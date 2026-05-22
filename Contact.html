@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>MyShop Pro - ទំនាក់ទំនងពួកយើង | ផែនទីច្បាស់</title>
+
+<!---Google Font--->
+<link href="https://fonts.googleapis.com/css2?family=Koulen&family=Battambang&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<!-- Custom CSS -->
+<link rel="stylesheet" href="style.css?v=1">
+
+<!-- Leaflet Routing Machine CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css"/>
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<!-- Leaflet Providers -->
+<script src="https://unpkg.com/leaflet-providers@1.13.0/leaflet-providers.js"></script>
+
+<!-- SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<!-- Leaflet Routing Machine -->
+<script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
+      
+<style>
+  body {
+    font-family: 'Battambang', 'Koulen', sans-serif;
+  }
+  .contact-card {
+    transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+  }
+  .contact-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 28px -10px rgba(0, 0, 0, 0.12);
+  }
+  .input-focus:focus {
+    box-shadow: 0 0 0 3px rgba(59,130,246,0.25);
+    border-color: #3b82f6;
+    outline: none;
+  }
+  .btn-submit {
+    transition: all 0.2s ease;
+  }
+  .btn-submit:hover {
+    transform: scale(1.02);
+    background: linear-gradient(135deg, #2563eb, #1e3a8a);
+  }
+
+  #map{
+    height: 400px;
+    width: 100%;
+    border-radius: 16px;
+    z-index: 1;
+  }
+  .leaflet-container {
+    border-radius: 1rem;
+    font-family: 'Inter', sans-serif;
+  }
+  .map-toggle-btn {
+    transition: all 0.2s ease;
+  }
+  .map-toggle-btn.active {
+    background-color: #3b82f6;
+    color: white;
+    border-color: #3b82f6;
+  }
+</style>
+</head>
+<body class="bg-gradient-to-br from-gray-50 to-gray-100">
+
+<!-- Navbar -->
+<nav class="bg-white/95 backdrop-blur-sm shadow-md sticky top-0 z-30 border-b border-gray-200">
+
+  <div class="max-w-6xl mx-auto flex justify-between items-center p-4 md:px-6">
+
+    <!-- Logo -->
+    <div class="flex items-center justify-center sm:justify-start gap-2 w-full sm:w-auto">
+  
+    <i class="fas fa-store text-blue-600 text-2xl"></i>
+
+    <h1 class="text-xl font-extrabold bg-gradient-to-r from-blue-700 to-indigo-600 bg-clip-text text-transparent">
+      SEVEN KHMER
+    </h1>
+
+  </div>
+
+    <!-- Menu -->
+    <ul class="hidden sm:flex gap-6 font-medium text-sm sm:text-base text-gray-700">
+
+      <li>
+        <a href="index.html"
+        class="hover:text-blue-600 transition flex items-center gap-1">
+          <i class="fas fa-home text-sm"></i>
+          Home
+        </a>
+      </li>
+
+      <li>
+        <a href="promo.html"
+        class="text-blue-600 border-b-2 border-blue-500 pb-1 flex items-center gap-1">
+          <i class="fas fa-tag"></i>
+          Promotion
+        </a>
+      </li>
+
+      <li>
+        <a href="Contact.html"
+        class="hover:text-blue-600 transition flex items-center gap-1">
+          <i class="fas fa-headset"></i>
+          Contact
+        </a>
+      </li>
+
+      <li>
+        <a href="products.html"
+        class="hover:text-blue-600 transition flex items-center gap-1">
+          <i class="fa-solid fa-cart-shopping"></i>
+          Products
+        </a>
+      </li>
+
+      <li>
+        <a href="Entertainment.html"
+        class="hover:text-blue-600 transition flex items-center gap-1">
+          🎬 Entertainment
+        </a>
+      </li>
+
+    </ul>
+
+  </div>
+
+</nav>
+
+<!-- Hamburger Button -->
+<button onclick="toggleMenu()"
+class="fixed top-2 left-4 z-30 
+text-black w-12 h-12 shadow-xl
+hover:scale-105 active:scale-95 transition-all duration-300
+flex items-center justify-center sm:hidden">
+
+  <span class="text-2xl">☰</span>
+</button>
+
+<!-- Overlay -->
+<div id="overlay"
+class="fixed inset-0 bg-black/50 backdrop-blur-sm z-30 hidden sm:hidden"
+onclick="toggleMenu()"></div>
+
+<!-- Sidebar -->
+<div id="sidebar" class="fixed top-0 left-0 z-40 h-full w-72 bg-gray-900 text-white shadow-2xl transform -translate-x-full transition-transform duration-300 ease-in-out">
+
+  <!-- Header -->
+  <div class="flex items-center justify-between p-5 border-b border-gray-700">
+
+    <div class="flex items-center gap-3">
+      <div class="bg-blue-600 w-10 h-10 rounded-full
+      flex items-center justify-center text-xl">
+        🛍️
+      </div>
+
+      <div>
+        <h1 class="font-bold text-lg">SEVEN KHMER</h1>
+        <p class="text-xs text-gray-400">Online Store</p>
+      </div>
+    </div>
+
+    <!-- Close Button -->
+    <button onclick="toggleMenu()"
+    class="bg-gray-800 hover:bg-red-500
+    w-9 h-9 rounded-full transition">
+
+      ✖️
+    </button>
+  </div>
+
+  <!-- Menu -->
+  <div class="p-5 space-y-3">
+
+    <a href="index.html"
+    class="flex items-center gap-3 p-3 rounded-xl
+    hover:bg-blue-600 transition duration-300">
+
+      <span class="text-xl">🏠</span>
+      <span>Home</span>
+    </a>
+
+    <a href="promo.html"
+    class="flex items-center gap-3 p-3 rounded-xl
+    hover:bg-pink-600 transition duration-300">
+
+      <i class="fas fa-tag text-lg"></i>
+      <span>Promotion</span>
+    </a>
+
+    <a href="Contact.html"
+    class="flex items-center gap-3 p-3 rounded-xl
+    hover:bg-green-600 transition duration-300">
+
+      <i class="fas fa-headset text-lg"></i>
+      <span>Contact</span>
+    </a>
+
+    <a href="products.html"
+    class="flex items-center gap-3 p-3 rounded-xl
+    hover:bg-yellow-500 transition duration-300">
+
+      <span class="text-xl">🛒</span>
+      <span>Products</span>
+    </a>
+
+    <a href="Entertainment.html"
+    class="flex items-center gap-3 p-3 rounded-xl
+    hover:bg-purple-600 transition duration-300">
+
+      <span class="text-xl">🎬</span>
+      <span>Entertainment</span>
+    </a>
+
+  </div>
+
+  <!-- Bottom Section -->
+  <div class="absolute bottom-0 w-full p-5 border-t border-gray-700">
+
+    <button onclick="toggleMenu()"
+    class="w-full bg-gradient-to-r from-red-500 to-red-600
+    hover:from-red-600 hover:to-red-700
+    py-3 rounded-xl font-semibold
+    shadow-lg transition-all duration-300">
+
+      ⬅️ បិទ Menu
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- Hero Section -->
+<section class="relative bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-16">
+  <div class="absolute inset-0 bg-black/20"></div>
+  <div class="relative max-w-6xl mx-auto px-4 text-center">
+    <i class="fas fa-comments text-5xl mb-4 text-yellow-300 drop-shadow-lg"></i>
+    <h1 class="font-[Koulen] text-4xl md:text-5xl font-bold mb-4">ទំនាក់ទំនងមកកាន់ពួកយើង</h1>
+    <p class="text-lg md:text-xl text-blue-100 max-w-2xl mx-auto">សេវាកម្ម 24/7 | ផែនទីបង្ហាញទីតាំងច្បាស់លាស់</p>
+  </div>
+</section>
+
+<!-- Main Content -->
+<div class="max-w-6xl mx-auto px-4 py-12">
+  <div class="grid md:grid-cols-2 gap-10">
+    
+    <!-- LEFT: Contact Form -->
+    <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8">
+      <div class="flex items-center gap-3 mb-6">
+        <div class="bg-blue-100 p-3 rounded-full">
+          <i class="fas fa-envelope text-blue-600 text-xl"></i>
+        </div>
+        <h2 class="text-2xl font-bold text-gray-800">ផ្ញើសារមកពួកយើង</h2>
+      </div>
+      
+     <!-- FORM CARD -->
+<div class="bg-white w-full max-w-lg rounded-3xl shadow-2xl p-8">
+
+
+    <!-- FORM -->
+    <form 
+    action="https://formsubmit.co/phinrithy100744@gmail.com" 
+    method="POST"
+    class="space-y-5">
+
+        <!-- Disable captcha -->
+        <input type="hidden" name="_captcha" value="false">
+
+        <!-- Success Page -->
+        <input type="hidden" name="_next" value="success.html">
+
+        <!-- Name -->
+        <div>
+            <label class="font-semibold block mb-2">
+                👤 ឈ្មោះ
+            </label>
+
+            <input 
+            type="text"
+            name="name"
+            required
+            placeholder="បញ្ចូលឈ្មោះ..."
+            class="w-full border-2 border-gray-200 rounded-xl p-4 outline-none focus:border-blue-500">
+        </div>
+
+        <!-- Email -->
+        <div>
+            <label class="font-semibold block mb-2">
+                📧 អ៊ីមែល
+            </label>
+
+            <input 
+            type="email"
+            name="email"
+            required
+            placeholder="example@gmail.com"
+            class="w-full border-2 border-gray-200 rounded-xl p-4 outline-none focus:border-blue-500">
+        </div>
+
+        <div>
+          <label class="block text-gray-700 font-semibold mb-2"><i class="fas fa-phone-alt text-blue-500 mr-2"></i>លេខទូរស័ព្ទ</label>
+          <input type="tel" id="phone" class="w-full px-4 py-3 border border-gray-300 rounded-xl input-focus transition" placeholder="+855 XX XXX XXX">
+        </div>
+        
+
+        <!-- Message -->
+    <div>
+      <label class="font-semibold block mb-2">
+            💬 សារ
+      </label>
+            <textarea
+            name="message"
+            rows="5"
+            required
+            placeholder="សរសេរសាររបស់អ្នក..."
+            class="w-full border-2 border-gray-200 rounded-xl p-4 outline-none focus:border-blue-500"></textarea>
+        </div>
+
+        <!-- Button -->
+  <button 
+    type="submit"
+    class="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-xl text-lg font-bold transition duration-300">
+      🚀 ផ្ញើសារ
+  </button>
+
+ </form>
+
+</div>
+        
+        <!-- Glassmorphism Bottom Section -->
+<div class="mt-20 relative overflow-hidden rounded-3xl border border-white/20 bg-white/10 backdrop-blur-xl shadow-2xl p-6">
+
+  <!-- Blur Glow -->
+  <div class="absolute -top-10 -left-10 w-32 h-32 bg-blue-400/30 rounded-full blur-3xl"></div>
+  <div class="absolute -bottom-10 -right-10 w-32 h-32 bg-indigo-500/30 rounded-full blur-3xl"></div>
+  
+  <div class="relative z-10 text-center">
+
+    <!-- Title -->
+    <h3 class="mt-5 text-xl font-bold text-gray-800">
+      យើងរីករាយក្នុងការជួយអ្នក 💙
+    </h3>
+
+    <!-- Description -->
+    <p class="text-gray-600 text-sm leading-relaxed mt-2 max-w-sm mx-auto">
+      សូមផ្ញើសារមកកាន់ពួកយើង ហើយក្រុមការងារនឹងឆ្លើយតបក្នុងរយៈពេលខ្លីបំផុត។
+    </p>
+
+    <!-- Info -->
+    <div class="flex items-center justify-center gap-4 mt-5 flex-wrap">
+      
+      <div class="px-4 py-2 rounded-full bg-white/30 backdrop-blur-md border border-white/20 text-sm text-gray-700 shadow">
+        <i class="fas fa-shield-alt text-green-500 mr-1"></i>
+        សុវត្ថិភាព
+      </div>
+      
+      <div class="px-4 py-2 rounded-full bg-white/30 backdrop-blur-md border border-white/20 text-sm text-gray-700 shadow">
+        <i class="fas fa-clock text-blue-500 mr-1"></i>
+        ឆ្លើយតបលឿន
+      </div>
+      
+    </div>
+    
+    <!-- Footer -->
+    <p class="text-xs text-gray-500 mt-6">
+      © 2026 MyShop Pro — Contact Support Center
+    </p>
+    
+  </div>
+</div>
+
+</div>
+
+    <!-- Toast -->
+    <div id="toastContainer"class="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center gap-2"></div>
+
+    <!-- RIGHT: Contact Cards + HIGH QUALITY MAP -->
+    <div class="space-y-6">
+      <!-- Contact Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+        <div class="contact-card bg-white rounded-xl shadow-md p-5 flex items-start gap-4">
+          <div class="bg-green-100 p-3 rounded-full"><i class="fas fa-phone-alt text-green-600 text-xl"></i></div>
+          <div><h3 class="font-bold">ទូរស័ព្ទ</h3><p class="text-gray-600 text-sm">012 968 728</p><p class="text-gray-500 text-xs">ច័ន្ទ-សុក្រ 8AM-6PM</p></div>
+        </div>
+        <div class="contact-card bg-white rounded-xl shadow-md p-5 flex items-start gap-4">
+          <div class="bg-red-100 p-3 rounded-full"><i class="fab fa-telegram-plane text-red-500 text-xl"></i></div>
+          <div><h3 class="font-bold">តេឡេក្រាម</h3><p class="text-gray-600 text-sm">@Seven_khmer</p><p class="text-gray-500 text-xs">ឆ្លើយតបរហ័ស</p></div>
+        </div>
+        <div class="contact-card bg-white rounded-xl shadow-md p-5 flex items-start gap-4">
+          <div class="bg-blue-100 p-3 rounded-full"><i class="fas fa-map-marker-alt text-blue-600 text-xl"></i></div>
+          <div><h3 class="font-bold">អាសយដ្ឋាន</h3><p class="text-gray-600 text-sm leading-relaxed">ផ្ទះលេខ ១៤៣ ផ្លូវលេខ ៥ បុរីពិភពថ្មីកំបូល ១</p><p class="text-gray-500 text-xs">ភ្នំពេញ, កម្ពុជា</p></div>
+        </div>
+        <div class="contact-card bg-white rounded-xl shadow-md p-5 flex items-start gap-4">
+          <div class="bg-purple-100 p-3 rounded-full"><i class="fas fa-clock text-purple-600 text-xl"></i></div>
+          <div><h3 class="font-bold">ម៉ោងបើក</h3><p class="text-gray-600 text-sm">ច័ន្ទ-សុក្រ: 8AM-8PM</p><p class="text-gray-500 text-xs">សៅរ៍: 9AM-5PM</p></div>
+        </div>
+    </div>
+      
+      <!-- 🗺️ HIGH QUALITY MAP with layer switcher -->
+<div class="max-w-6xl mx-auto px-4 py-6 ">
+
+  <div class="bg-white rounded-2xl shadow-xl p-5 border border-gray-200">
+
+    <!-- Title -->
+    <h3 class="text-2xl font-bold text-center mb-5">
+      🚚 ផ្លូវដឹកជញ្ជូនពិត
+    </h3>
+
+    <!-- Button -->
+    <div class="text-center mb-5">
+      <button
+        onclick="getUserLocation()"
+        class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl shadow-lg transition duration-300"
+      >
+        📍 យកទីតាំងខ្ញុំ
+      </button>
+    </div>
+    </div>
+
+    <!-- Map -->
+    <div id="map" class="overflow-hidden"></div>
+
+    <!-- Distance + Shipping -->
+    <div class="mt-5 bg-green-100 text-green-800 rounded-xl p-4 text-center font-semibold">
+
+      ចម្ងាយ:
+      <strong>
+        <span id="distance">0</span> km
+      </strong>
+
+      តម្លៃដឹកជញ្ជូន:
+      <strong>
+        $<span id="shipping-price">0.00</span>
+      </strong>
+
+    </div>
+
+  </div>
+
+</div>
+
+      <!-- Social Media Panel -->
+      <div class="bg-white rounded-2xl shadow-xl p-6">
+        <div class="flex items-center gap-3 mb-4">
+          <i class="fab fa-facebook-messenger text-2xl text-blue-500"></i>
+          <h3 class="text-xl font-bold text-gray-800">តាមដានពួកយើង</h3>
+        </div>
+        <div class="flex flex-wrap gap-4 justify-center md:justify-start">
+          <a href="#" class="bg-gray-100 hover:bg-blue-600 hover:text-white p-3 rounded-full transition w-12 h-12 flex items-center justify-center text-blue-600 text-xl"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="bg-gray-100 hover:bg-pink-500 hover:text-white p-3 rounded-full transition w-12 h-12 flex items-center justify-center text-pink-500 text-xl"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="bg-gray-100 hover:bg-sky-500 hover:text-white p-3 rounded-full transition w-12 h-12 flex items-center justify-center text-sky-500 text-xl"><i class="fab fa-telegram"></i></a>
+          <a href="#" class="bg-gray-100 hover:bg-green-600 hover:text-white p-3 rounded-full transition w-12 h-12 flex items-center justify-center text-green-600 text-xl"><i class="fab fa-whatsapp"></i></a>
+        </div>
+        <div class="mt-5 bg-amber-50 rounded-lg p-3 text-sm text-gray-700 flex items-center gap-2">
+          <i class="fas fa-headset text-amber-600"></i>
+          <span>សេវាកម្មអតិថិជន 24/7: ឆ្លើយតបក្នុងរយៈពេល ២ ម៉ោង</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- FAQ Section -->
+  <div class="mt-16 bg-white rounded-2xl shadow-lg p-6 md:p-8">
+    <div class="text-center mb-6">
+      <i class="fas fa-question-circle text-blue-500 text-4xl"></i>
+      <h2 class="text-2xl font-bold text-gray-800 mt-2">សំណួរពេញនិយម (FAQ)</h2>
+    </div>
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="border-l-4 border-blue-400 pl-4"><h3 class="font-bold"><i class="fas fa-truck text-blue-500 mr-2"></i>តើដឹកជញ្ជូនប៉ុន្មានថ្ងៃ?</h3><p class="text-gray-600 text-sm mt-1">ភ្នំពេញ 1-2 ថ្ងៃ ខេត្ត 3-5 ថ្ងៃ។ ដឹកជញ្ជូនឥតគិតថ្លៃសម្រាប់ការបញ្ជាទិញលើសពី 50$។</p></div>
+      <div class="border-l-4 border-blue-400 pl-4"><h3 class="font-bold"><i class="fas fa-undo-alt text-blue-500 mr-2"></i>តើអាចត្រឡប់ផលិតផលបានទេ?</h3><p class="text-gray-600 text-sm mt-1">បាទក្នុងរយៈពេល 7 ថ្ងៃ ប្រសិនបើផលិតផលមានបញ្ហា។</p></div>
+      <div class="border-l-4 border-blue-400 pl-4"><h3 class="font-bold"><i class="fas fa-credit-card text-blue-500 mr-2"></i>តើមានទម្រង់បង់ប្រាក់អ្វីខ្លះ?</h3><p class="text-gray-600 text-sm mt-1">ABA, TrueMoney, បង់តាមសាច់ប្រាក់ពេលទទួល (COD)។</p></div>
+      <div class="border-l-4 border-blue-400 pl-4"><h3 class="font-bold"><i class="fas fa-headset text-blue-500 mr-2"></i>ម៉ោងសេវាកម្ម?</h3><p class="text-gray-600 text-sm mt-1">Online Chat 24/7, ទូរស័ព្ទ 8AM-6PM។</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="bg-gray-900 text-gray-300 mt-10 py-8 border-t border-gray-800">
+  <div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4">
+    <div class="flex items-center gap-2 text-white font-bold text-xl"><i class="fas fa-cart-shopping text-blue-400"></i><span>Seven Khmer</span></div>
+    <div class="flex gap-6 text-2xl">
+      <a href="#" class="hover:text-blue-400 transition"><i class="fab fa-facebook"></i></a>
+      <a href="#" class="hover:text-pink-400 transition"><i class="fab fa-instagram"></i></a>
+      <a href="#" class="hover:text-sky-400 transition"><i class="fab fa-telegram"></i></a>
+    </div>
+    <p class="text-sm text-gray-500">© 2026 Seven Khmer | បម្រើអតិថិជនគ្រប់ពេលវេលា</p>
+  </div>
+</footer>
+
+<script>
+
+  // JS Toggle
+
+function toggleMenu() {
+
+  let sidebar = document.getElementById("sidebar");
+
+  if (sidebar.classList.contains("-translate-x-full")) {
+
+    sidebar.classList.remove("-translate-x-full");
+
+  } else {
+
+    sidebar.classList.add("-translate-x-full");
+
+  }
+}
+
+function toggleSidebar(){
+  document.getElementById("sidebar")
+    .classList.toggle("-translate-x-full");
+}
+
+  // ====================== HIGH QUALITY MAP ======================
+  // Shop coordinates (Phnom Penh, Kamboul district)
+  
+  /* ផែនទី */
+
+// Store location
+const storeLat = 11.51620;
+const storeLng = 104.77384;
+
+// Shipping price per km
+const pricePerKm = 0.5;
+
+// Initialize map
+const map = L.map('map').setView([storeLat, storeLng], 13);
+
+// Map layer
+L.tileLayer(
+  'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+  {
+    maxZoom: 19,
+    attribution: '© OpenStreetMap'
+  }
+).addTo(map);
+
+// Store marker
+L.marker([storeLat, storeLng])
+  .addTo(map)
+  .bindPopup("🏪 SEVEN KHMER")
+  .openPopup();
+
+let routingControl;
+
+// Get user location
+function getUserLocation(){
+
+  if(navigator.geolocation){
+
+    navigator.geolocation.getCurrentPosition(
+
+      function(position){
+
+        const userLat = position.coords.latitude;
+        const userLng = position.coords.longitude;
+
+        createRoute(userLat, userLng);
+
+        map.setView([userLat, userLng], 14);
+
+      },
+
+      function(error){
+        alert("មិនអាចទទួលបានទីតាំងអ្នកបានទេ");
+      }
+
+    );
+
+  } else {
+
+    alert("Browser មិន support Geolocation");
+
+  }
+}
+
+// Click map to create route
+
+map.on('click', function(e){
+
+  createRoute(e.latlng.lat, e.latlng.lng);
+
+});
+
+// Create route
+function createRoute(lat, lng){
+
+  // Remove old route
+  if(routingControl){
+    map.removeControl(routingControl);
+  }
+
+  routingControl = L.Routing.control({
+
+    waypoints: [
+      L.latLng(storeLat, storeLng),
+      L.latLng(lat, lng)
+    ],
+
+    routeWhileDragging: false,
+
+    show: false,
+
+    addWaypoints: false,
+
+    draggableWaypoints: false,
+
+    fitSelectedRoutes: true
+
+  }).addTo(map);
+
+  // When route found
+  routingControl.on('routesfound', function(e){
+
+    const route = e.routes[0];
+
+    // Distance in KM
+    const distance =
+      (route.summary.totalDistance / 1000).toFixed(2);
+
+    document.getElementById("distance").innerText =
+      distance;
+
+    // Shipping price
+    const shippingPrice =
+      (distance * pricePerKm).toFixed(2);
+
+    document.getElementById("shipping-price").innerText =
+      shippingPrice;
+
+  });
+
+}
+
+  // ====================== CONTACT FORM HANDLER ======================
+ 
+ (function() {
+    const form = document.getElementById('contactForm');
+
+    const submitBtn = document.getElementById('submitBtn');
+
+    if (!form || !submitBtn) {
+
+      console.error("Form or button not found");
+
+      return;
+    }
+
+    const originalBtnContent = submitBtn.innerHTML;
+        // ✅ IMPORTANT: CHANGE THIS EMAIL TO YOUR REAL EMAIL ADDRESS!
+        // Please replace "your-email@example.com" with your actual email (e.g., shop@myshop.com)
+
+    const YOUR_EMAIL = "phinrithy100744@gmail.com";  // ← សូមប្តូរទៅអ៊ីមែលពិតរបស់អ្នក!
+            
+         // Show toast message with animation
+
+function showToast(message, type = 'success') {
+
+    const container = document.getElementById('toastContainer');
+
+      if (!container) return;
+                
+    const toast = document.createElement('div');
+
+    toast.className = 'toast-notice px-5 py-3 rounded-xl shadow-2xl text-white font-medium text-sm flex items-center gap-3 mb-2 pointer-events-auto transition-all duration-300';
+                
+    let bgColor = 'bg-emerald-600';
+
+    let icon = '<i class="fas fa-check-circle text-white text-base"></i>';
+      if (type === 'error') {
+
+      bgColor = 'bg-red-500';
+
+      icon = '<i class="fas fa-exclamation-triangle text-white text-base"></i>';
+      
+        } else if (type === 'info') {
+
+          bgColor = 'bg-sky-500';
+
+          icon = '<i class="fas fa-info-circle text-white text-base"></i>';
+          
+        }
+                
+    toast.style.background = bgColor;
+
+    toast.style.backdropFilter = 'blur(4px)';
+
+    toast.innerHTML = `${icon}<span class="flex-1">${message}</span><button class="ml-3 text-white/80 hover:text-white text-lg leading-4 font-bold" onclick="this.parentElement.remove()">&times;</button>`;
+                
+    container.appendChild(toast);
+                
+       // Auto remove after 4 seconds
+setTimeout(() => {
+
+      if (toast && toast.remove) {
+
+        toast.style.opacity = '0';
+
+        toast.style.transform = 'translateY(10px)';
+
+setTimeout(() => toast.remove(), 200);
+
+      }
+
+  }, 4500);
+
+}              
+
+            // Validation rules
+function validateForm(formData) {
+
+    const nameTrim = formData.name?.trim();
+
+    const phoneTrim = formData.phone?.trim();
+
+    const messageTrim = formData.message?.trim();
+                
+      if (!nameTrim) {
+
+        showToast('សូមបញ្ចូលឈ្មោះរបស់អ្នក', 'error');
+
+          return false;
+
+         }
+           if (nameTrim.length < 2) {
+
+        showToast('ឈ្មោះត្រូវមានយ៉ាងតិច ២ តួអក្សរ', 'error');
+
+          return false;
+
+        }
+          if (!phoneTrim) {
+
+        showToast('សូមបញ្ចូលលេខទូរស័ព្ទ', 'error');
+
+          return false;
+
+        }
+        const phoneDigits = phoneTrim.replace(/[\s\-\(\)\+]/g, '');
+
+          if (phoneDigits.length < 6 || phoneDigits.length > 15) {
+
+        showToast('លេខទូរស័ព្ទមិនត្រឹមត្រូវ (យ៉ាងតិច ៦ ខ្ទង់ មិនលើស ១៥)', 'error');
+
+          return false;
+        }
+                if (!messageTrim) {
+                    showToast('សូមបញ្ចូលសាររបស់អ្នក', 'error');
+                    return false;
+                }
+                if (messageTrim.length < 5) {
+                    showToast('សារត្រូវមានយ៉ាងតិច ៥ តួអក្សរ', 'error');
+                    return false;
+                }
+                
+                // Email validation if provided
+                const emailValue = formData.email?.trim();
+                if (emailValue && emailValue !== '') {
+                    const emailPattern = /^[^\s@]+@([^\s@.,]+\.)+[^\s@.,]{2,}$/i;
+                    if (!emailPattern.test(emailValue)) {
+                        showToast('សូមបញ្ចូលអ៊ីមែលឲ្យបានត្រឹមត្រូវ (ឧទាហរណ៍: name@domain.com)', 'error');
+                        return false;
+                    }
+                }
+                return true;
+            }
+
+            // Loading state toggle
+function setLoading(isLoading) {
+                if (isLoading) {
+                    submitBtn.disabled = true;
+                    submitBtn.classList.add('opacity-80', 'cursor-not-allowed');
+                    submitBtn.innerHTML = `
+                        <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        <span>កំពុងផ្ញើសារ...</span>
+                    `;
+                } else {
+                    submitBtn.disabled = false;
+                    submitBtn.classList.remove('opacity-80', 'cursor-not-allowed');
+                    submitBtn.innerHTML = originalBtnContent;
+                }
+            }
+
+            // Handle form submission via FormSubmit.co (reliable free service)
+async function handleSubmit(event) {
+                event.preventDefault();
+                
+                // Gather values
+                const nameValue = document.getElementById('fullName')?.value || '';
+                const phoneValue = document.getElementById('phone')?.value || '';
+                const emailValue = document.getElementById('email')?.value || '';
+                const subjectSelect = document.getElementById('subject')?.value || 'សំណួរទូទៅ';
+                const messageValue = document.getElementById('message')?.value || '';
+                
+                const formValues = {
+                    name: nameValue,
+                    phone: phoneValue,
+                    email: emailValue,
+                    subject: subjectSelect,
+                    message: messageValue
+                };
+                
+                // Validate locally
+                if (!validateForm({ name: formValues.name, phone: formValues.phone, email: formValues.email, message: formValues.message })) {
+                    return;
+                }
+                
+                setLoading(true);
+                
+                try {
+                    // Prepare FormData for FormSubmit API
+                    const submitFormData = new FormData();
+                    submitFormData.append('name', formValues.name);
+                    submitFormData.append('phone', formValues.phone);
+                    submitFormData.append('email', formValues.email);
+                    submitFormData.append('subject', `[MyShop Contact] ${formValues.subject}`);
+                    submitFormData.append('message', `ឈ្មោះ: ${formValues.name}\nទូរស័ព្ទ: ${formValues.phone}\nអ៊ីមែល: ${formValues.email || 'មិនមាន'}\nប្រធានបទ: ${formValues.subject}\n\nសារ:\n${formValues.message}`);
+                    
+                    // Additional flags for better delivery
+                    submitFormData.append('_replyto', formValues.email || YOUR_EMAIL);
+                    submitFormData.append('_subject', `📩 សារថ្មីពី ${formValues.name} - MyShop Pro`);
+                    submitFormData.append('_template', 'table');
+                    submitFormData.append('_captcha', 'false');
+                    submitFormData.append('_next', 'https://yourwebsite.com/success.html');
+                    // Send to FormSubmit endpoint (free email forwarding)
+                    const response = await fetch(`https://formsubmit.co/ajax/${YOUR_EMAIL}`, {
+                        method: 'POST',
+                        body: submitFormData,
+                        headers: {
+                            'Accept': 'application/json'
+                        }
+                    });
+                    
+  const result = await response.json();
+                    
+ if (result.success === true || response.ok) {
+
+    showToast('✅ សាររបស់អ្នកបានផ្ញើដោយជោគជ័យ!', 'success');
+
+    form.reset();
+
+    if(document.getElementById('subject')) {
+        document.getElementById('subject').selectedIndex = 0;
+    }
+
+    // Redirect after 1.5 seconds
+    setTimeout(() => {
+        window.location.href = "success.html";
+    }, 1500);
+
+} else {
+
+    showToast('មានបញ្ហាក្នុងការផ្ញើសារ។ សូមពិនិត្យអ៊ីនធឺណិត ឬសាកល្បងម្តងទៀត', 'error');
+
+}
+                } catch (error) {
+                    console.error('Submission network error:', error);
+                    showToast('កំហុសបណ្តាញ សូមពិនិត្យការតភ្ជាប់អ៊ីនធឺណិតរបស់អ្នក', 'error');
+                } finally {
+                    setLoading(false);
+                }
+            }
+            
+            // Attach event listener
+            form.addEventListener('submit', handleSubmit);
+            
+            // Real-time small UX: check if email is configured
+            if (YOUR_EMAIL === "your-email@example.com") {
+                // Show warning in console, but not intrusive toast to not annoy user
+                console.warn("⚠️ សូមប្តូរ YOUR_EMAIL ទៅអ៊ីមែលពិតប្រាកដរបស់អ្នក ដើម្បីទទួលបានសារ។ បច្ចុប្បន្ននេះជាអ៊ីមែលសាកល្បង");
+                // Optional gentle reminder only once
+                setTimeout(() => {
+                    const reminder = localStorage.getItem('emailReminderShown');
+                    if(!reminder) {
+                        showToast('💡 អ្នកអភិវឌ្ឍន៍: សូមប្តូរអ៊ីមែល YOUR_EMAIL ក្នុងកូដដើម្បីទទួលសារ', 'info');
+                        localStorage.setItem('emailReminderShown', 'true');
+                    }
+                }, 1000);
+            }
+            
+            // Accessibility and additional live phone number formatting hint
+            const phoneInput = document.getElementById('phone');
+            if(phoneInput) {
+                phoneInput.addEventListener('input', function(e) {
+                    // simple formatting: allow only digits, plus, space, dash
+                    let val = this.value;
+                    // but we keep original, just hint
+                });
+            }
+            
+            console.log('📨 Contact form ready - MyShop Pro');
+        })();
+</script>
+
+</body>
+</html>

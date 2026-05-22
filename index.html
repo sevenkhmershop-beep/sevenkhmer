@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>MyShop Pro | ហាងទំនើប</title>
+
+<!---Google Font--->
+<link href="https://fonts.googleapis.com/css2?family=Koulen&family=Battambang&display=swap" rel="stylesheet">
+
+<!-- Tailwind CSS CDN + Font Awesome Icons for better visuals -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<!-- Custom CSS -->
+<link rel="stylesheet" href="style.css?v=1">
+
+<style>
+  /* custom smooth transitions & slider override */
+  
+  body{
+  font-family: 'Battambang', 'Koulen', sans-serif;
+  }
+  
+  /* slider transition enhancement */
+  .slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    visibility: hidden;
+  }
+  
+  .slide.active {
+    opacity: 1;
+    z-index: 10;
+    visibility: visible;
+  }
+  
+  /* Ensure slider container has relative & proper height */
+  #slider {
+    position: relative;
+  }
+  
+  /* dot active style */
+  .dot {
+    transition: all 0.2s ease;
+    cursor: pointer;
+    background-color: rgba(255,255,255,0.6);
+    width: 10px;
+    height: 10px;
+    border-radius: 999px;
+    display: inline-block;
+    margin: 0 4px;
+  }
+  
+  .dot.active-dot {
+    background-color: #facc15 !important; /* amber-400 */
+    transform: scale(1.2);
+    width: 14px;
+    height: 14px;
+    box-shadow: 0 0 4px rgba(0,0,0,0.3);
+  }
+  
+  /* make buttons modern */
+  .nav-btn {
+    background-color: rgba(255,255,255,0.85);
+    backdrop-filter: blur(4px);
+    transition: all 0.2s;
+    font-weight: bold;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  }
+  
+  .nav-btn:hover {
+    background-color: white;
+    transform: scale(1.05);
+  }
+  
+  /* banner hover effect */
+  .banner-cta {
+    transition: transform 0.2s;
+  }
+  .banner-cta:hover {
+    transform: translateY(-2px);
+  }
+  
+  /* slick card style for extra content - optional but improves design */
+  .feature-card {
+    background: white;
+    border-radius: 1rem;
+    transition: all 0.3s ease;
+  }
+  .feature-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 25px -12px rgba(0,0,0,0.15);
+  }
+  
+  /* adjust for mobile */
+  @media (max-width: 640px) {
+    .nav-btn {
+      width: 32px;
+      height: 32px;
+    }
+  }
+</style>
+</head>
+<body class="bg-gradient-to-br from-gray-50 to-gray-100">
+
+<!-- Navbar -->
+<nav class="bg-white/95 backdrop-blur-sm shadow-md sticky top-0 z-30 border-b border-gray-200">
+
+  <div class="max-w-6xl mx-auto flex justify-between items-center p-4 md:px-6">
+
+    <!-- Logo -->
+    <div class="flex items-center justify-center sm:justify-start gap-2 w-full sm:w-auto">
+  
+    <i class="fas fa-store text-blue-600 text-2xl"></i>
+
+    <h1 class="text-xl font-extrabold bg-gradient-to-r from-blue-700 to-indigo-600 bg-clip-text text-transparent">
+      SEVEN KHMER
+    </h1>
+
+  </div>
+
+    <!-- Menu -->
+    <ul class="hidden sm:flex gap-6 font-medium text-sm sm:text-base text-gray-700">
+
+      <li>
+        <a href="index.html"
+        class="hover:text-blue-600 transition flex items-center gap-1">
+          <i class="fas fa-home text-sm"></i>
+          Home
+        </a>
+      </li>
+
+      <li>
+        <a href="promo.html"
+        class="text-blue-600 border-b-2 border-blue-500 pb-1 flex items-center gap-1">
+          <i class="fas fa-tag"></i>
+          Promotion
+        </a>
+      </li>
+
+      <li>
+        <a href="Contact.html"
+        class="hover:text-blue-600 transition flex items-center gap-1">
+          <i class="fas fa-headset"></i>
+          Contact
+        </a>
+      </li>
+
+      <li>
+        <a href="products.html"
+        class="hover:text-blue-600 transition flex items-center gap-1">
+          <i class="fa-solid fa-cart-shopping"></i>
+          Products
+        </a>
+      </li>
+
+      <li>
+        <a href="Entertainment.html"
+        class="hover:text-blue-600 transition flex items-center gap-1">
+          🎬 Entertainment
+        </a>
+      </li>
+
+    </ul>
+
+  </div>
+
+</nav>
+
+  <!-- Hamburger Button -->
+<button onclick="toggleMenu()"
+class="fixed top-2 left-4 z-30 
+text-black w-12 h-12 shadow-xl
+hover:scale-105 active:scale-95 transition-all duration-300
+flex items-center justify-center sm:hidden">
+
+  <span class="text-2xl">☰</span>
+</button>
+
+<!-- Overlay -->
+<div id="overlay"
+class="fixed inset-0 bg-black/50 backdrop-blur-sm z-30 hidden sm:hidden"
+onclick="toggleMenu()"></div>
+
+<!-- Sidebar -->
+<div id="sidebar"
+class="fixed top-0 left-0 z-40 h-full w-72 bg-gray-900 text-white shadow-2xl transform -translate-x-full transition-transform duration-300 ease-in-out will-change-transform">
+
+  <!-- Header -->
+  <div class="flex items-center justify-between p-5 border-b border-gray-700">
+
+    <div class="flex items-center gap-3">
+      <div class="bg-blue-600 w-10 h-10 rounded-full
+      flex items-center justify-center text-xl">
+        🛍️
+      </div>
+
+      <div>
+        <h1 class="font-bold text-lg">MyShop Pro</h1>
+        <p class="text-xs text-gray-400">Online Store</p>
+      </div>
+    </div>
+
+    <!-- Close Button -->
+    <button onclick="toggleMenu()"
+    class="bg-gray-800 hover:bg-red-500
+    w-9 h-9 rounded-full transition">
+
+      ✖️
+    </button>
+  </div>
+
+  <!-- Menu -->
+  <div class="p-5 space-y-3">
+
+    <a href="index.html"
+    class="flex items-center gap-3 p-3 rounded-xl
+    hover:bg-blue-600 transition duration-300">
+
+      <span class="text-xl">🏠</span>
+      <span>Home</span>
+    </a>
+
+    <a href="promo.html"
+    class="flex items-center gap-3 p-3 rounded-xl
+    hover:bg-pink-600 transition duration-300">
+
+      <i class="fas fa-tag text-lg"></i>
+      <span>Promotion</span>
+    </a>
+
+    <a href="Contact.html"
+    class="flex items-center gap-3 p-3 rounded-xl
+    hover:bg-green-600 transition duration-300">
+
+      <i class="fas fa-headset text-lg"></i>
+      <span>Contact</span>
+    </a>
+
+    <a href="products.html"
+    class="flex items-center gap-3 p-3 rounded-xl
+    hover:bg-yellow-500 transition duration-300">
+
+      <span class="text-xl">🛒</span>
+      <span>Products</span>
+    </a>
+
+    <a href="Entertainment.html"
+    class="flex items-center gap-3 p-3 rounded-xl
+    hover:bg-purple-600 transition duration-300">
+
+      <span class="text-xl">🎬</span>
+      <span>Entertainment</span>
+    </a>
+
+  </div>
+
+  <!-- Bottom Section -->
+  <div class="absolute bottom-0 w-full p-5 border-t border-gray-700">
+
+    <button onclick="toggleMenu()"
+    class="w-full bg-gradient-to-r from-red-500 to-red-600
+    hover:from-red-600 hover:to-red-700
+    py-3 rounded-xl font-semibold
+    shadow-lg transition-all duration-300">
+
+      ⬅️ បិទ Menu
+    </button>
+
+  </div>
+
+</div>
+
+<!-- 🎞️ Enhanced Slider Section -->
+<div id="slider" class="relative max-w-6xl mx-auto mt-6 rounded-2xl overflow-hidden shadow-2xl group">
+  <!-- Slides container: dynamic via JS -->
+  <div id="slides" class="relative h-64 md:h-96 w-full"></div>
+
+  <!-- Navigation Buttons (improved accessibility) -->
+  <button onclick="prevSlide()" aria-label="Previous slide" class="absolute left-3 top-1/2 -translate-y-1/2 z-20 nav-btn">
+    <i class="fas fa-chevron-left text-gray-800 text-sm md:text-base"></i>
+  </button>
+  <button onclick="nextSlide()" aria-label="Next slide" class="absolute right-3 top-1/2 -translate-y-1/2 z-20 nav-btn">
+    <i class="fas fa-chevron-right text-gray-800 text-sm md:text-base"></i>
+  </button>
+
+  <!-- Dots indicator -->
+  <div id="dots" class="absolute bottom-4 w-full flex justify-center gap-2 z-20 pb-1"></div>
+</div>
+
+<!-- 🎯 Banner Section with extra flair -->
+<section class="max-w-6xl mx-auto mt-10 px-4">
+  <div class="bg-gradient-to-r from-amber-400 to-orange-500 rounded-2xl shadow-xl overflow-hidden transform transition hover:shadow-2xl">
+    <div class="flex flex-col md:flex-row justify-between items-center p-6 md:p-8 gap-6">
+      <div class="text-center md:text-left">
+        <div class="inline-flex items-center gap-2 bg-white/20 rounded-full px-3 py-1 text-sm font-semibold text-white backdrop-blur-sm mb-3">
+          <i class="fas fa-fire"></i> <span>ការផ្តល់ជូនពិសេស</span>
+        </div>
+        <h2 class="text-3xl md:text-4xl font-black text-white drop-shadow">🔥 បញ្ចុះតម្លៃរហូតដល់ 50%</h2>
+        <p class="text-white/90 text-lg mt-2 font-medium">ដឹកជញ្ជូនឥតគិតថ្លៃទូទាំងប្រទេសកម្ពុជា 🇰🇭</p>
+        <button class="mt-4 bg-white text-orange-600 font-bold px-6 py-2 rounded-full shadow-lg hover:shadow-xl transition-all banner-cta flex items-center gap-2 mx-auto md:mx-0">
+          <span>ទិញឥឡូវ</span> <i class="fas fa-arrow-right"></i>
+        </button>
+      </div>
+      <div class="hidden md:block">
+        <i class="fas fa-shipping-fast text-7xl text-white/30"></i>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 🧩 Extra: Featured products / mini gallery to enhance layout (brand relevant) -->
+<section class="max-w-6xl mx-auto mt-14 px-4">
+  <div class="flex justify-between items-center border-b border-gray-200 pb-3">
+    <h2 class="text-2xl font-bold text-gray-800 flex items-center gap-2"><i class="fas fa-star text-yellow-500"></i> ផលិតផលលក់ដាច់</h2>
+    <a href="#" class="text-blue-600 hover:underline text-sm font-medium">មើលទាំងអស់ →</a>
+  </div>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+    <!-- Product card 1 -->
+    <div class="feature-card bg-white rounded-xl overflow-hidden shadow-md p-4 flex flex-col items-center text-center">
+      <div class="w-32 h-32 bg-gray-100 rounded-full flex items-center justify-center mb-3 shadow-inner">
+        <i class="fas fa-mobile-alt text-5xl text-blue-500"></i>
+      </div>
+      <h3 class="font-bold text-lg">ស្មាតហ្វូនទំនើប</h3>
+      <p class="text-gray-500 text-sm">អេក្រង់ OLED 120Hz</p>
+      <div class="mt-2 text-red-500 font-bold">$299</div>
+      <button class="mt-3 bg-gray-100 hover:bg-blue-500 hover:text-white transition px-4 py-1 rounded-full text-sm font-semibold">ទិញឥឡូវ</button>
+    </div>
+    <!-- Product card 2 -->
+    <div class="feature-card bg-white rounded-xl overflow-hidden shadow-md p-4 flex flex-col items-center text-center">
+      <div class="w-32 h-32 bg-gray-100 rounded-full flex items-center justify-center mb-3 shadow-inner">
+        <i class="fas fa-headphones text-5xl text-indigo-500"></i>
+      </div>
+      <h3 class="font-bold text-lg">កាសស្តាប់ត្រចៀក</h3>
+      <p class="text-gray-500 text-sm">សម្លេងច្បាស់ ប្រឆាំងសំលេងរំខាន</p>
+      <div class="mt-2 text-red-500 font-bold">$79</div>
+      <button class="mt-3 bg-gray-100 hover:bg-blue-500 hover:text-white transition px-4 py-1 rounded-full text-sm font-semibold">ទិញឥឡូវ</button>
+    </div>
+    <!-- Product card 3 -->
+    <div class="feature-card bg-white rounded-xl overflow-hidden shadow-md p-4 flex flex-col items-center text-center">
+      <div class="w-32 h-32 bg-gray-100 rounded-full flex items-center justify-center mb-3 shadow-inner">
+        <i class="fas fa-clock text-5xl text-green-500"></i>
+      </div>
+      <h3 class="font-bold text-lg">នាឡិកាឆ្លាតវៃ</h3>
+      <p class="text-gray-500 text-sm">តាមដានសុខភាព</p>
+      <div class="mt-2 text-red-500 font-bold">$149</div>
+      <button class="mt-3 bg-gray-100 hover:bg-blue-500 hover:text-white transition px-4 py-1 rounded-full text-sm font-semibold">ទិញឥឡូវ</button>
+    </div>
+  </div>
+</section>
+
+<!-- 🔻 Footer with extra info & social icons -->
+<footer class="bg-gray-900 text-gray-300 mt-16 py-8">
+  <div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4">
+    <div class="flex flex-col items-center md:items-start">
+      <div class="flex items-center gap-2 text-white font-bold text-xl">
+        <i class="fas fa-cart-shopping text-blue-400"></i> 
+        <span>Seven Khmer</span>
+      </div>
+      <p class="text-sm text-gray-400 mt-1">គុណភាពខ្ពស់ តម្លៃសមរម្យ</p>
+    </div>
+    <div class="flex gap-6 text-2xl">
+      <a href="#" class="hover:text-blue-400 transition"><i class="fab fa-facebook"></i></a>
+      <a href="#" class="hover:text-pink-400 transition"><i class="fab fa-instagram"></i></a>
+      <a href="#" class="hover:text-sky-400 transition"><i class="fab fa-telegram"></i></a>
+    </div>
+    <p class="text-sm text-gray-500">© 2026 MyShop Pro | រក្សាសិទ្ធិគ្រប់យ៉ាង</p>
+  </div>
+</footer>
+
+<script>
+  // ---------- Updated Data with real diverse unsplash images for high-quality demo ----------
+  // Use high-res placeholder images but with modern unsplash or picsum for better aesthetics.
+  // For authentic feel and to avoid broken links (since image folder "image/products/eletricals/2.jpg" may not exist),
+  // I replace with reliable placeholders but keep brand context & Cambodian friendly: 
+  // Using Cloudimage mock / placeholder images with rich products style.
+  
+    // JS Toggle 
+
+  function toggleMenu() {
+
+  let sidebar = document.getElementById("sidebar");
+  let overlay = document.getElementById("overlay");
+
+  if (sidebar.classList.contains("-translate-x-full")) {
+
+    sidebar.classList.remove("-translate-x-full");
+    overlay.classList.remove("hidden");
+
+  } else {
+
+    sidebar.classList.add("-translate-x-full");
+    overlay.classList.add("hidden");
+
+  }
+}
+
+  const sliderData = [
+    {
+      img: "https://picsum.photos/id/20/1600/600",    // laptop workspace
+      title: "📱 ផលិតផលថ្មីឆ្នាំ២០២៦",
+      desc: "គុណភាពខ្ពស់ ទាន់សម័យ តម្លៃពិសេស"
+    },
+    {
+      img: "https://picsum.photos/id/26/1600/600",    // nature walk but looks modern style
+      title: "🔥 បញ្ចុះតម្លៃ 50%",
+      desc: "សម្រាប់អតិថិជនថ្មី ប្រញាប់ឡើង!"
+    },
+    {
+      img: "https://picsum.photos/id/0/1600/600",     // coffee laptop (modern)
+      title: "🚚 ដឹកជញ្ជូនឥតគិតថ្លៃ",
+      desc: "ទូទាំងប្រទេស ឥតគិតថ្លៃសម្រាប់ការបញ្ជាទិញលើសពី 50$"
+    },
+    {
+      img: "https://picsum.photos/id/106/1600/600",    // flowers, bright but clean
+      title: "🎁 អំណោយបន្ថែម",
+      desc: "ទិញ 1 ថែម 1 សម្រាប់កញ្ចប់ពិសេស"
+    }
+  ];
+  
+  // DOM elements
+  const slidesContainer = document.getElementById("slides");
+  const dotsContainer = document.getElementById("dots");
+  let currentIdx = 0;
+  let slideElements = [];
+  let dotElements = [];
+  let autoInterval = null;
+  
+  // Build slides HTML + dots
+  function buildSlider() {
+    let slidesHtml = '';
+    let dotsHtml = '';
+    
+    sliderData.forEach((item, idx) => {
+      // Slide structure with overlay gradient to improve text readability
+      slidesHtml += `
+        <div class="slide ${idx === 0 ? 'active' : ''}" data-slide-index="${idx}">
+          <img src="${item.img}" alt="${item.title}" class="w-full h-full object-cover" loading="lazy">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex items-center justify-center">
+            <div class="text-white text-center px-4 transform transition-all duration-500">
+              <h2 class="text-2xl md:text-5xl font-extrabold drop-shadow-lg bg-black/30 inline-block px-4 py-1 rounded-lg">${item.title}</h2>
+              <p class="mt-3 text-base md:text-xl font-medium drop-shadow-md">${item.desc}</p>
+              <button class="mt-5 bg-amber-500 hover:bg-amber-600 px-5 py-2 rounded-full text-sm font-bold shadow-lg transition transform hover:scale-105">ទិញឥឡូវ →</button>
+            </div>
+          </div>
+        </div>
+      `;
+      
+      dotsHtml += `<button class="dot ${idx === 0 ? 'active-dot' : ''}" data-dot-index="${idx}" aria-label="Go to slide ${idx+1}"></button>`;
+    });
+    
+    slidesContainer.innerHTML = slidesHtml;
+    dotsContainer.innerHTML = dotsHtml;
+    
+    // Get updated references
+    slideElements = document.querySelectorAll(".slide");
+    dotElements = document.querySelectorAll(".dot");
+    
+    // Add click handlers to dots
+    dotElements.forEach((dot, i) => {
+      dot.addEventListener("click", (e) => {
+        e.stopPropagation();
+        goToSlide(i);
+        resetAutoTimer();
+      });
+    });
+  }
+  
+  // Core show function (updates classes & dots styling)
+  function showSlide(index) {
+    if (!slideElements.length) return;
+    // Wrap index
+    const total = slideElements.length;
+    let newIndex = (index + total) % total;
+    
+    // Remove active class from all slides and dot active classes
+    slideElements.forEach(slide => slide.classList.remove("active"));
+    dotElements.forEach(dot => dot.classList.remove("active-dot"));
+    
+    // Add active class to current slide and respective dot
+    slideElements[newIndex].classList.add("active");
+    if (dotElements[newIndex]) {
+      dotElements[newIndex].classList.add("active-dot");
+    }
+    
+    currentIdx = newIndex;
+  }
+  
+  function nextSlide() {
+    if (!slideElements.length) return;
+    showSlide(currentIdx + 1);
+    resetAutoTimer();
+  }
+  
+  function prevSlide() {
+    if (!slideElements.length) return;
+    showSlide(currentIdx - 1);
+    resetAutoTimer();
+  }
+  
+  function goToSlide(index) {
+    if (!slideElements.length) return;
+    showSlide(index);
+    resetAutoTimer();
+  }
+  
+  // Auto slide every 4 seconds
+  function startAutoSlide() {
+    if (autoInterval) clearInterval(autoInterval);
+    autoInterval = setInterval(() => {
+      if (slideElements.length) {
+        nextSlide();
+      }
+    }, 4000);
+  }
+  
+  function resetAutoTimer() {
+    if (autoInterval) {
+      clearInterval(autoInterval);
+      startAutoSlide();
+    }
+  }
+  
+  // ----- Swipe (touch) Support for mobile -----
+  let touchStartX = 0;
+  let touchEndX = 0;
+  
+  function handleTouchStart(e) {
+    touchStartX = e.changedTouches[0].clientX;
+  }
+  
+  function handleTouchEnd(e) {
+    touchEndX = e.changedTouches[0].clientX;
+    const deltaX = touchEndX - touchStartX;
+    if (Math.abs(deltaX) > 50) {
+      if (deltaX > 0) {
+        // Swipe right => Previous slide
+        prevSlide();
+      } else {
+        // Swipe left => Next slide
+        nextSlide();
+      }
+      resetAutoTimer();
+    }
+  }
+  
+  // ---- Keyboard accessibility: left/right arrows ----
+  function handleKeyDown(e) {
+    if (e.key === 'ArrowLeft') {
+      prevSlide();
+      resetAutoTimer();
+      e.preventDefault();
+    } else if (e.key === 'ArrowRight') {
+      nextSlide();
+      resetAutoTimer();
+      e.preventDefault();
+    }
+  }
+  
+  // ---- Initialize slider, event listeners, etc ----
+  function initSlider() {
+    buildSlider();            // creates slides/dots and references updated
+    
+    // Re-assign event listeners after rebuild (slider container events)
+    const sliderDiv = document.getElementById("slider");
+    if (sliderDiv) {
+      sliderDiv.addEventListener("touchstart", handleTouchStart, { passive: true });
+      sliderDiv.addEventListener("touchend", handleTouchEnd);
+    }
+    window.addEventListener("keydown", handleKeyDown);
+    
+    startAutoSlide();
+  }
+  
+  // Re-run whenever needed; since buildSlider replaces innerHTML,
+  // but we call once on page load. Ensure all variable references correct.
+  
+  // Additionally, to ensure safety that images show properly, we attach a small fallback
+  // for broken images due to external unsplash (but picsum always works)
+  function attachImageFallback() {
+    // After building, if some images fail, replace with gradient placeholder
+    document.querySelectorAll('.slide img').forEach(img => {
+      img.onerror = function() {
+        if (!this.src.includes('placekitten')) {
+          this.src = 'https://picsum.photos/id/1/1600/600';
+        }
+      };
+    });
+  }
+  
+  // Invoke
+  initSlider();
+  
+  // After slide building, we also need to set background-size for perfect aspect & attach fallback
+  setTimeout(() => {
+    attachImageFallback();
+    // Re-sync active dot state after image loading? but it's fine
+    // To ensure slides share same container height
+    const firstSlide = document.querySelector('.slide');
+    if (firstSlide) {
+      const containerHeight = firstSlide.clientHeight;
+      document.getElementById('slider').style.minHeight = containerHeight + 'px';
+    }
+  }, 100);
+  
+  // additional responsive: on window resize we ensure slider container doesn't overflow
+  window.addEventListener('resize', () => {
+    if (slideElements.length && slideElements[0]) {
+      const h = slideElements[0].clientHeight;
+      if (h > 0) document.getElementById('slider').style.minHeight = h + 'px';
+    }
+  });
+  
+  // Expose functions globally for button onclick and debugging
+  window.nextSlide = nextSlide;
+  window.prevSlide = prevSlide;
+  window.goToSlide = goToSlide;
+  
+  // Optional: Since we reference nextSlide, prevSlide on buttons that already exist with onclick,
+  // but note that original template used "prev()" and "next()" which we rewrite, but we redefined.
+  // Also "go(i)" is replaced by goToSlide, but dot handlers already attached dynamically.
+  // Remove legacy global conflicts: overwrite any old references.
+  window.prev = prevSlide;
+  window.next = nextSlide;
+  window.go = goToSlide;
+  
+  // Add small hover dot effect & make initial active dot class consistent after buildSlider.
+  // Manual dot styling sync after any external interaction: showSlide updates classes.
+  // But some edge case after resize we set.
+  
+  // Finally ensure if user clicks external products also nice feedback, no error.
+  console.log("MyShop Pro Fully Loaded with Enhanced Slider & High Quality Images");
+</script>
+
+<!-- Small extra tweak: ensure slider on mobile has touch friendliness & increment dots -->
+
+</body>
+</html>

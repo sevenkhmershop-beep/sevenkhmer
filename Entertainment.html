@@ -1,0 +1,730 @@
+ <!DOCTYPE html>
+<html lang="km">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Cinetix Entertainment</title>
+
+<!-- TailwindCSS -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<!-- Custom CSS -->
+<link rel="stylesheet" href="style.css?v=1">
+
+<!-- Font Awesome -->
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Battambang:wght@300;400;700&family=Koulen&display=swap" rel="stylesheet">
+
+<style>
+
+
+body{
+  font-family: 'Battambang', 'Koulen', sans-serif;
+  background:#0f172a;
+}
+
+/* card hover */
+.video-card{
+    transition:0.3s;
+}
+
+.video-card:hover{
+    transform:translateY(-6px);
+}
+
+/* scrollbar */
+::-webkit-scrollbar{
+    width:6px;
+}
+
+::-webkit-scrollbar-thumb{
+    background:#f97316;
+    border-radius:20px;
+}
+
+</style>
+
+</head>
+
+<body class="text-white">
+
+<!-- HEADER -->
+<header class="sticky top-0 z-30 bg-black/50 backdrop-blur-xl border-b border-white/10">
+
+<div class="max-w-7xl mx-auto px-5 py-4 flex items-center justify-between">
+
+<div class="flex items-center gap-3">
+
+<div class="w-10 h-10 rounded-xl bg-orange-500 flex items-center justify-center hidden md:flex ">
+<i class="fas fa-play"></i>
+</div>
+
+<h1 class="hidden md:flex text-2xl font-bold">
+Cinetix
+</h1>
+
+</div>
+
+<div class="max-w-7xl mx-auto px-5 mt-0">
+  <input id="searchInput"
+    type="text"
+    placeholder="🔍 ស្វែងរកវីដេអូ..."
+    class="w-full px-4 py-3 rounded-xl bg-gray-800 text-white outline-none">
+</div>
+
+<div class="hidden md:flex items-center gap-5 text-sm md:text-xs">
+
+<a href="index.html " class="hover:text-orange-400 transition">
+🏠 Home
+</a>
+
+<a href="promo.html " class="hover:text-orange-400 transition">
+  <i class="fas fa-tag text-lg"></i>
+  <span>Promotion</span>
+</a>
+
+<a href="Contact.html " class="hover:text-orange-400 transition">
+  <i class="fas fa-headset text-lg"></i>
+  <span>Contact</span>
+</a>
+
+<a href="products.html " class="hover:text-orange-400 transition">
+  <span class="text-xl">🛒</span>
+  <span>Products</span>
+</a>
+
+<a href="Entertainment.html " class="hover:text-orange-400 transition">
+🎬 Movies
+</a>
+</div>
+
+</div>
+
+</header>
+
+  <!-- Hamburger Button -->
+<button onclick="toggleMenu()"
+class="fixed top-2 left-4 z-50 
+text-white w-12 h-12 shadow-xl
+hover:scale-105 active:scale-95 transition-all duration-300
+flex items-center justify-center sm:hidden">
+
+  <span class="text-2xl">☰</span>
+</button>
+
+<!-- Overlay -->
+<div id="overlay"
+class="fixed inset-0 bg-black/50 backdrop-blur-sm z-30 hidden sm:hidden"
+onclick="toggleMenu()"></div>
+
+<!-- Sidebar -->
+<div id="sidebar"
+class="fixed top-0 left-0 z-40 h-full w-72
+bg-gray-900 text-white
+shadow-2xl
+transform -translate-x-full
+transition-all duration-300 ease-in-out">
+
+  <!-- Header -->
+  <div class="flex items-center justify-between p-5 border-b border-gray-700">
+
+    <div class="flex items-center gap-3">
+      <div class="bg-blue-600 w-10 h-10 rounded-full
+      flex items-center justify-center text-xl">
+        🛍️
+      </div>
+
+      <div>
+        <h1 class="font-bold text-lg">MyShop Pro</h1>
+        <p class="text-xs text-gray-400">Online Store</p>
+      </div>
+    </div>
+
+    <!-- Close Button -->
+    <button onclick="toggleMenu()"
+    class="bg-gray-800 hover:bg-red-500
+    w-9 h-9 rounded-full transition">
+
+      ✖️
+    </button>
+  </div>
+
+  <!-- Menu -->
+  <div class="p-5 space-y-3">
+
+    <a href="index.html"
+    class="flex items-center gap-3 p-3 rounded-xl
+    hover:bg-blue-600 transition duration-300">
+
+      <span class="text-xl">🏠</span>
+      <span>Home</span>
+    </a>
+
+    <a href="promo.html"
+    class="flex items-center gap-3 p-3 rounded-xl
+    hover:bg-pink-600 transition duration-300">
+
+      <i class="fas fa-tag text-lg"></i>
+      <span>Promotion</span>
+    </a>
+
+    <a href="Contact.html"
+    class="flex items-center gap-3 p-3 rounded-xl
+    hover:bg-green-600 transition duration-300">
+
+      <i class="fas fa-headset text-lg"></i>
+      <span>Contact</span>
+    </a>
+
+    <a href="products.html"
+    class="flex items-center gap-3 p-3 rounded-xl
+    hover:bg-yellow-500 transition duration-300">
+
+      <span class="text-xl">🛒</span>
+      <span>Products</span>
+    </a>
+
+    <a href="Entertainment.html"
+    class="flex items-center gap-3 p-3 rounded-xl
+    hover:bg-purple-600 transition duration-300">
+
+      <span class="text-xl">🎬</span>
+      <span>Entertainment</span>
+    </a>
+
+  </div>
+
+  <!-- Bottom Section -->
+  <div class="absolute bottom-0 w-full p-5 border-t border-gray-700">
+
+    <button onclick="toggleMenu()"
+    class="w-full bg-gradient-to-r from-red-500 to-red-600
+    hover:from-red-600 hover:to-red-700
+    py-3 rounded-xl font-semibold
+    shadow-lg transition-all duration-300">
+
+      ⬅️ បិទ Menu
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- HERO -->
+<section class="max-w-7xl mx-auto px-5 py-8">
+
+<div class="grid lg:grid-cols-3 gap-8">
+
+<!-- VIDEO -->
+<div class="lg:col-span-2">
+
+<div class="rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
+
+<video id="featuredVideo" class="w-full aspect-video" controls poster="https://images.pexels.com/photos/7991579/pexels-photo-7991579.jpeg">
+
+<source src="video/song.mp4" type="video/mp4">
+
+</video>
+
+<div id="playlist" class="space-y-4 max-h-[500px] overflow-y-auto"></div>
+
+</div>
+
+<div class="mt-5 flex flex-wrap justify-between gap-4">
+
+<div>
+
+<h2  id="videoTitle" class="text-3xl font-bold">
+🔥 វីដេអូថ្មី
+</h2>
+
+<p class="text-gray-400 mt-2">
+មើលវីដេអូកម្សាន្តគុណភាពខ្ពស់
+</p>
+
+</div>
+
+<div class="flex gap-3">
+
+<button id="likeBtn"
+class="bg-gray-800 hover:bg-gray-700 px-5 py-2 rounded-full flex items-center gap-2 transition">
+
+<i class="far fa-heart text-red-400"></i>
+
+<span id="likeCount">128</span>
+
+</button>
+
+<button id="shareBtn"
+class="bg-gray-800 hover:bg-gray-700 px-5 py-2 rounded-full">
+
+<i class="fas fa-share-alt"></i>
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- SIDEBAR -->
+<div class="bg-black/30 rounded-3xl border border-white/10 p-4">
+
+<div class="flex items-center justify-between mb-4">
+
+<h3 class="font-bold text-xl">
+📺 Playlist
+</h3>
+
+<span class="text-xs bg-orange-500/20 text-orange-300 px-3 py-1 rounded-full">
+LIVE
+</span>
+
+</div>
+
+
+
+
+<!-- ITEM -->
+<div
+class="playlist-item flex gap-3 cursor-pointer bg-gray-800/40 hover:bg-gray-700/60 p-2 rounded-2xl transition"
+data-video-src="video/1.mp4"
+data-video-title="Big Buck Bunny">
+
+<img
+src="https://images.pexels.com/photos/2558605/pexels-photo-2558605.jpeg?auto=compress&cs=tinysrgb&w=200"
+class="w-32 h-20 object-cover rounded-xl">
+
+<div>
+
+<h4 class="font-semibold text-sm">
+Big Buck Bunny
+</h4>
+
+<p class="text-xs text-gray-400 mt-1">
+10:34 • 9.8M views
+</p>
+
+</div>
+
+</div>
+
+<!-- ITEM -->
+<div
+class="playlist-item flex gap-3 cursor-pointer bg-gray-800/40 hover:bg-gray-700/60 p-2 rounded-2xl transition"
+data-video-src="video/3.mp4"
+data-video-title="តាមបេះដូង">
+
+<img
+src="https://images.pexels.com/photos/220067/pexels-photo-220067.jpeg?auto=compress&cs=tinysrgb&w=200"
+class="w-32 h-20 object-cover rounded-xl">
+
+<div> <h4 class="font-semibold text-sm">
+តាមបេះដូង
+</h4>
+
+<p class="text-xs text-gray-400 mt-1">
+12:14 • 4.1M views
+</p>
+
+</div>
+
+</div>
+
+<!-- ITEM -->
+<div
+class="playlist-item flex gap-3 cursor-pointer bg-gray-800/40 hover:bg-gray-700/60 p-2 rounded-2xl transition"
+data-video-src="video/PHP1.mp4"
+data-video-title="មេរៀនទី១ PHP">
+
+<img
+src="video/MyPhoto.jpg"
+class="w-32 h-20 object-cover rounded-xl">
+
+<div> <h4 class="font-semibold text-sm">
+មេរៀនទី១ PHP
+</h4>
+
+<p class="text-xs text-gray-400 mt-1">
+12:14 • 4.1M views
+</p>
+
+</div>
+
+</div>
+
+<!-- ITEM -->
+<div
+class="playlist-item flex gap-3 cursor-pointer bg-gray-800/40 hover:bg-gray-700/60 p-2 rounded-2xl transition"
+data-video-src="video/4.mp4"
+data-video-title="ដកស្នេហ៍វិញចុះ">
+
+<img
+src="video/photo1.png"
+class="w-32 h-20 object-cover rounded-xl">
+
+<div>
+
+<h4 class="font-semibold text-sm">
+ដកស្នេហ៍វិញចុះ
+</h4>
+
+<p class="text-xs text-gray-400 mt-1">
+10:18 • 3.2M views
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+</section>
+
+<!--<audio id="bgMusic" loop>
+  <source src="music.mp3" type="audio/mp3">
+</audio>
+
+<button onclick="toggleMusic()" class="bg-orange-500 px-4 py-2 rounded-xl">
+🎵 Music
+</button> -->
+
+<!-- VIDEO GRID -->
+<section class="max-w-7xl mx-auto px-5 py-10">
+
+<h2 class="text-2xl font-bold mb-8">
+🔥 Recommended Videos
+</h2>
+
+<div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+<!-- CARD -->
+<div
+class="video-card bg-gray-900 rounded-3xl overflow-hidden border border-white/10 hover:border-orange-500/40 cursor-pointer"
+data-video-src="video/song.mp4"
+data-video-title="Sintel Movie">
+
+<div class="relative overflow-hidden">
+
+<img
+src="https://images.pexels.com/photos/1266810/pexels-photo-1266810.jpeg?auto=compress&cs=tinysrgb&w=400"
+class="w-full h-48 object-cover hover:scale-110 transition duration-500">
+
+<div class="absolute inset-0 bg-black/40 flex items-center justify-center">
+
+<i class="fas fa-play-circle text-5xl text-white"></i>
+
+</div>
+
+</div>
+
+<div class="p-4">
+
+<h3 class="font-bold">
+Sintel Movie
+</h3>
+
+<p class="text-sm text-gray-400 mt-2">
+Fantasy Adventure
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- MODAL -->
+<div
+id="videoModal"
+class="fixed inset-0 bg-black/90 z-50 hidden items-center justify-center p-4">
+
+<div class="bg-gray-900 rounded-3xl overflow-hidden max-w-5xl w-full border border-orange-500/20">
+
+<div class="flex justify-between items-center p-4 border-b border-white/10">
+
+<div class="flex items-center gap-3">
+
+<h3 id="modalTitle" class="font-bold text-xl">
+Video
+</h3>
+
+<button
+id="copyBtn"
+class="bg-orange-500 hover:bg-orange-600 px-3 py-1 rounded-full text-sm">
+
+<i class="fas fa-copy"></i>
+Copy
+
+</button>
+
+<button
+id="fullscreenBtn"
+class="bg-gray-700 hover:bg-gray-600 px-3 py-1 rounded-full text-sm">
+
+<i class="fas fa-expand"></i>
+
+</button>
+
+</div>
+
+<button
+id="closeModal"
+class="bg-red-500 hover:bg-red-600 w-10 h-10 rounded-full">
+
+<i class="fas fa-times"></i>
+
+</button>
+
+</div>
+
+<video
+id="modalVideo"
+class="w-full aspect-video"
+controls
+autoplay>
+
+</video>
+
+</div>
+
+</div>
+
+<!-- TOAST -->
+<div
+id="toast"
+class="fixed bottom-5 right-5 bg-orange-500 text-white px-5 py-3 rounded-2xl hidden shadow-2xl z-50">
+
+✅ Copied Successfully
+
+</div>
+
+<script>
+
+function toggleMenu() {
+  const sidebar = document.getElementById("sidebar");
+  const overlay = document.getElementById("overlay");
+
+  sidebar.classList.toggle("-translate-x-full");
+  overlay.classList.toggle("hidden");
+}
+
+// SEARCHINPUT
+const searchInput = document.getElementById("searchInput");
+
+searchInput.addEventListener("input", function () {
+
+  let value = this.value.toLowerCase();
+
+  document.querySelectorAll(".video-card, .playlist-item").forEach(el => {
+
+    let title =
+      el.dataset.videoTitle?.toLowerCase() ||
+      el.innerText.toLowerCase();
+
+    if (title.includes(value)) {
+
+      // playlist item
+      if (el.classList.contains("playlist-item")) {
+        el.style.display = "flex";
+      }
+
+      // video card
+      else {
+        el.style.display = "block";
+      }
+
+    } else {
+
+      el.style.display = "none";
+
+    }
+
+  });
+
+});
+
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  const featuredVideo = document.getElementById("featuredVideo");
+  const videoTitle = document.getElementById("videoTitle");
+  const playlist = document.getElementById("playlist");
+
+  // 👉 IMPORTANT: get <source> element (FIX FOR YOUR ISSUE)
+  const source = featuredVideo.querySelector("source");
+
+  // 👉 VIDEO DATA
+  const videos = [
+    {
+      title: "Big Buck Bunny",
+      src: "video/1.mp4",
+      thumb: "https://images.pexels.com/photos/2558605/pexels-photo-2558605.jpeg"
+    },
+    {
+      title: "តាមបេះដូង",
+      src: "video/3.mp4",
+      thumb: "https://images.pexels.com/photos/220067/pexels-photo-220067.jpeg"
+    },
+    {
+      title: "មេរៀនទី១ PHP",
+      src: "video/PHP1.mp4",
+      thumb: "video/MyPhoto.jpg"
+    },
+    {
+      title: "ដកស្នេហ៍វិញចុះ",
+      src: "video/4.mp4",
+      thumb: "video/photo1.png"
+    },
+
+    {
+      title: "និស្ស័យស្នេហ៍",
+      src: "video/2.mp4",
+      thumb: "https://images.pexels.com/photos/220067/pexels-photo-220067.jpeg"
+    }
+  ];
+
+  playlist.innerHTML = "";
+
+  videos.forEach((v, index) => {
+
+    const div = document.createElement("div");
+
+    div.className =
+      "playlist-item flex gap-3 cursor-pointer bg-gray-800/40 hover:bg-gray-700/60 p-2 rounded-2xl transition";
+
+    div.innerHTML = `
+      <img src="${v.thumb}" class="w-32 h-20 object-cover rounded-xl">
+      <div>
+        <h4 class="font-semibold text-sm">${v.title}</h4>
+        <p class="text-xs text-gray-400 mt-1">Video ${index + 1}</p>
+      </div>
+    `;
+
+    div.addEventListener("click", () => {
+
+      // ✅ FIXED VIDEO SWITCH
+      source.src = v.src;
+      featuredVideo.load();
+
+      featuredVideo.play().catch(err => {
+        console.log("Autoplay blocked:", err);
+      });
+
+      videoTitle.innerText = v.title;
+
+    });
+
+    playlist.appendChild(div);
+  });
+
+  // 👉 LIKE BUTTON (safe check)
+  const likeBtn = document.getElementById("likeBtn");
+  const likeCount = document.getElementById("likeCount");
+
+  if (likeBtn && likeCount) {
+
+    let count = parseInt(likeCount.innerText) || 0;
+
+    likeBtn.onclick = () => {
+      count++;
+      likeCount.innerText = count;
+    };
+  }
+
+});
+
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  const featuredVideo = document.getElementById("featuredVideo");
+  const videoTitle = document.getElementById("videoTitle");
+  const playlistItems = document.querySelectorAll(".playlist-item");
+
+  const source = featuredVideo.querySelector("source");
+
+  playlistItems.forEach(item => {
+
+    item.addEventListener("click", () => {
+
+      const videoSrc = item.dataset.videoSrc;
+      const title = item.dataset.videoTitle;
+
+      if (!videoSrc) return;
+
+      // ✅ change video correctly
+      source.src = videoSrc;
+      featuredVideo.load();
+
+      featuredVideo.play().catch(err => {
+        console.log("Play blocked:", err);
+      });
+
+      videoTitle.innerText = title;
+
+    });
+
+  });
+
+});
+
+// COPY LINK
+document.getElementById('shareBtn').onclick = ()=>{
+
+navigator.clipboard.writeText(window.location.href);
+
+toast.innerHTML = "✅ Link Copied";
+
+toast.classList.remove('hidden');
+
+setTimeout(()=>{
+
+toast.classList.add('hidden');
+
+},2000);
+
+};
+
+// FAVORITES
+
+const likeBtn = document.getElementById("likeBtn");
+const likeCount = document.getElementById("likeCount");
+const heartIcon = document.getElementById("heartIcon");
+
+let count = 128;
+
+likeBtn.addEventListener("click", () => {
+
+  count++;
+
+  likeCount.innerText = count;
+
+  // animation
+  likeBtn.classList.add("scale-110");
+
+  // change icon
+  heartIcon.classList.remove("far");
+  heartIcon.classList.add("fas");
+
+  setTimeout(() => {
+
+    likeBtn.classList.remove("scale-110");
+
+  }, 200);
+
+});
+</script>
+
+</body>
+</html>
