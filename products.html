@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-9">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SEVEN KHMER SHOP</title>
+<title>Products</title>
 
 <!-- Custom CSS -->
-<link rel="stylesheet" href="style.css?v=11">
+<link rel="stylesheet" href="style.css?v=12">
 
 <!---Google Font--->
 <link href="https://fonts.googleapis.com/css2?family=Koulen&family=Battambang&display=swap" rel="stylesheet">
@@ -63,12 +63,6 @@
     class="flex items-center gap-3 p-3 rounded-xl bg-white-500 hover:bg-blue-500 text-black transition duration-300"
     onclick="filterCategory('')">
     All
-  </button>
-
-  <button 
-    class="flex items-center gap-3 p-3 rounded-xl bg-white-500 hover:bg-red-500 text-black transition duration-300"
-    onclick="filterCategory('Wallpaper')">
-    Wallpaper
   </button>
 
   <button 
@@ -138,6 +132,12 @@
     hover:bg-purple-600 transition duration-300">
       <span class="text-xl">🎬</span>
       <span>Entertainment</span>
+    </a>
+
+    <a href="wallpaper.html" 
+    class="flex items-center gap-3 rounded-xl 
+    hover:bg-red-600 transition duration-300 p-3">
+       🖼️ Wallpaper
     </a>
 
     <a href="Success.html"
@@ -426,6 +426,16 @@ const products = [
 
   {id:275, name:"ធុង 798",price:13.5 ,category:"Plastics",img:"image/plastic/16.jpg"},
 
+  {id:276, name:"ផ្កាប់កែវតូច",price:2.5 ,category:"Plastics",img:"image/plastic/17.jpg"},
+  
+  {id:277, name:"ផ្កាប់កែវធំ",price:3 ,category:"Plastics",img:"image/plastic/18.jpg"},
+
+  {id:278, name:"ធុងទឺក 35L",price:2.5 ,category:"Plastics",img:"image/plastic/19.jpg"},
+
+  {id:279, name:"ធុងទឺក 80L",price:5 ,category:"Plastics",img:"image/plastic/20.jpg"},
+
+  {id:280, name:"ធុងទឺក 45L",price:3.6 ,category:"Plastics",img:"image/plastic/21.jpg"},
+
   // ================= POT  =================
 
   {id:360, name:"ឆ្នាំងលេខដៃមូល 26",price:4.3 ,category:"Pot",img:"image/pot/4.jpg"},
@@ -487,7 +497,7 @@ for(let i=4;i<=200;i++){
     id:i,
     name:"Product" + i,
     price:20,
-    img:"image/products/stave/"+i+".JPG"
+    img:"image/stave/"+i+".JPG"
   });
 }
 
@@ -648,8 +658,8 @@ function toggleSidebar(){
 // ================= TETEGRAM =================
 function sendTelegram(){
 
-  const token = "";
-  const chatId = "";
+  const token = "7961243136:AAExQ2ps_SBqWICvl5iLM-JTKmz0982-tEE";
+  const chatId = "711901461";
 
   if(cart.length === 0){
     alert("Cart is empty!");
