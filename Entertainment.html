@@ -1,221 +1,209 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="km">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<title> Entertainment</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<!---Google Font--->
+<title>SEVEN KHMER | Watch Movies Online Free</title>
+
+<!-- SEO -->
+<meta name="description" content="SEVEN KHMER - Watch latest Khmer movies, series and entertainment online for free.">
+<meta name="keywords" content="khmer movies, watch movies online, free movies, SEVEN KHMER, entertainment cambodia">
+<meta name="author" content="SEVEN KHMER">
+
+<!-- Canonical -->
+<link rel="canonical" href="https://yourdomain.com">
+
+<!-- Favicon -->
+<link rel="icon" href="/favicon.png">
+
+<!-- Open Graph (Facebook) -->
+<meta property="og:title" content="SEVEN KHMER Movies">
+<meta property="og:description" content="Watch latest Khmer movies and entertainment online for free.">
+<meta property="og:image" content="https://yourdomain.com/image/og.jpg">
+<meta property="og:url" content="https://yourdomain.com">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="SEVEN KHMER">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="SEVEN KHMER Movies">
+<meta name="twitter:description" content="Watch Khmer movies online free">
+<meta name="twitter:image" content="https://yourdomain.com/image/og.jpg">
+
+<!-- CSS -->
+<link rel="stylesheet" href="style.css?v=1">
+
+<!-- Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Koulen&family=Battambang&display=swap" rel="stylesheet">
 
 <!-- Font Awesome -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-<!-- Leaflet CSS -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
-
-<!-- Tailwind CSS -->
+<!-- Tailwind -->
 <script src="https://cdn.tailwindcss.com"></script>
 
-<!-- Custom CSS -->
-<link rel="stylesheet" href="style.css?v=4">
-
-<!-- Leaflet Routing Machine CSS -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css"/>
-
-<!-- Leaflet JS -->
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
-<!-- Leaflet Providers -->
-<script src="https://unpkg.com/leaflet-providers@1.13.0/leaflet-providers.js"></script>
-
-<!-- SweetAlert2 -->
+<!-- Optional -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-<!-- Leaflet JS -->
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-
-<!-- Leaflet Routing Machine -->
-<script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
+<script src="https://www.youtube.com/iframe_api"></script>
 
 <style>
-
-
-body{
-  font-family: 'Battambang', 'Koulen', sans-serif;
-  background:#0f172a;
-}
-
-/* card hover */
-.video-card{
-    transition:0.3s;
-}
-
-.video-card:hover{
-    transform:translateY(-6px);
-}
-
-/* scrollbar */
-::-webkit-scrollbar{
-    width:6px;
-}
-
-::-webkit-scrollbar-thumb{
-    background:#f97316;
-    border-radius:20px;
-}
-
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Battambang', 'Koulen', sans-serif;
+    background: radial-gradient(circle at 10% 20%, #0f172a, #030617);
+    color: #f1f5f9;
+  }
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: #1e293b; border-radius: 10px; }
+  ::-webkit-scrollbar-thumb { background: #f97316; border-radius: 10px; }
+  .video-card, .playlist-item {
+    transition: all 0.25s ease;
+  }
+  .video-card:hover, .playlist-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 25px -12px rgba(249,115,22,0.25);
+  }
+  #featuredVideo iframe {
+    width: 100% !important;
+    aspect-ratio: 16 / 9;
+    border-radius: 28px;
+    box-shadow: 0 20px 30px -12px black;
+  }
+  .glass-panel {
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .playlist-item.active {
+    background: linear-gradient(95deg, #f9731622, #facc1522);
+    border-left: 3px solid #f97316;
+  }
+  .hover-lift:hover {
+    transform: translateY(-3px);
+  }
+  /* ✅ CSS ត្រឹមត្រូវសម្រាប់ line-clamp */
+  .line-clamp-1 {
+  display: box;
+  line-clamp: 1; /* standard (អាចមិនទាន់ support គ្រប់ browser) */
+  box-orient: vertical;
+  overflow: hidden;
+  }
+  .custom-scroll::-webkit-scrollbar {
+    width: 4px;
+  }
 </style>
-
 </head>
+<body class="antialiased">
 
-<body class="text-white">
-
-<!-- HEADER -->
-<header class="sticky top-0 z-30 bg-black/50 backdrop-blur-xl border-b border-white/10">
-
-<div class="max-w-7xl mx-auto px-5 py-4 flex items-center justify-between">
-
-<div class="max-w-7xl mx-auto px-5 mt-0">
-  <input id="searchInput"
-    type="text"
-    placeholder="🔍 ស្វែងរកវីដេអូ..."
-    class="w-full px-4 py-3 rounded-xl bg-gray-800 text-white outline-none">
-</div>
-
-<div class="hidden md:flex items-center gap-4 text-sm md:text-lg">
-
-<a href="index.html" class="hover:text-orange-400 transition">
-   Home
-</a>
-
-<a href="promo.html" class="hover:text-orange-400 transition">
-  <span>Promotion</span>
-</a>
-
-<a href="Contact.html" class="hover:text-orange-400 transition">
-  <span>Contact</span>
-</a>
-
-<a href="products.html" class="hover:text-orange-400 transition">
-  <span>Products</span>
-</a>
-
-<a href="Entertainment.html" class="hover:text-orange-400 transition">
-   Movies
-</a>
-
-
-<a href="wallpaper.html"
-   class="hover:text-blue-600 transition flex items-center gap-1">
-     Wallpaper
-</a>
-
-</div>
-
-</div>
-
-</header>
-
-  <!-- Hamburger Button -->
-<button onclick="toggleMenu()"
-class="fixed top-4 left-4 z-30 
-text-white w-12 h-12 shadow-xl
-hover:scale-105 active:scale-95 transition-all duration-300
-flex items-center justify-center sm:hidden">
-
-  <span class="text-5xl">☰</span>
-</button>
-
-<!-- Overlay -->
-<div id="overlay"
-class="fixed inset-0 bg-black/50 backdrop-blur-sm z-30 hidden sm:hidden"
-onclick="toggleMenu()"></div>
-
-<!-- Sidebar -->
-<div id="sidebar"
-class="fixed top-0 left-0 z-40 h-full w-72
-bg-gray-900 text-white
-shadow-2xl
-transform -translate-x-full
-transition-all duration-300 ease-in-out">
-
-  <!-- Header -->
-  <div class="flex items-center justify-between p-5 border-b border-gray-700">
-
+<!-- ========== STICKY HEADER ========== -->
+<header class="sticky top-0 z-40 bg-black/60 backdrop-blur-xl border-b border-white/10 shadow-md">
+  <div class="max-w-7xl mx-auto px-5 py-3 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
     <div class="flex items-center gap-3">
-      <div class="bg-blue-600 w-10 h-10 rounded-full
-      flex items-center justify-center text-xl">
-        🛍️
+      <div class=" w-11 h-11 rounded-xl flex items-center justify-center text-white ">
+        <!-- <i class="fas fa-film text-sm"></i> -->
+         <img src="image/logo/150x150.png" alt="">
       </div>
-
-      <div>
-        <h1 class="font-bold text-lg">SEVEN KHMER</h1>
-        <p class="text-xs text-gray-400">Online Store</p>
-      </div>
+      <span class="font-bold text-2xl tracking-tight">SEVEN<span class="text-orange-400">KHMER</span></span>
+      <span class="text-[11px] bg-orange-500/20 text-orange-300 px-2 py-0.5 rounded-full ml-2">MOVIES</span>
     </div>
+    <div class="relative w-full md:w-80">
+      <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+      <input id="searchInput" type="text" placeholder="ស្វែងរកវីដេអូ / search video..." 
+        class="w-full bg-gray-900/80 border border-gray-700 rounded-2xl py-2.5 pl-10 pr-4 text-white placeholder:text-gray-400 outline-none focus:border-orange-500 transition">
+    </div>
+  
+        <!-- MENU --> 
+  <ul class="hidden sm:flex gap-2 md:gap-4 text-white-700 font-extrabold text-lg sm:text-sm"> 
+  
+        <!-- Home --> 
+    
+    <li> 
+      <a href="index.html" class="hover:text-blue-600 transition"> Home </a> </li> 
+      
+        <!-- Promotion --> 
+         
+    <li> 
+      
+      <a href="promo.html" class="hover:text-blue-600 transition"> Promotion </a> </li>
+           
+        <!-- Contact --> 
+      
+    <li> 
+      <a href="Contact.html" class="hover:text-blue-600 transition"> Contact </a> </li> 
+            
+        <!-- Products Dropdown --> 
+      
+    <li class="relative">
+               
+        <!-- Button -->
+      
+      <button id="dropdownBtn" class="hover:text-blue-600 transition flex items-center gap-1">
+          Products
+      <i class="fa-solid fa-chevron-down text-xs"></i>
+    
+      </button> 
+                
+        <!-- Dropdown Menu --> 
+                 
+    <ul id="dropdownMenu" class="absolute -right-3 top-full mt-2 w-44 bg-white text-black rounded-2xl shadow-2xl overflow-hidden hidden z-50">
+                   
+      <li> 
+                    
+        <a href="products.html" class="block px-5 py-3 hover:bg-blue-50 hover:text-blue-600 transition">       
+          Products
+        </a>
+                   
+      </li> 
+         
+      <li> 
+                    
+        <a href="clothes.html" class="block px-5 py-3 hover:bg-blue-50 hover:text-blue-600 transition">             
+          Clothes 
+        </a>
+                 
+      </li> 
 
-    <!-- Close Button -->
-    <button onclick="toggleMenu()"
-    class="bg-gray-800 hover:bg-red-500
-    w-9 h-9 rounded-full transition">
+      <li>
+                     
+       <a href="Entertainment.html" class="block px-5 py-3 hover:bg-blue-50 hover:text-blue-600 transition">           
+          Entertainment             
+        </a> 
+                     
+      </li> 
 
-      ✖️
-    </button>
+    </ul>
+
+      </li>
+
+  </ul>
   </div>
 
-  <!-- Menu -->
-  <div class="p-5 space-y-3">
+</div>
+  </div>
+</header>
 
-    <a href="index.html"
-    class="flex items-center gap-3 p-3 rounded-xl
-    hover:bg-blue-600 transition duration-300">
+<!-- Mobile menu button -->
+<button onclick="toggleMobileMenu()" class="fixed top-4 right-8 z-50 bg-black/70 backdrop-blur w-9 h-9 rounded-2xl flex items-center justify-center  md:hidden border border-white/20">
+  <i class="fas fa-bars text-4xl text-white"></i>
+</button>
 
-      <span class="text-xl">🏠</span>
-      <span>Home</span>
-    </a>
-
-    <a href="promo.html"
-    class="flex items-center gap-3 p-3 rounded-xl
-    hover:bg-pink-600 transition duration-300">
-
-      <i class="fas fa-tag text-lg"></i>
-      <span>Promotion</span>
-    </a>
-
-    <a href="Contact.html"
-    class="flex items-center gap-3 p-3 rounded-xl
-    hover:bg-green-600 transition duration-300">
-
-      <i class="fas fa-headset text-lg"></i>
-      <span>Contact</span>
-    </a>
-
-    <a href="products.html"
-    class="flex items-center gap-3 p-3 rounded-xl
-    hover:bg-yellow-500 transition duration-300">
-
-      <span class="text-xl">🛒</span>
-      <span>Products</span>
-    </a>
-
-    <a href="Entertainment.html"
-    class="flex items-center gap-3 p-3 rounded-xl
-    hover:bg-purple-600 transition duration-300">
-
-      <span class="text-xl">🎬</span>
-      <span>Entertainment</span>
-    </a>
-
-    <a href="wallpaper.html"
-    class="flex items-center gap-3 p-3 rounded-xl
-    hover:bg-red-600 transition duration-300">
-
-      <span class="text-xl">🖼️ </span>
-      <span>Wallpaper</span>
-    </a>
-
+<!-- MOBILE SIDEBAR -->
+<div id="mobileSidebar" class="fixed top-0 left-0 h-full w-72 bg-gray-900/95 backdrop-blur-xl z-50 transform -translate-x-full transition-transform duration-300 ease-out shadow-2xl md:hidden">
+  <div class="p-5 border-b border-gray-700 flex justify-between items-center">
+    <div class="flex items-center gap-2"><i class="fas fa-video text-orange-400 text-xl"></i><span class="font-bold text-xl">Menu</span></div>
+    <button onclick="toggleMobileMenu()" class="bg-gray-800 w-8 h-8 rounded-full"><i class="fas fa-times"></i></button>
+  </div>
+  <div class="p-5 flex flex-col gap-4 text-lg">
+    <a href="index.html" class="flex gap-3 p-2 rounded-xl hover:bg-orange-500/20"><i class="fas fa-home w-6"></i>Home</a>
+    <a href="products.html" class="flex gap-3 p-2 rounded-xl hover:bg-orange-500/20"><i class="fas fa-tag w-6"></i>Promotion</a>
+    <a href="Contact.html" class="flex gap-3 p-2 rounded-xl hover:bg-orange-500/20"><i class="fas fa-headset w-6"></i>Contact</a>
+    <a href="products.html" class="flex gap-3 p-2 rounded-xl hover:bg-orange-500/20"><i class="fas fa-store w-6"></i>Products</a>
+    <a href="clothes.html" class="flex gap-3 p-2 rounded-xl hover:bg-orange-500/20"><i class="fa-solid fa-tshirt"></i>Clothes</a>
+    <a href="Entertainment.html" class="flex gap-3 p-2 rounded-xl bg-orange-500/30 text-orange-300"><i class="fas fa-film w-6"></i>Entertainment</a>
   </div>
 
   <!-- Bottom Section -->
@@ -231,471 +219,288 @@ transition-all duration-300 ease-in-out">
     </button>
 
   </div>
-
 </div>
+<div id="overlayMenu" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 hidden md:hidden" onclick="toggleMobileMenu()"></div>
 
+<!-- MAIN CONTENT -->
+<main class="max-w-7xl mx-auto px-4 md:px-6 py-8">
+  <!-- featured row -->
+  <div class="grid lg:grid-cols-3 gap-8">
+    <!-- VIDEO PLAYER AREA -->
+    <div class="lg:col-span-2 space-y-4">
+      <div class="rounded-3xl overflow-hidden bg-black/30 border border-white/10 shadow-2xl">
+        <div id="featuredVideo" class="relative"></div>
+      </div>
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <h2 id="videoTitle" class="text-2xl md:text-3xl font-bold flex items-center gap-2">🎬 លាពៅសំណព្វ</h2>
+          <p class="text-gray-400 text-sm mt-1"><i class="fas fa-eye"></i> 2.3k watching · Khmer Music</p>
+        </div>
+        <div class="flex gap-3">
+          <button id="likeBtn" class="bg-gray-800/80 hover:bg-gray-700 px-5 py-2.5 rounded-2xl flex items-center gap-2 transition-all duration-200 border border-white/10">
+            <i id="heartIcon" class="far fa-heart text-red-400 text-lg"></i>
+            <span id="likeCount" class="font-semibold">284</span>
+          </button>
+          <button id="shareBtn" class="bg-gray-800/80 hover:bg-gray-700 px-5 py-2.5 rounded-2xl transition"><i class="fas fa-share-alt"></i></button>
+        </div>
+      </div>
+    </div>
 
-<!-- HERO -->
-<section class="max-w-7xl mx-auto px-5 py-8">
-
-<div class="grid lg:grid-cols-3 gap-8">
-
-<!-- VIDEO -->
-<div class="lg:col-span-2">
-
-<div class="rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
-
-<iframe
-id="featuredVideo"
-
-class="w-full aspect-video youtubePlayer"
-src="https://www.youtube.com/embed/le20G8aOzsQ"
-title="YouTube video player"
-frameborder="0"
-allow="autoplay"
-allowfullscreen>
-</iframe>
-
-<div id="playlist" class="space-y-4 max-h-[500px] overflow-y-auto"></div>
-
-</div>
-
-<div class="mt-5 flex flex-wrap justify-between gap-4">
-
-<div>
-
-<h2  id="videoTitle" class="text-3xl font-bold">
-🔥 វីដេអូថ្មី
-</h2>
-
-<p class="text-gray-400 mt-2">
-មើលវីដេអូកម្សាន្តគុណភាពខ្ពស់
-</p>
-
-</div>
-
-<div class="flex gap-3">
-
-<button id="likeBtn"
-class="bg-gray-800 hover:bg-gray-700 px-5 py-2 rounded-full flex items-center gap-2 transition">
-
-<i id="heartIcon" class="far fa-heart text-red-400"></i>
-
-<span id="likeCount">128</span>
-
-</button>
-
-<button id="shareBtn"
-class="bg-gray-800 hover:bg-gray-700 px-5 py-2 rounded-full">
-
-<i class="fas fa-share-alt"></i>
-
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-<!-- SIDEBAR -->
-<div class="bg-black/30 rounded-3xl border border-white/10 p-4">
-
-<div class="flex items-center justify-between mb-4">
-
-<h3 class="font-bold text-xl">
-📺 Playlist
-</h3>
-
-<span class="text-xs bg-orange-500/20 text-orange-300 px-3 py-1 rounded-full">
-LIVE
-</span>
-
-</div>
-
-<div
-id="playlist"
-class="space-y-4 max-h-[500px] overflow-y-auto p-2 scroll-smooth">
-
-  <!-- Loading -->
-  <div class="text-center text-gray-400 py-10 animate-pulse">
-
-    <i class="fas fa-video text-4xl mb-3 text-orange-400"></i>
-
-    <p class="text-sm">
-      Loading Videos...
-    </p>
-
+    <!-- PLAYLIST SIDEBAR -->
+    <div class="bg-black/30 backdrop-blur-sm rounded-3xl border border-white/10 p-5">
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="font-bold text-xl flex items-center gap-2"><i class="fas fa-list-ul text-orange-400"></i> Playlist · បទពិរោះៗ</h3>
+        <span class="text-[11px] bg-orange-500/30 text-orange-300 px-3 py-1 rounded-full"><i class="fas fa-circle text-[8px] text-green-400 mr-1"></i> 15 videos</span>
+      </div>
+      <div id="playlistContainer" class="space-y-3 max-h-[550px] overflow-y-auto pr-1 custom-scroll"></div>
+    </div>
   </div>
 
-</div>
-</section>
+  <!-- RECOMMENDED SECTION -->
+  <div class="mt-16">
+    <div class="flex items-center gap-3 mb-6">
+      <i class="fas fa-fire text-orange-500 text-2xl"></i>
+      <h2 class="text-2xl font-bold">ការណែនាំពិសេស <span class="text-orange-400">Recommended</span></h2>
+      <div class="h-px flex-1 bg-gradient-to-r from-orange-500/40 to-transparent"></div>
+    </div>
+    <div id="recommendGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
+  </div>
+</main>
 
-<!-- VIDEO GRID -->
-<section class="max-w-7xl mx-auto px-5 py-10">
-
-<h2 class="text-2xl font-bold mb-8">
-🔥 Recommended Videos
-</h2>
-
-<div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-
-<!-- CARD -->
-<div
-class="video-card bg-gray-900 rounded-3xl overflow-hidden border border-white/10 hover:border-orange-500/40 cursor-pointer"
-data-video-src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-data-video-title="Sintel Movie">
-
-<div class="relative overflow-hidden">
-
-<img
-src="https://images.pexels.com/photos/1266810/pexels-photo-1266810.jpeg?auto=compress&cs=tinysrgb&w=400"
-class="w-full h-48 object-cover hover:scale-110 transition duration-500">
-
-<div class="absolute inset-0 bg-black/40 flex items-center justify-center">
-
-<i class="fas fa-play-circle text-5xl text-white"></i>
-
-</div>
-
-</div>
-
-<div class="p-4">
-
-<h3 class="font-bold">
-Sintel Movie
-</h3>
-
-<p class="text-sm text-gray-400 mt-2">
-Fantasy Adventure
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- MODAL -->
-<div
-id="videoModal"
-class="fixed inset-0 bg-black/90 z-50 hidden items-center justify-center p-4">
-
-<div class="bg-gray-900 rounded-3xl overflow-hidden max-w-5xl w-full border border-orange-500/20">
-
-<div class="flex justify-between items-center p-4 border-b border-white/10">
-
-<div class="flex items-center gap-3">
-
-<h3 id="modalTitle" class="font-bold text-xl">
-Video
-</h3>
-
-<button
-id="copyBtn"
-class="bg-orange-500 hover:bg-orange-600 px-3 py-1 rounded-full text-sm">
-
-<i class="fas fa-copy"></i>
-Copy
-
-</button>
-
-<button
-id="fullscreenBtn"
-class="bg-gray-700 hover:bg-gray-600 px-3 py-1 rounded-full text-sm">
-
-<i class="fas fa-expand"></i>
-
-</button>
-
-</div>
-
-<button
-id="closeModal"
-class="bg-red-500 hover:bg-red-600 w-10 h-10 rounded-full">
-
-<i class="fas fa-times"></i>
-
-</button>
-
-</div>
-
-<video
-id="modalVideo"
-class="w-full aspect-video"
-controls
-autoplay>
-
-</video>
-
-</div>
-
-</div>
-
-<!-- TOAST -->
-<div
-id="toast"
-class="fixed bottom-5 right-5 bg-orange-500 text-white px-5 py-3 rounded-2xl hidden shadow-2xl z-50">
-
-✅ Copied Successfully
-
+<!-- TOAST NOTIFICATION -->
+<div id="toastMsg" class="fixed bottom-6 right-6 bg-gradient-to-r from-orange-500 to-amber-600 text-white px-5 py-3 rounded-2xl shadow-2xl z-50 hidden items-center gap-2 font-medium">
+  <i class="fas fa-check-circle"></i> <span id="toastText">Copied!</span>
 </div>
 
 <script>
-
-function toggleMenu() {
-  const sidebar = document.getElementById("sidebar");
-  const overlay = document.getElementById("overlay");
-
-  sidebar.classList.toggle("-translate-x-full");
-  overlay.classList.toggle("hidden");
-}
-
-
-// SEARCHINPUT
-const searchInput = document.getElementById("searchInput");
-
-searchInput.addEventListener("input", function () {
-
-  let value = this.value.toLowerCase();
-
-  document.querySelectorAll(".video-card, .playlist-item").forEach(el => {
-
-    let title =
-      el.dataset.videoTitle?.toLowerCase() ||
-      el.innerText.toLowerCase();
-
-    if (title.includes(value)) {
-
-      // playlist item
-      if (el.classList.contains("playlist-item")) {
-        el.style.display = "flex";
-      }
-
-      // video card
-      else {
-        el.style.display = "block";
-      }
-
-    } else {
-
-      el.style.display = "none";
-
-    }
-
-  });
-
-});
-
-
-document.addEventListener("DOMContentLoaded", () => {
-  
-  const featuredVideo = document.getElementById("featuredVideo");
-  const videoTitle = document.getElementById("videoTitle");
-  const playlist = document.getElementById("playlist");
-
-  // 👉 VIDEO DATA
+  // ======================= VIDEO DATABASE =======================
   const videos = [
-    {
-      title: "លាពៅសំណព្វ",
-      src: "https://www.youtube.com/embed/le20G8aOzsQ",
-      thumb: "https://images.pexels.com/photos/220067/pexels-photo-220067.jpeg"
-    },
-    {
-      title: "តាមបេះដូង",
-      src: "https://www.youtube.com/embed/T-X0gmmJQCs",
-      thumb: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRV4ZUv-nmtvot2-TwgBBn43W3rzjvO4IiGSR3uyfeYYZFMMn3UWxUPjnY&s"
-    },
-    {
-      title: "ហួសពេលហើយអូន",
-      src: "https://www.youtube.com/embed//Db0NhEtOUPU",
-      thumb: "data:image/jpeg;base64,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"
-    },
-    {
-      title: "ដកស្នេហ៍វិញចុះ",
-      src: "https://www.youtube.com/embed/DX7iHASSUdU",
-      thumb: "video/photo1.png"
-    },
-
-    {
-      title: "និស្ស័យស្នេហ៍",
-      src: "https://www.youtube.com/embed/0zmHHuxggak",
-      thumb: "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIAHIAzAMBIgACEQEDEQH/xAAcAAAABwEBAAAAAAAAAAAAAAAAAQIDBAUHBgj/xABIEAABAwIEAgUIBgcHAwUAAAABAgMRAAQFEiExBkEHEyJRYRQXMlVxgaHSFUKRlMHwI0VSkpOx0RYkM0NicvE1goQ0c4Oiwv/EABkBAAMBAQEAAAAAAAAAAAAAAAABAwIEBf/EACQRAAIDAAEEAgIDAAAAAAAAAAABAgMREgQhMUETURRCInHw/9oADAMBAAIRAxEAPwDgPNZxr6kV95Z+eh5q+NvUavvLPz16XU7MRM86cDhO+lPDPJHmMdFnGp0GCK+8s/PR+avjb1Gr7yz89emgrIoGJnepAUCJSZFJ6NPTy95quNvUavvLPz0B0VcbnbA1H/yWfnr1FyrG+mPFnXcet7C2uXkot2hnbBKUdYoyCI3MRuNOXOsyli0tRU7pqCOB81fGxH/Q1feWfnoearjc/qNX3ln567nhvpHVhFkwy/bv37rSCLg54I1OUCQcxiNTFReOuPrjiJm3s7BN1ZNBTilFq4KQ+iIGaNe/TUa67Vnmiq6O5vM7f5HIearjaY+g1T3eUs/PQ81PG/qNX3ln567bhfpGOEYfbNfRztzkZSjO4/lJA3kQY8BJ91XJ6ZGkkJXgbgJ7f+P/AJf2el8PGn8iE+kuS3j2Mw81PG/qNX3ln56Hmp43H6jV95Z+etUR0wsEFSsGeS2oS0ouak8goRpr3E0nzxNSZwR2EdlcPic2m2mo15xR8iEukuf6sy8dFPHHqJf3ln56LzU8b+olfeWfnrq+F8cur/jU3N/d3SzddchpsuqUlBJzBMH6oSDsN4rc7JxLto0pOaMoiacZaYtqdUuMjzB5qeN/USvvLPz0PNTxv6iV95Z+evU1D3VokeWvNRxv6iV95Z+ei81PG/qJX3ln569Te6jgUAeWPNTxv6iV95Z+ej81HG/qNX3ln569S6THOjAgRrvOppAeWPNVxsP1Gr7yz89IX0X8Zo9LBVD/AMln5q9SXKils5N6p7lQKdQCa57r3X6LVVczzb5ueLfVCv47XzUR6OuLR+qFfx2vmr0RlA+qY9tKKEFMjN765fzrPSR1fiQ+2edPN5xX6pV/Ha+alebviz1Qr+O181eiUNo2Jk08lMACBTXWWP0hPpa17ZKQqpDELMEVEGop1pzJO2uleu0eRFjqgQsgDTlTrZyt+NEiMokk0sBJNYKJe0KQSoSRXB8ZdHB4ixhzEWMQRbl5tIcQ4yVypIgEEEabfZXT4jb4lcIu2WCUpKkKYXnToIgiNOffVQbPHzdqi4fD6UEJWcmXLyk7T3j291TcU/JeuyVb5Rfc5ZPQ2UFHVY0BIzOzbzK+WXtaDbedt9a4zHuEMTwTFLjDxh1xeyUKZuWLVwhU5VKKYzQd0nXl3GtfW1xF5Q3brffKVKGYjJBTlM9rlqOffTi8Ox1lq2VbPKQtDCULSlYIJ577+HeY21lfGvJePV25jeo4DD+iS6u2GHFXyLfI2klL9uokKI1GigCAano6Got0D6YSHsxCyGDkCDvAzTm21Jjwrq7Szx8Mjyd99DZSrsrKAc079r3U5ap4keJUXVhPWwUuZEwMo021150cImX1Vr7aZPxhwNiHDty0xaofxK0daORbVqs5ADsvITrAmdBv7rDAejC7xjCrZ91a8PfdQS+3dMqUNFEJy+iRIjQ1pNw7j3lL7jJf8nQ8BCUpzKBmYB5DTX20w3h3EjqG7gvrS+pIUr9IkQcwJ0/2jLr7NqXCJt9Za0lvgp8F6KvovFrW8TiocQxKshYg5yMsAz6Ou0T41otqz5PboZmcgie+uftrTiRLqw/dLKChYSVKb7Jjs7Dx+HvLC7HiRfVl15S8hzAhbemm48c3wrSSRzzslPvJnWanYUBVBw65izl04MRL3UlpCkFxKRqQJ28fxrowmmYGz76FO5fChlpgN0K5jjHjjDOF1JYe/TXi05gwkxlHeo8q4TEuld66ypt2k26RvlUSTQI19SUgErSYGtVr9shSjKIO4rNcH6Vl2zwTfJNywYmT2k+I/pWpYbd2mLWbV7h7yX7d0SlY+IPcR3VC2vkVqnxZA8mSk7KNOdUmBCBVr5OO6i8nA2FQXT4dHz6VamhMhMUkoE/Wq0cZASdKr1pAWazOviajZpHKo0FKEkVHkzrTgXGle1h4fIlMrKRl1IOtNYrcvM2Ti7RSkODZSUhRHuNBKz3042vKqNNam4lIzKFtniU2xQevOcpWQXGircSJkR7fDx0dCeJG7gvkPaoy5CtmJkaxPcPzNWqrq8axRlDbSlWa2znUlIOVXKTO29RMQvsVcJNhauoSEKIS80DKuX1tqlh0KQhtfEoTcqdQo5WV9VBagqEZdtZ38KjMniG6695hy4CHAEp/wwB2BMAkQZn40t3EOILdKVOMobbKiJLO2kidfCPfO1Nqv+IrcuOuJOVwpy52pTrM5ROkab70jQ7bJ4qbDaVhwpKgSHFMqyDWRI1MGB7KWpriRq4eTb9b1ClqKSepVuo7Tr469/KKfef4gyMdShElCs56selm038J+FQ277H7ZSGFJlSlqS1nYkqE6GZ7j8PGkAQf4nccfbbU6HG5ChkZAGvZIJ37PjS2FcQXl00HQ+GGnZd1Qg+ExE7GfdT2HYhjtxdtJcbb6tLmW4/Qxl02Bnv51GXiPEa1m2LYS6SnRLQSrKZzRryiJ/qKYAQriRh1VoyHwRKkZg0Rk15986QTP20pVzxO0ptL6Hf0ikgdllR8RI0007v50br/ABMq3LCWFAFkpDmUZgobazz3Jpk4nxDhzKUPoJMKjrGpKjE7z3mP+aALGwuOImVpXe2Dr6Sk5m0LZBBkxrmHKPtrpmCpbaVrQW1EAlBIJSe6RVZgbmJOIe+k0JSQpIbhGWRlBP8A9p+wVbJ2oAOoGPYqzgmDXmJ3Mlq1aLhA3VGw95gVPriemVp13o7xTqQTkLK1R+yHUk/DWgDzli2I3mM4vcX145nu7lzMuO/aB4AaDwFPjAsXUE5bK4WCNIFdV0ZYRa3YdvXkhx1LmUT9UVsLFqwhoBLQAA3rnna08R110R4cpHm67w3ErFM3Vm+2k8yNPtrQOgzih6y4jGB3Dija34UUA7JdSCQR7Ugj3CtAxbC2b6zeSMikLSUmNjWM8MWD+E9INk06qRY3IdWoD/LAkn7CKddvLyYso444nqihRAzryo6uc40+OzVatEqOlWTpMaVDcC1LJCVQe4VCyOla5YUildwmjEkgxRgbRvR5wJmvSPJHE+NRsTun7W1L7DJdUnkEFX8tY/pTocAOtGVkOdk6E1iUkUjF+SnOOYokqhhsNDNkV5K52oA0BkSd9PiaeViWPOsgItcoWcucWjgISR6Q1/OlXbaU5cuROXkIo8UuTY4a9cthCnG0FSUqkAnxipSWeWdEXvhFVZYrjfXIZesSpHZJc8mdGhMGd9YpKsRx5LRbRauKhSh1htllUZyJ7vR1/Ilh7HsUzNOIaDLZOSeqUdxIJnuiPefClt49ixeB8hGraT1ZaWQZEyO8jUETWOxTuIdxzGwy+ypkBbaFZ1JtXMydoVuORmYGxo14rxC6zDLCzlKsjiLJZzxIGsxGo102PKpz+OXqLUPOWCGytYQc6FaAkDXxqJbcQYoi1SU2aX0JSZcyK1gnQRz7u+edAyWvGcUZtULetAlxbpTl6hYkBIO2+5if51XpxnH0LQl1hxK5CkIVbLlWYzHu235e+pqsexPrW82EygkmeqWY7Mj3zp9nfUa54gxZf6JNkhp9JEENKUSDOonloJPt7tQBb+L4+cilWqmEoha1C1cCfSEgzyjWgnHscfaW5bWKFhJISBbOK1A0BgwD76NzHsZNwtxGHlTQaVDSmVAFQ2131/r3V1bIHVIISEFSQSAIg0AcsniDGTdFgWIUdZAtnCpIgHXWdzFdFgd1d3dqpd8wWHQ4UhORSZAjWDrzqUlIzFQHaO576dSKAFUzeWzF5au2t00l1h1BQ4hQ0Uk6EU9QNAGJ8JYG7geIY1h7AWttq5T1PWGFFBka+Onv0rqbN68abW1d5Ekok5FEgH/u1q+4gwjLdKxO0bHWFMPgaZgNj4xVA5fNpfzuPspQR/ma/ZXFYmpM9Pp8lBYPWeHBLhfF085IBI64lGncNhVCvAkXPFjmItpSkrY6nXQEkmfhpV9Z3lvkUzaqU6NSpSUQkfhXIcb3hTZfoypJzgwCfwI76x+ySNy2MXJ+jam9EgDWANqWKzzofxa4ucMubC7WCq2UlTYKjmyqGu/Kf51odd68Hk7o27saglZBiVe6pzvo1CUTNUiTmUYdbzwFTpUCyxpl5y4TcZWQ1rOfNInujTcUAe/Wn7dxwFI6w7nelG1+ybqXogXeLoW4gWfVFsrA61TmhHPSPz4UyccfLOdtppChlIhefNKspAEciD7takLxsBwJhOdSgAC93gnXTuB99N2uMZVlTjCAVFuVpcic8xp7f5+2k5ayijiJjeOuht5Zt25QklP6XQ7c4ppfET7wSU27XV5wlQzZgtJTmB20Hj7O+lHiBxh9STaJUUzE3EEwSnu0/wCe6gOJWmUL6m2aaBWdeukEgCTAGum2tYnr9FYJLuNHHrjyXq3mGFEBBK1rEaqjQRuB+e+Q3xW6hDanLNlbuQgKS/3EA/V01PvgU2riJdylDRYtpUUFRdezI1g9w1/lTycbtU2ttfP2SUlWZCQpwSiFJA5d5SfZrWFv0al/ZKt+I3bx7qV4cjJJBJdkSE5pAy6idKYb4rcQ22GcMaSlYCgA9lAk/wCzTTfupVzxklLbgQylCwCUqU9IIB15e2Kk3XFbds+WVsgrCko/xQJJSFbRVTAx/ay4LedNg3OsAvnWDH7G3P8ACku8UqQ4XBhzRVCgFKeIJA7uztrTZ4xeVdpUi3bFukJKkqd7RJ0gGPzpSnuMLV0NqXYtuZe0iXwSCFFP7PePiKAD/tk+rN1dg2opVl/9RodM2nZ7p3+FP2/FDtxavvIsAgtpQYU6YlRjUxypg8TpsW21M2TDduoOEth3KSUmJBiCDpGgp1PGIUUZLMHOrKD5Rp6OafR2oAZZ4xeQzL1k0peuqXoCtTG6e4TSjxbeJuFf3JtTeVUAOwAQQB2o56/CmhxWxcXB8usWF5VJ6hReBgLSDE5e8H4VKTxs0UIX5IkIXkiX9e1MfVoAC+LbkpypsAlajlnrSQiY1IyjYnbwNT+HsbucSfVb3NsltSGworC5knlHL7afwriCxxHI2m4ZRdKn+79aCrTwprjLiRjhXBHMSuGlvkKShtlKgCtRPedoEn2CgC8UAZBiCKx3GMdwBHFdxhqBCWnClK1ej1n1gDy1qFf9M+I3IUjD8Ot7RMauKcLqkDv2An3VlrqlLWt1wkrUsqJO8zM1OcVJYaqudctRtmN8S4fhmFK6twuKIgJFZtiuJPXRVdXbUFXoNk7DkJ8Zqhsim7vmhfPlQHolSjpGwHvqffLccdQ2U5Ut6gkzJmsQrUXpvqOp5/xXgk4dxLiXD2KourJ0NONpGZHpJIOpSRWy8FdKGHcQvJtr5CMPuVegFOZkOewkCPZXnS5cLj6jJJJp+3dU0ncb/ZVjn8Lsev3T2fA1CXOY6Vj/AEddIl7b9XYYoov2Q7KVn0mv6jwrWi4VnMhUpOoIO4qsFpOcjmgKfZSCsUlpA0zEeypLQQNwAnme6vNlfjw9CHTvjo4hAJykgg86jX1u1bKcvVoU4pCB2UxqBrp/zUpnIVdkygamajXN2hhqXUFSVKCcsaann4VaNq3CbraWisOu7QNquAUMJUshWdQGbnpr41Ft+IGmUXCzZlD4K8+TLCsup591G3jNgpLYes1FtaQpP6EKIUTBn+vhTiMYw4uKQqxV2SYIZCjpqZ8dtN609b7oSxeGE9xKMkMWrnWklI60gJBAkzB93tqWviVDT1xaItXVLaVlSslASSQo8zt2TUby7DW75SfIiCsDUIBkqjSNhMfChc4jhNyhBuLZ3KSpUlmNjlM85/pQuz7IH3XkS7xDY3bNs5e2DpdBQUrbCRqROknumffrTiuLylIjD3FLAKlQUgFMgCNec7+Hsp5nFMLtJYctMrTSR1Z6oHSJM+z8KScSwFx1alW6y44goV+hiRsfZ3fk1VMwyRccVWlu0ytVu6etSpSRKeW/Okf2vtgVBdo+nKeakfs5v2u6g1jGCMstpFuvq05glTjWbY9rU+KvjSXcSwjDlqs27IrU26EOZmpjQGZO/ZI+yORpiDs+Km31rbcs3Eqy9YmCnbuIJ3/qKiXPFNu+2+i4sFLaCczZMRoSkZte/u8ffPbx/BiMybdYCkyT5MNUmPhyqLfYxgjrWll1ykmQOqCBsDv7CPyKAFM8YNBrNdWbsmTLcEQMs7n/AFD47RXWpA3jWuOdvOH7rEWn3WH+tYEJR1ICQVZT/wDkfZV7hGOMYo84lhtaWw2laVr0zAkjblqDQBawO4VjnTniLN8qzw2zcLrtmtTlzlEpZJHZzeMSY7q1nE3epw65eDyLcoaUQ856LZAPaPgK8o32I3ay835Ql7rFqcW9HaWVGCZOuseH4UmJ/QlTjbbJQhBjTUmPbNRS+5c3KgNOyfRplSSpBUpRNHYf4/tEUmJJCCQF9rmedWlg6+be4bS0hxCEyVrcSgIJ0GpMe6oISENqK0hQcMbCQB/KTH2UuzvLm0zdQEBRg9ptKoPI6gwR30htJjIR1alZhlIVlg8o3oNpUonQ5BqTROHMuBrB3Jkk8zToCUpyhwanWKYmXPDqyLlAB0navQXDLi1YOxmUDEgSJgV57wDs3KAI/Gt64WURg7Yn6xq9SITeBpQAdIpZRm9lZiOmLDh+qrr99NL88mG+qbv99NeN8Fv0e181X2aalISPCjW226kJW2lYBkA8qzHzyYb6puv4iaWjpnwxJ/6Rd/xE0Ki3RO6rDS/ILRTcBhCSREp0I5ilIwuzzIJaHZBzAfW56+/861mo6asMmfoe7/fTS/Pbhfqa7n/3E1eMLV5IynWzUlWNotWZVs2VAASU91U167gjYRDJJOpQ22Qlaeyok6aj0ft9tcSnpvwob4NeH/5EVWXHSlw891Z+icTSUIKdHkGZAGvuSPyTN4QfslOS9Gqi6wB1UrQ2RGUlTJg6aiY7qQ9fcOC4ZSGRCkznDUJjkD+HtrNV9LXDC1KJ4dve0ZP951mInem09K3DiX0OJwK+ShIjqw+IPvme77KolhN9zVrd3h55gr8laQEpWtaXGtUhJ7Xx18aMpwVdu/iKkda08oqU4pMlMdkwI02+FZS10r8ONPurTguJFt1CkKZNwCmFelGsiY76e87/AA6lkNN4DfpbSCA35QCNVZjuZ3oe52BZ7NQt7LCAWmmbdp0ZSlK3EBRWEmDrz3/GpwwTDS+l7yRuAmA2UjLrGsd+gHsmskb6aMHbWypvBr1IZSUoT1qY1iffp8alo6d8LCpODXnhDiKyuWmnxw00YDhjbRb6kZyoKDm6wRtr+efeaktYHhXVoQbFheRISCtAmPbWTnp0w1Sifoa7/ioFSm+nLCygk4TdiOXWo1p7LRYsOs6V7+xY4VucNfecQ/eIysIZ9KQZk9ydprzo4w+k5VNEaGCOddnxJ0nYbj96i4uMKfSEN9WkZ0zEk/jVI7xZgiyMuG3IjvUmt+STT0pTbOdVGU0LS2dS8Dk0kbirn+1eCxH0dc/vJo08WYMkg/Rtxp/qTRiBaVarNwZpCiBASKR5M4HlEJOgq5Vxfg5/Vtx+8mkf2tweVH6NuNf9SaEkHf6KFNs5J7Jmafbt1JglJPsqxPE2Dq2w98f9yaUjinCkiBYPx/uTWsRluX0O4GwoXCSGyNeZrcuG5bwhnNuqTWI23GeEsOJX9HXBjuUmumtel/DmLdDX0VdHKI/xE1Wtxj7IWQnLwjHKFChUDsBQoUKABQoUKABQoUKABQoUKABQoUKABQoUKAD5UDQoUADlRUKFAB0KFCgAUVChQAaaBoUKABQoUKAP/9k="
-    },
-
-    {
-      title: "នឹកភូមិភ្នំធំ",
-      src: "https://www.youtube.com/embed/Ludst38lJRc",
-      thumb: "https://i.ytimg.com/vi/Ludst38lJRc/hqdefault.jpg?sqp=-oaymwEnCNACELwBSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLCwdh2Cd1E8Q-xadX0M-gi-fK-vgg"
-    },
-
-    {
-      title: "បងគ្មានទរព្យធន",
-      src: "https://www.youtube.com/embed/HjRUsew4WhU",
-      thumb: "https://i.ytimg.com/vi/Tlc2tBuI3xA/hqdefault.jpg?sqp=-oaymwEnCNACELwBSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLCX6MouilMymtIkTr65yx1VPER66g"
-    },
-
-    {
-      title: "ទន្សោងគោព្រៃ",
-      src: "https://www.youtube.com/embed/70jyJ7l1vdw",
-      thumb: "https://i.ytimg.com/vi/T_4Halgojyc/hqdefault.jpg?sqp=-oaymwEnCNACELwBSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLBqxHnjwPkF4ctu3jYqXnGdalHAgA"
-    },
-
-    {
-      title: "ចាញ់ស្នេហ៍បង",
-      src: "https://www.youtube.com/embed/SPv8qv7R634",
-      thumb: "https://i.ytimg.com/vi/SPv8qv7R634/hqdefault.jpg?sqp=-oaymwExCNACELwBSFryq4qpAyMIARUAAIhCGAHwAQH4Af4JgALQBYoCDAgAEAEYLiA7KH8wDw==&rs=AOn4CLB9wEGwTApgUhic7a9TfSWr7jYaPQ"
-    },
-
-    {
-      title: "អូនគិតដល់បង",
-      src: "https://www.youtube.com/embed/PeCPYZM_J_8",
-      thumb: "https://i.ytimg.com/vi/PeCPYZM_J_8/hqdefault.jpg?sqp=-oaymwEwCKgBEF5IWvKriqkDIwgBFQAAiEIYAfABAfgB_gmAAqQFigIMCAAQARhQIFooZTAP&rs=AOn4CLDbR2_la5j0WOR_SCM1M4YDLaCONQ"
-    },
-
-    {
-      title: "ស្នេហាអ្នកឡើងត្នោត",
-      src: "https://www.youtube.com/embed/u57QaGZZUa4",
-      thumb: "https://i.ytimg.com/vi/u57QaGZZUa4/hq720.jpg?sqp=-oaymwEnCNAFEJQDSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLD4dsw2U8_lCh4_IQvz117JfxZDhw"
-    },
-
-    {
-      title: "មើលអីបង",
-      src: "https://www.youtube.com/embed/FsEQtVehEEg",
-      thumb: "https://i.ytimg.com/vi/1xjbeW7aPjE/hqdefault.jpg?sqp=-oaymwEXCOADEI4CSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLAz8M0J9LToyNnCU2Zo9x6IcI7Xmw"
-    },
-
-    {
-      title: "អោបប្តីនឹកសង្សា",
-      src: "https://www.youtube.com/embed/bdbpG0ciIik",
-      thumb: "https://i.ytimg.com/vi/bdbpG0ciIik/hqdefault.jpg?sqp=-oaymwEmCKgBEF5IWvKriqkDGQgBFQAAiEIYAdgBAeIBCggYEAIYBjgBQAE=&rs=AOn4CLDema-U5LZWgdHeILaT_IwzrSsNxw"
-    },
-
+    { title: "លាពៅសំណព្វ", src: "https://www.youtube.com/embed/le20G8aOzsQ", thumb: "https://img.youtube.com/vi/le20G8aOzsQ/hqdefault.jpg", category: "pop" },
+    { title: "តាមបេះដូង", src: "https://www.youtube.com/embed/T-X0gmmJQCs", thumb: "https://img.youtube.com/vi/T-X0gmmJQCs/hqdefault.jpg", category: "love" },
+    { title: "ហួសពេលហើយអូន", src: "https://www.youtube.com/embed/Db0NhEtOUPU", thumb: "https://img.youtube.com/vi/Db0NhEtOUPU/hqdefault.jpg", category: "sad" },
+    { title: "ដកស្នេហ៍វិញចុះ", src: "https://www.youtube.com/embed/DX7iHASSUdU", thumb: "https://img.youtube.com/vi/DX7iHASSUdU/hqdefault.jpg", category: "pop" },
+    { title: "និស្ស័យស្នេហ៍", src: "https://www.youtube.com/embed/0zmHHuxggak", thumb: "https://img.youtube.com/vi/0zmHHuxggak/hqdefault.jpg", category: "classic" },
+    { title: "នឹកភូមិភ្នំធំ", src: "https://www.youtube.com/embed/Ludst38lJRc", thumb: "https://img.youtube.com/vi/Ludst38lJRc/hqdefault.jpg", category: "folk" },
+    { title: "បងគ្មានទរព្យធន", src: "https://www.youtube.com/embed/HjRUsew4WhU", thumb: "https://img.youtube.com/vi/HjRUsew4WhU/hqdefault.jpg", category: "modern" },
+    { title: "ទន្សោងគោព្រៃ", src: "https://www.youtube.com/embed/70jyJ7l1vdw", thumb: "https://img.youtube.com/vi/70jyJ7l1vdw/hqdefault.jpg", category: "folk" },
+    { title: "ចាញ់ស្នេហ៍បង", src: "https://www.youtube.com/embed/SPv8qv7R634", thumb: "https://img.youtube.com/vi/SPv8qv7R634/hqdefault.jpg", category: "love" },
+    { title: "អូនគិតដល់បង", src: "https://www.youtube.com/embed/PeCPYZM_J_8", thumb: "https://img.youtube.com/vi/PeCPYZM_J_8/hqdefault.jpg", category: "romantic" },
+    { title: "ស្នេហាអ្នកឡើងត្នោត", src: "https://www.youtube.com/embed/u57QaGZZUa4", thumb: "https://img.youtube.com/vi/u57QaGZZUa4/hqdefault.jpg", category: "pop" },
+    { title: "មើលអីបង", src: "https://www.youtube.com/embed/FsEQtVehEEg", thumb: "https://img.youtube.com/vi/FsEQtVehEEg/hqdefault.jpg", category: "fun" },
+    { title: "អោបប្តីនឹកសង្សា", src: "https://www.youtube.com/embed/bdbpG0ciIik", thumb: "https://img.youtube.com/vi/bdbpG0ciIik/hqdefault.jpg", category: "drama" },
+    { title: "បើមិនប្រកាន់", src: "https://www.youtube.com/embed/nXZB0AiTYMw", thumb: "https://img.youtube.com/vi/nXZB0AiTYMw/hqdefault.jpg", category: "love" },
+    { title: "នឹកប្រពន្ធគេ", src: "https://www.youtube.com/embed/VtPMnqmgJG4", thumb: "https://img.youtube.com/vi/VtPMnqmgJG4/hqdefault.jpg", category: "comedy" },
+    { title: "ស្នេហ៍ប្រុសងក់ងរ", src: "https://www.youtube.com/embed/pVYwRHT4nyI", thumb: "https://i.ytimg.com/vi/pVYwRHT4nyI/hqdefault.jpg?sqp=-oaymwEnCNACELwBSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLBu024UZz_Vg_NwMgbcuUgiiCKFiQ", category: "comedy" },
+    { title: "ញ៉ាំស្រា", src: "https://www.youtube.com/embed/AHmXbmxEikA", thumb: "https://i.ytimg.com/vi/AHmXbmxEikA/hqdefault.jpg?sqp=-oaymwEnCNACELwBSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLBOs-YGaD13ZkDLzjQpJgYEBe4HCg", category: "comedy" }
   ];
+  // សម្រាប់ប៊ូតុង "បិទ Menu"
+  function toggleMenu() {
+    document.getElementById('mobileSidebar')
+      .classList.add('-translate-x-full');
 
-  playlist.innerHTML = "";
-    
-  videos.forEach((v, index) => {
-
-    const div = document.createElement("div");
-
-    div.className =
-      "playlist-item flex gap-3 cursor-pointer bg-gray-800/40 hover:bg-gray-700/60 p-2 rounded-2xl transition";
-
-    div.innerHTML = `
-      <img src="${v.thumb}" class="w-32 h-20 object-cover rounded-xl">
-      <div>
-        <h4 class="font-semibold text-lg">${v.title}</h4>
-        <p class="text-xs text-gray-400 mt-1">Video ${index + 1}</p>
-      </div>
-    `;
-
-    div.addEventListener("click", () => {
-
-      // ✅ FIXED VIDEO SWITCH
-
-      featuredVideo.src = v.src;
-     
-      videoTitle.innerText = v.title;
-
-    });
-
-    playlist.appendChild(div);
-  });
-
-  // 👉 LIKE BUTTON (safe check)
-  const likeBtn = document.getElementById("likeBtn");
-  const likeCount = document.getElementById("likeCount");
-
-  if (likeBtn && likeCount) {
-
-    let count = parseInt(likeCount.innerText) || 0;
-
-    likeBtn.onclick = () => {
-      count++;
-      likeCount.innerText = count;
-    };
+    document.getElementById('mobileSidebar')
+      .classList.remove('translate-x-0');
   }
 
+  const btn = document.getElementById("dropdownBtn");
+const menu = document.getElementById("dropdownMenu");
+
+// Toggle dropdown
+btn.addEventListener("click", function (e) {
+    e.stopPropagation(); // កុំឲ្យ event ទៅ document
+    menu.classList.toggle("hidden");
 });
 
+// ចុចក្រៅដើម្បីបិទ
+document.addEventListener("click", function (e) {
+    if (!menu.contains(e.target) && !btn.contains(e.target)) {
+        menu.classList.add("hidden");
+    }
+});
 
-document.addEventListener("DOMContentLoaded", () => {
+  // DOM elements
+  const featuredDiv = document.getElementById("featuredVideo");
+  const videoTitleSpan = document.getElementById("videoTitle");
+  const playlistContainer = document.getElementById("playlistContainer");
+  const recommendGrid = document.getElementById("recommendGrid");
+  let currentVideoIndex = 0;
+  let currentPlayer = null;
+  let playerReady = false;
 
-  const featuredVideo = document.getElementById("featuredVideo");
-  const videoTitle = document.getElementById("videoTitle");
-  const playlistItems = document.querySelectorAll(".playlist-item");
+  function extractVideoId(url) {
+    const match = url.match(/embed\/([a-zA-Z0-9_-]+)/);
+    return match ? match[1] : "le20G8aOzsQ";
+  }
 
+  window.onYouTubeIframeAPIReady = function() {
+    const firstVideoId = extractVideoId(videos[0].src);
+    if (featuredDiv) {
+      currentPlayer = new YT.Player('featuredVideo', {
+        height: '100%',
+        width: '100%',
+        videoId: firstVideoId,
+        playerVars: { autoplay: 0, modestbranding: 1, rel: 0, controls: 1, enablejsapi: 1 },
+        events: {
+          onReady: onPlayerReady,
+          onStateChange: onPlayerStateChange
+        }
+      });
+    }
+  };
 
-  playlistItems.forEach(item => {
+  function onPlayerReady(event) {
+    playerReady = true;
+    videoTitleSpan.innerText = videos[0].title;
+    currentVideoIndex = 0;
+    highlightActivePlaylist(0);
+  }
 
-    item.addEventListener("click", () => {
+  function onPlayerStateChange(event) {
+    if (event.data === YT.PlayerState.ENDED) playNextVideo();
+  }
 
-      const videoSrc = item.dataset.videoSrc;
-      const title = item.dataset.videoTitle;
+  function playVideoByIndex(index) {
+    if (!videos[index]) return;
+    const video = videos[index];
+    const videoId = extractVideoId(video.src);
+    if (currentPlayer && playerReady) {
+      currentPlayer.loadVideoById(videoId);
+      videoTitleSpan.innerText = video.title;
+    } else {
+      featuredDiv.innerHTML = `<iframe src="${video.src}?autoplay=1" frameborder="0" allowfullscreen class="w-full aspect-video rounded-3xl"></iframe>`;
+      videoTitleSpan.innerText = video.title;
+    }
+    currentVideoIndex = index;
+    highlightActivePlaylist(index);
+  }
 
-      if (!videoSrc) return;
+  function playNextVideo() {
+    let next = (currentVideoIndex + 1) % videos.length;
+    playVideoByIndex(next);
+  }
 
-       featuredVideo.src = videoSrc;
-
-      videoTitle.innerText = title;
-
+  function highlightActivePlaylist(activeIdx) {
+    document.querySelectorAll('.playlist-item').forEach((el, idx) => {
+      if (idx === activeIdx) el.classList.add('active');
+      else el.classList.remove('active');
     });
+  }
 
+  function buildPlaylist() {
+    playlistContainer.innerHTML = "";
+    videos.forEach((video, idx) => {
+      const div = document.createElement("div");
+      div.className = "playlist-item flex gap-3 cursor-pointer bg-white/5 hover:bg-white/10 p-3 rounded-2xl transition-all duration-200 border border-transparent hover:border-orange-500/40";
+      div.innerHTML = `
+        <img src="${video.thumb}" class="w-20 h-16 object-cover rounded-xl shadow-md" loading="lazy">
+        <div class="flex-1">
+          <h4 class="font-semibold text-base line-clamp-1">${video.title}</h4>
+          <p class="text-[11px] text-gray-400 flex items-center gap-1 mt-1"><i class="fas fa-music text-orange-400 text-[9px]"></i> វីដេអូថ្មី</p>
+        </div>
+        <i class="fas fa-play-circle text-orange-400 text-xl self-center opacity-70"></i>
+      `;
+      div.addEventListener("click", (e) => { e.preventDefault(); playVideoByIndex(idx); });
+      playlistContainer.appendChild(div);
+    });
+    if(playlistContainer.firstChild) highlightActivePlaylist(0);
+  }
+
+  function buildRecommendations() {
+    recommendGrid.innerHTML = "";
+    const recVideos = videos.slice(0, 8);
+    recVideos.forEach((video, idx) => {
+      const card = document.createElement("div");
+      card.className = "video-card bg-gray-900/60 backdrop-blur-sm rounded-2xl overflow-hidden border border-white/10 hover:border-orange-500/50 cursor-pointer transition-all duration-300 group";
+      card.innerHTML = `
+        <div class="relative overflow-hidden">
+          <img src="${video.thumb}" class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-500">
+          <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
+            <i class="fas fa-play-circle text-5xl text-white drop-shadow-lg"></i>
+          </div>
+        </div>
+        <div class="p-3">
+          <h3 class="font-bold truncate">${video.title}</h3>
+          <p class="text-xs text-gray-400 mt-1 flex items-center gap-1"><i class="fas fa-headphones"></i> 2.1k views</p>
+        </div>
+      `;
+      card.addEventListener("click", () => {
+        playVideoByIndex(idx);
+        document.querySelector(".lg\\:col-span-2").scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+      recommendGrid.appendChild(card);
+    });
+  }
+
+  // Search
+  const searchInput = document.getElementById("searchInput");
+  function filterVideos(query) {
+    const lowerQuery = query.toLowerCase();
+    document.querySelectorAll(".playlist-item").forEach((item, i) => {
+      item.style.display = videos[i]?.title.toLowerCase().includes(lowerQuery) ? "flex" : "none";
+    });
+    document.querySelectorAll(".video-card").forEach((card, i) => {
+      card.style.display = videos[i]?.title.toLowerCase().includes(lowerQuery) ? "block" : "none";
+    });
+  }
+  if (searchInput) searchInput.addEventListener("input", (e) => filterVideos(e.target.value));
+
+  // Like button
+  const likeBtn = document.getElementById("likeBtn");
+  const likeSpan = document.getElementById("likeCount");
+  const heartIconElem = document.getElementById("heartIcon");
+  let likeCount = parseInt(localStorage.getItem("entertainment_likes") || "284");
+  likeSpan.innerText = likeCount;
+
+  likeBtn.addEventListener("click", () => {
+    likeCount++;
+    likeSpan.innerText = likeCount;
+    localStorage.setItem("entertainment_likes", likeCount);
+    heartIconElem.classList.remove("far");
+    heartIconElem.classList.add("fas");
+    likeBtn.classList.add("scale-105");
+    setTimeout(() => likeBtn.classList.remove("scale-105"), 200);
+    Swal.fire({ icon: 'success', title: 'ចូលចិត្តហើយ!', text: 'អរគុណសម្រាប់ការគាំទ្រ 💖', timer: 1200, showConfirmButton: false, background: '#0f172a', color: '#fff' });
   });
 
-});
+  // Share button
+  const shareBtn = document.getElementById("shareBtn");
+  const toastMsgDiv = document.getElementById("toastMsg");
+  const toastTextSpan = document.getElementById("toastText");
+  function showToast(message) {
+    toastTextSpan.innerText = message;
+    toastMsgDiv.classList.remove("hidden");
+    setTimeout(() => toastMsgDiv.classList.add("hidden"), 2200);
+  }
+  shareBtn.addEventListener("click", () => {
+    navigator.clipboard.writeText(window.location.href);
+    showToast("🔗 ចម្លង Link ដោយជោគជ័យ!");
+  });
 
-// COPY LINK
-document.getElementById('shareBtn').onclick = ()=>{
+  // Mobile menu
+  window.toggleMobileMenu = function() {
+    document.getElementById("mobileSidebar").classList.toggle("-translate-x-full");
+    document.getElementById("overlayMenu").classList.toggle("hidden");
+  };
 
-navigator.clipboard.writeText(window.location.href);
-
-toast.innerHTML = "✅ Link Copied";
-
-toast.classList.remove('hidden');
-
-setTimeout(()=>{
-
-toast.classList.add('hidden');
-
-},2000);
-
-};
-
-// FAVORITES
-
-const likeBtn = document.getElementById("likeBtn");
-const likeCount = document.getElementById("likeCount");
-const heartIcon = document.getElementById("heartIcon");
-
-let count = 128;
-
-likeBtn.addEventListener("click", () => {
-
-  count++;
-
-  likeCount.innerText = count;
-
-  // animation
-  likeBtn.classList.add("scale-110");
-
-  // change icon
-  heartIcon.classList.remove("far");
-  heartIcon.classList.add("fas");
-
-  setTimeout(() => {
-
-    likeBtn.classList.remove("scale-110");
-
-  }, 200);
-
-});
-
-
+  // Initialize
+  document.addEventListener("DOMContentLoaded", () => {
+    buildPlaylist();
+    buildRecommendations();
+    setTimeout(() => {
+      if (!currentPlayer && featuredDiv) {
+        featuredDiv.innerHTML = `<iframe src="${videos[0].src}?autoplay=0" frameborder="0" allowfullscreen class="w-full aspect-video rounded-3xl"></iframe>`;
+        videoTitleSpan.innerText = videos[0].title;
+      }
+    }, 800);
+    if (typeof YT === 'undefined') {
+      window.onYouTubeIframeAPIReady = function() { 
+        featuredDiv.innerHTML = `<iframe src="https://www.youtube.com/embed/${extractVideoId(videos[0].src)}" class="w-full aspect-video rounded-3xl" frameborder="0" allowfullscreen></iframe>`;
+      };
+      const script = document.createElement('script');
+      script.src = "https://www.youtube.com/iframe_api";
+      document.head.appendChild(script);
+    }
+  });
 </script>
-
 </body>
 </html>
