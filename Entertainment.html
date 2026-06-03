@@ -35,7 +35,7 @@
 <meta name="twitter:image" content="https://yourdomain.com/image/og.jpg">
 
 <!-- CSS -->
-<link rel="stylesheet" href="style.css?v=1">
+<link rel="stylesheet" href="style.css?v=2">
 
 <!-- Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Koulen&family=Battambang&display=swap" rel="stylesheet">
@@ -67,12 +67,15 @@
     transform: translateY(-5px);
     box-shadow: 0 20px 25px -12px rgba(249,115,22,0.25);
   }
-  #featuredVideo iframe {
-    width: 100% !important;
-    aspect-ratio: 16 / 9;
-    border-radius: 28px;
-    box-shadow: 0 20px 30px -12px black;
-  }
+#featuredVideo {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+}
+
+#featuredVideo iframe {
+  width: 100% !important;
+  height: 100% !important;
+}
   .glass-panel {
     background: rgba(15, 23, 42, 0.6);
     backdrop-filter: blur(10px);
@@ -336,14 +339,18 @@ document.addEventListener("click", function (e) {
     const firstVideoId = extractVideoId(videos[0].src);
     if (featuredDiv) {
       currentPlayer = new YT.Player('featuredVideo', {
-        height: '100%',
-        width: '100%',
-        videoId: firstVideoId,
-        playerVars: { autoplay: 0, modestbranding: 1, rel: 0, controls: 1, enablejsapi: 1 },
+      videoId: firstVideoId,
+      playerVars: {
+      autoplay: 0,
+      modestbranding: 1,
+      rel: 0,
+      controls: 1,
+      enablejsapi: 1
+        },
         events: {
-          onReady: onPlayerReady,
-          onStateChange: onPlayerStateChange
-        }
+        onReady: onPlayerReady,
+        onStateChange: onPlayerStateChange
+          }
       });
     }
   };
