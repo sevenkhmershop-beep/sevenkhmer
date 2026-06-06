@@ -35,7 +35,7 @@
 <meta name="twitter:image" content="https://yourdomain.com/image/og.jpg">
 
 <!-- CSS -->
-<link rel="stylesheet" href="style.css?v=2">
+<link rel="stylesheet" href="style.css?v=3">
 
 <!-- Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Koulen&family=Battambang&display=swap" rel="stylesheet">
@@ -125,22 +125,19 @@
         <!-- Home --> 
     
     <li> 
-      <a href="index.html" class="hover:text-blue-600 transition"> Home </a> </li> 
-      
-        <!-- Promotion --> 
-         
+      <a href="index.html" class="hover:text-blue-600 transition"> Home </a> 
+    </li> 
+    <!-- Promotion --> 
     <li> 
-      
-      <a href="promo.html" class="hover:text-blue-600 transition"> Promotion </a> </li>
-           
-        <!-- Contact --> 
-      
+      <a href="promo.html" class="hover:text-blue-600 transition"> Promotion </a> 
+    </li>
+
+      <!-- Contact --> 
     <li> 
-      <a href="Contact.html" class="hover:text-blue-600 transition"> Contact </a> </li> 
-            
-        <!-- Products Dropdown --> 
-      
-    <li class="relative">
+      <a href="Contact.html" class="hover:text-blue-600 transition"> Contact </a> 
+    </li> 
+      <li class="relative">
+      <!-- Products Dropdown --> 
                
         <!-- Button -->
       
@@ -154,28 +151,28 @@
                  
     <ul id="dropdownMenu" class="absolute -right-3 top-full mt-2 w-44 bg-white text-black rounded-2xl shadow-2xl overflow-hidden hidden z-50">
                    
-      <li> 
-                    
+      <li>          
         <a href="products.html" class="block px-5 py-3 hover:bg-blue-50 hover:text-blue-600 transition">       
           Products
-        </a>
-                   
+        </a>     
       </li> 
          
-      <li> 
-                    
+      <li>        
         <a href="clothes.html" class="block px-5 py-3 hover:bg-blue-50 hover:text-blue-600 transition">             
           Clothes 
-        </a>
-                 
+        </a>    
       </li> 
 
-      <li>
-                     
+      <li>        
+        <a href="wallpaper.html" class="block px-5 py-3 hover:bg-blue-50 hover:text-blue-600 transition">             
+          Wallpaper
+        </a>    
+      </li> 
+
+      <li> 
        <a href="Entertainment.html" class="block px-5 py-3 hover:bg-blue-50 hover:text-blue-600 transition">           
           Entertainment             
-        </a> 
-                     
+        </a>         
       </li> 
 
     </ul>
@@ -190,7 +187,7 @@
 </header>
 
 <!-- Mobile menu button -->
-<button onclick="toggleMobileMenu()" class="fixed top-4 right-8 z-50 bg-black/70 backdrop-blur w-9 h-9 rounded-2xl flex items-center justify-center  md:hidden border border-white/20">
+<button onclick="toggleMobileMenu()" class="fixed top-4 right-8 z-50  backdrop-blur w-9 h-9  flex items-center justify-center  md:hidden ">
   <i class="fas fa-bars text-4xl text-white"></i>
 </button>
 
@@ -206,11 +203,12 @@
     <a href="Contact.html" class="flex gap-3 p-2 rounded-xl hover:bg-orange-500/20"><i class="fas fa-headset w-6"></i>Contact</a>
     <a href="products.html" class="flex gap-3 p-2 rounded-xl hover:bg-orange-500/20"><i class="fas fa-store w-6"></i>Products</a>
     <a href="clothes.html" class="flex gap-3 p-2 rounded-xl hover:bg-orange-500/20"><i class="fa-solid fa-tshirt"></i>Clothes</a>
+    <a href="wallpaper.html" class="flex gap-3 p-2 rounded-xl hover:bg-orange-500/20"><i class="fa-solid fa-image"></i>Wallpaper</a>
     <a href="Entertainment.html" class="flex gap-3 p-2 rounded-xl bg-orange-500/30 text-orange-300"><i class="fas fa-film w-6"></i>Entertainment</a>
   </div>
 
   <!-- Bottom Section -->
-  <div class="absolute bottom-0 w-full p-5 border-t border-gray-700">
+  <div class="absolute bottom-16 w-full p-5 border-t border-gray-700">
 
     <button onclick="toggleMenu()"
     class="w-full bg-gradient-to-r from-red-500 to-red-600
@@ -222,6 +220,7 @@
     </button>
 
   </div>
+
 </div>
 <div id="overlayMenu" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 hidden md:hidden" onclick="toggleMobileMenu()"></div>
 
