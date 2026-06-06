@@ -388,6 +388,8 @@ transform -translate-x-full transition-all duration-300 shadow-2xl">
 
 
 // ================= PRODUCTS DATA =================
+let selectedImages = {};
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
 const products = [
   { id: 4000, name: "ក្រដាស់បិតជញ្ជាំង", price: 2.15, category: "Wallpaper",
 
@@ -554,8 +556,6 @@ const products = [
   ]}
 ];
 
-// ================= CART =================
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
 // ================= SIDEBAR =================
 function toggleMenu() {
@@ -565,136 +565,163 @@ function toggleMenu() {
   overlay.classList.toggle("hidden");
 }
 
+// ================= CHANGE IMAGE =================
+function changeImage(mainId, imgSrc, productId, imageId) {
+  document.getElementById(mainId).src = imgSrc;
+
+  selectedImages[productId] = imageId;
+
+  console.log("Selected:", productId, imageId);
+}
+
 // ================= RENDER PRODUCTS =================
 function renderProducts(data) {
   const container = document.getElementById("products");
   if (!container) return;
-  
+
   container.innerHTML = data.map((p, index) => `
-    <div class="product-card bg-white rounded-3xl shadow-lg overflow-hidden hover:shadow-2xl hover:-translate-y-1 transition duration-300">
+    <div class="product-card bg-white rounded-3xl shadow-lg overflow-hidden">
+
       <div class="p-1">
-        <img id="mainImg${index}" 
-        src="${p.images[0]}" 
-        alt="${p.name}" 
-        fetchpriority="low" 
-        loading="lazy"  
-        decoding="async" 
-        onclick="openImage('${p.images[0]}')"
-        class="w-full h-44 md:h-60 object-cover rounded-2xl cursor-zoom-in">
+        <img
+          id="mainImg${index}"
+          src="${p.images[0]}"
+          class="w-full h-44 object-cover rounded-2xl cursor-zoom-in"
+          onclick="openImage('${p.images[0]}')"
+        >
+
         <div class="grid grid-cols-4 gap-2 mt-3">
-          ${p.images.map(img => `<img src="${img}"  
-          alt="${p.name}" 
-          fetchpriority="low" 
-          loading="lazy"  
-          decoding="async" 
-          onclick="changeImage('mainImg${index}','${img}')" 
-          class="small-img h-16 rounded-xl object-cover">`).join("")}
+          ${p.images.map((img, imgIndex) => `
+            <img
+              src="${img}"
+              class="h-16 rounded-xl object-cover cursor-pointer border"
+              data-image-id="${p.id}-${imgIndex + 1}"
+              onclick="changeImage(
+                'mainImg${index}',
+                '${img}',
+                '${p.id}',
+                '${p.id}-${imgIndex + 1}'
+              )"
+            >
+          `).join("")}
         </div>
       </div>
+
       <div class="p-4">
         <h2 class="font-bold text-lg">${p.name}</h2>
         <p class="text-gray-500 text-sm">${p.category}</p>
-        <div class="flex items-center justify-between mt-4">
-          <h3 class="text-blue-600 text-2xl font-bold">$${p.price}</h3>
-        </div>
-        <button onclick="addToCart(${p.id})" 
-          class="bg-blue-600 hover:bg-blue-700 text-white flex items-center justify-center h-10 w-full py-3 mt-4 transition">
-            Add To Cart
-            </button>
+
+        <h3 class="text-blue-600 text-xl font-bold mt-2">$${p.price}</h3>
+
+        <button
+          onclick="addToCart(${p.id})"
+          class="bg-blue-600 text-white w-full mt-3 py-2 rounded-lg"
+        >
+          Add To Cart
+        </button>
       </div>
+
     </div>
   `).join("");
 }
 
-// function changeImage(id, src) {
-//   document.getElementById(id).src = src;
-// }
-
-function changeImage(mainId, src) {
-  const mainImg = document.getElementById(mainId);
-  mainImg.src = src;
-
-  mainImg.setAttribute("onclick", `openImage('${src}')`);
-}
-
-function searchProduct() {
-  const value = document.getElementById("search").value.toLowerCase();
-  const filtered = products.filter(p => p.name.toLowerCase().includes(value) || p.category.toLowerCase().includes(value));
-  renderProducts(filtered);
-}
-
-// ================= ZOOMED IMAGE =================
-
-function openImage(src) {
-  document.getElementById("zoomedImage").src = src;
-  const modal = document.getElementById("imageModal");
-
-  modal.classList.remove("hidden");
-  modal.classList.add("flex");
-}
-
-function closeImage() {
-  const modal = document.getElementById("imageModal");
-
-  modal.classList.add("hidden");
-  modal.classList.remove("flex");
-}
-
-// ================= CART FUNCTIONS =================
+// ================= ADD TO CART =================
 function addToCart(id) {
-  const item = cart.find(p => p.id === id);
+  const product = products.find(p => p.id == id);
+  const item = cart.find(p => p.id == id);
+
+  const imageId = selectedImages[id] || `${id}-1`;
+
   if (item) {
     item.qty++;
   } else {
-    cart.push({ ...products.find(p => p.id === id), qty: 1 });
+    cart.push({
+      ...product,
+      qty: 1,
+      imageId: imageId
+    });
   }
+
   save();
 }
 
-function changeQty(id, n) {
-  const item = cart.find(p => p.id === id);
-  if (!item) return;
-  item.qty += n;
-  if (item.qty <= 0) {
-    cart = cart.filter(p => p.id !== id);
-  }
-  save();
-}
-
+// ================= SAVE =================
 function save() {
   localStorage.setItem("cart", JSON.stringify(cart));
   renderCart();
   updateCount();
 }
 
+// ================= SEARCH =================
+function searchProduct() {
+  const value = document.getElementById("search").value.toLowerCase();
+
+  const filtered = products.filter(p =>
+    p.name.toLowerCase().includes(value) ||
+    p.category.toLowerCase().includes(value)
+  );
+
+  renderProducts(filtered);
+}
+
+// ================= ZOOM IMAGE =================
+function openImage(src) {
+  document.getElementById("zoomedImage").src = src;
+  document.getElementById("imageModal").classList.remove("hidden");
+}
+
+function closeImage() {
+  document.getElementById("imageModal").classList.add("hidden");
+}
+
+// ================= CART =================
+function changeQty(id, n) {
+  const item = cart.find(p => p.id === id);
+  if (!item) return;
+
+  item.qty += n;
+
+  if (item.qty <= 0) {
+    cart = cart.filter(p => p.id !== id);
+  }
+
+  save();
+}
+
 function renderCart() {
   const box = document.getElementById("cartItems");
   if (!box) return;
+
   let total = 0;
+
   box.innerHTML = cart.map(p => {
     total += p.price * p.qty;
+
     return `
-    <div class="border rounded-2xl p-3 shadow-sm">
-      <div class="flex justify-between items-center">
-        <div>
-          <h3 class="font-bold">${p.name}</h3>
-          <p class="text-gray-500 text-sm">$${p.price}</p>
-        </div>
-        <div class="flex items-center gap-2">
-          <button onclick="changeQty(${p.id},-1)" class="bg-gray-200 w-7 h-7 rounded-full">-</button>
-          <span>${p.qty}</span>
-          <button onclick="changeQty(${p.id},1)" class="bg-gray-200 w-7 h-7 rounded-full">+</button>
+      <div class="border p-3 rounded-xl">
+        <div class="flex justify-between">
+          <div>
+            <h3>${p.name}</h3>
+            <p>$${p.price}</p>
+            <small>Image: ${p.imageId}</small>
+          </div>
+
+          <div class="flex gap-2 items-center">
+            <button onclick="changeQty(${p.id},-1)">-</button>
+            <span>${p.qty}</span>
+            <button onclick="changeQty(${p.id},1)">+</button>
+          </div>
         </div>
       </div>
-    </div>
     `;
   }).join("");
+
   document.getElementById("total").innerText = total;
 }
 
 function updateCount() {
-  const countEl = document.getElementById("count");
-  if (countEl) countEl.innerText = cart.reduce((s, p) => s + p.qty, 0);
+  document.getElementById("count").innerText =
+    cart.reduce((s, p) => s + p.qty, 0);
 }
 
 function clearCart() {
@@ -705,35 +732,50 @@ function clearCart() {
 }
 
 function toggleCart() {
-  const panel = document.getElementById("cartPanel");
-  panel.classList.toggle("translate-x-full");
+  document.getElementById("cartPanel")
+    .classList.toggle("translate-x-full");
 }
 
 function showQR() {
   document.getElementById("qrBox")?.classList.toggle("hidden");
 }
 
+
 // ================= TELEGRAM =================
 function sendTelegram() {
   const token = "7961243136:AAExQ2ps_SBqWICvl5iLM-JTKmz0982-tEE";
   const chatId = "711901461";
+
   if (cart.length === 0) {
     alert("Cart is empty!");
     return;
   }
+
   let msg = "🛒 New Order:\n\n";
+
   cart.forEach(p => {
-    msg += `• ${p.name} x${p.qty} = $${p.price * p.qty}\n`;
+    msg += `📦 ${p.name}\n`;
+    msg += `🆔 Product ID: ${p.id}\n`;
+    msg += `🖼️ Image ID: ${p.imageId || "N/A"}\n`;
+    msg += `🔢 Qty: ${p.qty}\n`;
+    msg += `💰 Price: $${p.price * p.qty}\n`;
+    msg += `----------------------\n`;
   });
-  let total = cart.reduce((sum, p) => sum + p.price * p.qty, 0);
+
+  const total = cart.reduce((sum, p) => sum + p.price * p.qty, 0);
   msg += `\n💰 Total: $${total}`;
+
   fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ chat_id: chatId, text: msg })
-  }).then(() => alert("Order sent ✅")).catch(() => alert("Error ❌"));
+    body: JSON.stringify({
+      chat_id: chatId,
+      text: msg
+    })
+  })
+  .then(() => alert("Order sent ✅"))
+  .catch(() => alert("Error ❌"));
 }
-
 // ================= PDF =================
 let invoiceCounter = Number(localStorage.getItem("invoiceCounter")) || 0;
 
