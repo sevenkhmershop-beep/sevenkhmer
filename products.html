@@ -6,34 +6,31 @@
 <title>Products | SEVEN KHMER</title>
 
 <!-- SEO -->
-<meta name="description" content="Browse products at SEVEN KHMER. Shop clothing, electronics, home products, accessories, and more with delivery across Cambodia.">
-<meta name="keywords" content="products cambodia, online shopping, clothes, electronics, home products, seven khmer">
+<meta name="description" content="SEVEN KHMER Online Shopping - Buy clothing, electronics, home products and more with delivery across Cambodia.">
+<meta name="keywords" content="online shopping cambodia, clothes, electronics, home products, seven khmer, ecommerce">
 <meta name="author" content="SEVEN KHMER">
 <meta name="robots" content="index, follow">
 <meta name="theme-color" content="#111827">
 
 <!-- Canonical -->
-<link rel="canonical" href="https://yourdomain.com/products.html">
+<link rel="canonical" href="https://yourdomain.com/">
 
 <!-- Favicon -->
 <link rel="icon" type="image/png" href="image/logo/favicon.png">
 
-<!-- Open Graph -->
+<!-- Open Graph (Facebook / Telegram) -->
 <meta property="og:title" content="Products | SEVEN KHMER">
-<meta property="og:description" content="Explore our collection of clothing, electronics, home products, and more.">
+<meta property="og:description" content="Shop clothing, electronics and more with delivery across Cambodia.">
 <meta property="og:image" content="https://yourdomain.com/image/logo/150x150.png">
-<meta property="og:url" content="https://yourdomain.com/products.html">
+<meta property="og:url" content="https://yourdomain.com/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="SEVEN KHMER">
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Products | SEVEN KHMER">
-<meta name="twitter:description" content="Browse products and shop online with SEVEN KHMER.">
+<meta name="twitter:title" content="SEVEN KHMER Online Shopping">
+<meta name="twitter:description" content="Shop online in Cambodia with SEVEN KHMER.">
 <meta name="twitter:image" content="https://yourdomain.com/image/logo/150x150.png">
-<!-- Custom CSS -->
-<link rel="stylesheet" href="style.css?v=18">
-
 <!---Google Font--->
 <link href="https://fonts.googleapis.com/css2?family=Koulen&family=Battambang&display=swap" rel="stylesheet">
 
@@ -64,9 +61,15 @@
 <!-- Leaflet Routing Machine -->
 <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
 
-<!-- ✅ ADD THIS -->
+<!-- html2canvas -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
+<script src="https://unpkg.com/js-image-zoom/js-image-zoom.min.js"></script>
+
+<!-- jspdf for PDF -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<link rel="stylesheet" href="style.css?v=19">
 <style>
   body{
   font-family: 'Battambang', 'Koulen', sans-serif;
@@ -581,7 +584,7 @@ for(let i=4;i<=200;i++){
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 let filter = "";
 let currentPage = 1;
-const perPage = 160;
+const perPage = 80;
 
 // ================= SEARCH =================
 function searchProduct(){
