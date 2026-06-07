@@ -70,6 +70,7 @@
 <!-- jspdf for PDF -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
+<link rel="stylesheet" href="style.css?v=2">
 <style>
 *{
   margin:0;
@@ -547,10 +548,11 @@ function toggleCart() {
 function showQR() {
   document.getElementById("qrBox")?.classList.toggle("hidden");
 }
+//============ TELEGRAME============
 
 function sendTelegram() {
-  const token = "";
-  const chatId = "";
+  const token = "7961243136:AAExQ2ps_SBqWICvl5iLM-JTKmz0982-tEE";
+  const chatId = "711901461";
   if (cart.length === 0) { alert("Cart is empty!"); return; }
   let msg = "🛒 New Order:\n\n";
   cart.forEach(p => {
@@ -566,6 +568,8 @@ function sendTelegram() {
 }
 
 let invoiceCounter = Number(localStorage.getItem("invoiceCounter")) || 0;
+
+//============INVOICE================
 
 function printInvoice() {
   if (cart.length === 0) { alert("Cart is empty!"); return; }
