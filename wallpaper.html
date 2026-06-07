@@ -44,9 +44,6 @@
 <!-- Tailwind CSS -->
 <script src="https://cdn.tailwindcss.com"></script>
 
-<!-- Custom CSS -->
-<link rel="stylesheet" href="style.css?v=2">
-
 <!-- Leaflet Routing Machine CSS -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css"/>
 
@@ -65,12 +62,15 @@
 <!-- Leaflet Routing Machine -->
 <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
 
-<!-- ✅ ADD THIS -->
+<!-- html2canvas -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
 <script src="https://unpkg.com/js-image-zoom/js-image-zoom.min.js"></script>
-<style>
 
+<!-- jspdf for PDF -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<style>
 *{
   margin:0;
   padding:0;
@@ -82,7 +82,6 @@ body{
   background:#f1f5f9;
 }
 
-/* PRODUCT CARD */
 .product-card{
   transition:0.3s;
 }
@@ -104,7 +103,6 @@ body{
   transform:translateY(-6px);
 }
 
-/* SMALL IMAGE */
 .small-img{
   cursor:pointer;
   border:2px solid transparent;
@@ -116,7 +114,6 @@ body{
   transform:scale(1.05);
 }
 
-/* SCROLLBAR */
 ::-webkit-scrollbar{
   width:7px;
 }
@@ -126,201 +123,113 @@ body{
   border-radius:10px;
 }
 
-/* DROPDOWN STYLES - FIXED */
-.dropdown-menu {
+/* Modal Navigation Buttons */
+.modal-nav-btn {
   position: absolute;
-  left: 0;
-  margin-top: 0.75rem;
-  width: 12rem;
-  background: white;
-  box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
-  border-radius: 0.75rem;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.2s ease, visibility 0.2s ease;
-  z-index: 50;
-  border: 1px solid #e5e7eb;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.6);
+  color: white;
+  font-size: 2rem;
+  padding: 0.75rem 1rem;
+  border: none;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: 0.3s;
+  z-index: 60;
 }
 
-.dropdown-menu.show {
-  opacity: 1;
-  visibility: visible;
+.modal-nav-btn:hover {
+  background: rgba(0,0,0,0.9);
+  transform: translateY(-50%) scale(1.1);
 }
 
-/* Delay for better UX */
-.dropdown-container {
-  position: relative;
+.modal-close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(0,0,0,0.6);
+  color: white;
+  font-size: 1.5rem;
+  padding: 0.5rem 0.8rem;
+  border: none;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: 0.3s;
+  z-index: 60;
 }
 
-/* Animation for chevron */
-.chevron-rotate {
-  transition: transform 0.2s ease;
+.modal-close-btn:hover {
+  background: red;
 }
-
-.chevron-rotate.rotated {
-  transform: rotate(180deg);
-}
-
 </style>
 </head>
 
 <body>
 
 <!-- ================= NAVBAR ================= -->
-
-<nav class="bg-white shadow sticky top-0 z-50 ">
-
+<nav class="bg-white shadow sticky top-0 z-50">
   <div class="max-w-7xl mx-auto px-4 py-3 flex items-center">
-
-    <!-- LEFT LOGO -->
-    <div class="flex items-center gap-3 flex-shrink-0 ml-[60px] ">
-
-      <div class=" text-white w-11  h-11 md:w-20 md:h-20 rounded-full flex items-center justify-center text-lg ">
-        <img class="rounded-xl w-11 h-11 md:w-20 md:h-20 " src="image/logo/150x150.png"  alt="LOGO">
+    <div class="flex items-center gap-3 flex-shrink-0 ml-[60px]">
+      <div class="text-white w-11 h-11 md:w-20 md:h-20 rounded-full flex items-center justify-center text-lg">
+        <img class="rounded-xl w-11 h-11 md:w-20 md:h-20" src="image/logo/150x150.png" alt="LOGO">
       </div>
-
       <div class="leading-tight">
-        <h1 class="font-bold text-blue-600 text-lg">
-          SEVEN KHMER
-        </h1>
-        <p class="text-xs text-gray-500">
-          Online Shopping
-        </p>
+        <h1 class="font-bold text-blue-600 text-lg">SEVEN KHMER</h1>
+        <p class="text-xs text-gray-500">Online Shopping</p>
       </div>
-
     </div>
-
     
-    <!-- RIGHT TOOLS -->
     <div class="flex items-center gap-3 ml-auto">
-
-      <!-- SEARCH -->
       <div class="relative">
-        <input
-          id="search"
-          type="text"
-          placeholder="Search..."
-          oninput="searchProduct()"
-          class="border border-gray-300 rounded-xl py-2 pl-10 pr-3 outline-none focus:ring-2 focus:ring-blue-400 w-32 md:w-52"
-        >
+        <input id="search" type="text" placeholder="Search..." oninput="searchProduct()" class="border border-gray-300 rounded-xl py-2 pl-10 pr-3 outline-none focus:ring-2 focus:ring-blue-400 w-32 md:w-52">
         <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
       </div>
-
-      <!-- CART -->
-      <div onclick="toggleCart()"
-        class="relative cursor-pointer text-xl hover:scale-110 transition">
+      <div onclick="toggleCart()" class="relative cursor-pointer text-xl hover:scale-110 transition">
         🛒
-        <span id="count"
-          class="absolute -top-2 -right-2 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
-          0
-        </span>
+        <span id="count" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">0</span>
       </div>
-
     </div>
-
   </div>
-
 </nav>
 
 <!-- ================= MOBILE BUTTON ================= -->
-<li onclick="toggleMenu()" class="fixed top-3 md:top-5 left-4 z-50 w-12 h-12 rounded-full flex items-center justify-center text-5xl list-none cursor-pointer ">
-  ☰
-</li>
+<li onclick="toggleMenu()" class="fixed top-3 md:top-5 left-4 z-50 w-12 h-12 rounded-full flex items-center justify-center text-5xl list-none cursor-pointer">☰</li>
 
 <!-- ================= OVERLAY ================= -->
 <div id="overlay" onclick="toggleMenu()" class="fixed inset-0 bg-black/40 backdrop-blur-sm hidden z-40"></div>
 
 <!-- ================= SIDEBAR ================= -->
-<div id="sidebar"
-class="fixed top-0 left-0 w-72 h-screen overflow-y-auto
-bg-gray-900 text-white z-50
-transform -translate-x-full transition-all duration-300 shadow-2xl">
-
-  <!-- Header -->
+<div id="sidebar" class="fixed top-0 left-0 w-72 h-screen overflow-y-auto bg-gray-900 text-white z-50 transform -translate-x-full transition-all duration-300 shadow-2xl">
   <div class="flex justify-between items-center p-5 border-b border-gray-700">
     <div class="flex text-sm items-center gap-3">
-      <div class="bg-blue-600 w-10 h-10 rounded-full flex items-center justify-center text-xl">
-        🛍️
-      </div>
+      <div class="bg-blue-600 w-10 h-10 rounded-full flex items-center justify-center text-xl">🛍️</div>
       <div>
         <h2 class="font-bold text-sm">SEVEN KHMER</h2>
         <p class="text-xs text-gray-400">Online Store</p>
       </div>
     </div>
-
-    <button onclick="toggleMenu()"
-    class="bg-gray-800 hover:bg-red-500 w-9 h-9 rounded-full">
-      ✖
-    </button>
+    <button onclick="toggleMenu()" class="bg-gray-800 hover:bg-red-500 w-9 h-9 rounded-full">✖</button>
   </div>
-
-  <!-- Menu -->
   <div class="p-5 space-y-3">
-
-    <a href="index.html"
-    class="flex items-center gap-3 bg-gray-800 hover:bg-blue-600 transition p-3 rounded-xl">
-      🏠 Home
-    </a>
-
-    <a href="promo.html"
-    class="flex items-center gap-3 bg-gray-800 hover:bg-pink-600 transition p-3 rounded-xl">
-      🏷️ Promotion
-    </a>
-
-    <a href="Contact.html"
-    class="flex items-center gap-3 bg-gray-800 hover:bg-green-600 transition p-3 rounded-xl">
-      📞 Contact
-    </a>
-
-    <a href="products.html"
-    class="flex items-center gap-3 bg-gray-800 hover:bg-yellow-500 transition p-3 rounded-xl">
-      🛒 Products
-    </a>
-
-    <a href="clothes.html"
-    class="flex items-center gap-3 bg-gray-800 hover:bg-red-600 transition p-3 rounded-xl">
-      <i class="fa-solid fa-tshirt"></i>
-      Clothes
-    </a>
-
-    <a href="wallpaper.html"
-    class="flex items-center gap-3 bg-gray-800 hover:bg-red-600 transition p-3 rounded-xl">
-      <span class="text-xl">🖼️ </span>
-      <span>Wallpaper</span>
-    </a>
-
-    <a href="Entertainment.html"
-    class="flex items-center gap-3 bg-gray-800 hover:bg-purple-600 transition p-3 rounded-xl">
-      🎬 Entertainment
-    </a>
-
-    <a href="Success.html"
-    class="flex items-center gap-3 bg-gray-800 hover:bg-emerald-600 transition p-3 rounded-xl">
-      <i class="fa-solid fa-circle-check"></i>
-      PDF
-    </a>
-
-    <!-- បង្កើតចន្លោះខាងក្រោម -->
+    <a href="index.html" class="flex items-center gap-3 bg-gray-800 hover:bg-blue-600 transition p-3 rounded-xl">🏠 Home</a>
+    <a href="promo.html" class="flex items-center gap-3 bg-gray-800 hover:bg-pink-600 transition p-3 rounded-xl">🏷️ Promotion</a>
+    <a href="Contact.html" class="flex items-center gap-3 bg-gray-800 hover:bg-green-600 transition p-3 rounded-xl">📞 Contact</a>
+    <a href="products.html" class="flex items-center gap-3 bg-gray-800 hover:bg-yellow-500 transition p-3 rounded-xl">🛒 Products</a>
+    <a href="clothes.html" class="flex items-center gap-3 bg-gray-800 hover:bg-red-600 transition p-3 rounded-xl"><i class="fa-solid fa-tshirt"></i> Clothes</a>
+    <a href="wallpaper.html" class="flex items-center gap-3 bg-gray-800 hover:bg-red-600 transition p-3 rounded-xl"><span class="text-xl">🖼️</span><span>Wallpaper</span></a>
+    <a href="Entertainment.html" class="flex items-center gap-3 bg-gray-800 hover:bg-purple-600 transition p-3 rounded-xl">🎬 Entertainment</a>
+    <a href="Success.html" class="flex items-center gap-3 bg-gray-800 hover:bg-emerald-600 transition p-3 rounded-xl"><i class="fa-solid fa-circle-check"></i> PDF</a>
     <div class="pb-4">
-    <button onclick="toggleMenu()"
-      class="w-full bg-gradient-to-r from-red-500 to-red-600
-      hover:from-red-600 hover:to-red-700
-      text-white py-3 rounded-xl font-semibold
-      shadow-lg transition-all duration-300">
-      ⬅️ បិទ Menu
-    </button>
+      <button onclick="toggleMenu()" class="w-full bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white py-3 rounded-xl font-semibold shadow-lg transition-all duration-300">⬅️ បិទ Menu</button>
+    </div>
   </div>
-
-  </div>
-
 </div>
+
 <!-- ================= HERO ================= -->
-<section class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-12 px-6  ">
+<section class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-12 px-6">
   <div class="max-w-4xl mx-auto text-center">
-    <h1 class="text-3xl md:text-6xl font-extrabold text-white drop-shadow-[4px_4px_0_rgba(0,0,0,0.4)]">
-      Welcome To <br>
-      SEVEN KHMER SHOP
-    </h1>
+    <h1 class="text-3xl md:text-6xl font-extrabold text-white drop-shadow-[4px_4px_0_rgba(0,0,0,0.4)]">Welcome To <br> SEVEN KHMER SHOP</h1>
     <p class="mt-5 text-lg text-blue-100">Best Online Shopping In Cambodia</p>
   </div>
 </section>
@@ -330,14 +239,12 @@ transform -translate-x-full transition-all duration-300 shadow-2xl">
   <div id="products" class="grid grid-cols-2 md:grid-cols-4 gap-6"></div>
 </section>
 
-<!-- ================= MODAL ================= -->
-
-<div id="imageModal"
-     class="fixed inset-0 bg-black/80 hidden items-center justify-center z-50"
-     onclick="closeImage()">
-     
-  <img id="zoomedImage"
-     class="w-[800px] max-w-[95vw] h-auto rounded-xl shadow-2xl">
+<!-- ================= MODAL WITH PREV/NEXT BUTTONS ================= -->
+<div id="imageModal" class="fixed inset-0 bg-black/90 hidden items-center justify-center z-50">
+  <button onclick="closeImage()" class="modal-close-btn absolute top-4 right-4 text-white text-2xl bg-black/50 w-10 h-10 rounded-full hover:bg-red-600">✖</button>
+  <button onclick="prevImageInModal()" class="modal-nav-btn left-4 text-white text-3xl bg-black/50 w-12 h-12 rounded-full hover:bg-black/80">❮</button>
+  <img id="zoomedImage" class="w-[800px] max-w-[90vw] max-h-[85vh] h-auto rounded-xl shadow-2xl cursor-pointer" onclick="closeImage()">
+  <button onclick="nextImageInModal()" class="modal-nav-btn right-4 text-white text-3xl bg-black/50 w-12 h-12 rounded-full hover:bg-black/80">❯</button>
 </div>
 
 <!-- ================= CART PANEL ================= -->
@@ -364,15 +271,10 @@ transform -translate-x-full transition-all duration-300 shadow-2xl">
 
 <!-- Footer -->
 <footer class="bg-gray-900 text-gray-300 mt-10 py-8">
-  
   <div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4">
-
     <div class="flex items-center gap-2 text-white font-bold text-xl">
-
-      <i><img class="w-11 h-11" src="image/logo/150x150.png" alt=""></i> 
- 
+      <i><img class="w-11 h-11" src="image/logo/150x150.png" alt=""></i>
       <span>SEVEN KHMER</span>
-
     </div>
     <div class="flex gap-6 text-2xl">
       <a href="#" class="hover:text-blue-400 transition"><i class="fab fa-facebook"></i></a>
@@ -383,179 +285,37 @@ transform -translate-x-full transition-all duration-300 shadow-2xl">
   </div>
 </footer>
 
-
 <script>
-
-
 // ================= PRODUCTS DATA =================
 let selectedImages = {};
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
 const products = [
-  { id: 4000, name: "ក្រដាស់បិតជញ្ជាំង", price: 2.15, category: "Wallpaper",
-
-  images: [ "image/oldpaper/5.jpg",
-            
-            "image/oldpaper/4.jpg", 
-
-            "image/oldpaper/6.jpg", 
-
-            "image/oldpaper/7.jpg"
-  ]},
-
-  { id: 4001, name: "ក្រដាស់បិតជញ្ជាំង", price:2.15, category: "Wallpaper", 
-  images: ["image/oldpaper/1.jpg",
-
-          "image/oldpaper/2.jpg", 
-
-          "image/oldpaper/3.jpg",
-
-          "image/oldpaper/4.jpg"
-  ]},
-
-  { id: 4002, name: "ក្រដាស់បិតជញ្ជាំង", price:2.15, category: "Wallpaper", 
-  images: ["image/oldpaper/8.jpg",
-
-          "image/oldpaper/9.jpg", 
-
-          "image/oldpaper/10.jpg",
-
-          "image/oldpaper/11.jpg"
-  ]},
-  
-  { id: 4003, name: "ក្រដាស់បិតជញ្ជាំង", price:2.15, category: "Wallpaper", 
-  images: ["image/oldpaper/12.jpg",
-
-          "image/oldpaper/13.jpg", 
-
-          "image/oldpaper/14.jpg", 
-
-          "image/oldpaper/15.jpg",
-  ] },
-
-  { id: 4004, name: "ក្រដាស់បិតជញ្ជាំង", price:2.15, category: "Wallpaper", 
-  images: ["image/oldpaper/16.jpg",
-
-          "image/oldpaper/17.jpg", 
-
-          "image/oldpaper/18.jpg", 
-
-          "image/oldpaper/19.jpg",
-  ]},
-
-  { id: 4005, name: "ក្រដាស់បិតជញ្ជាំង", price:2.15, category: "Wallpaper", 
-  images: ["image/oldpaper/20.jpg",
-
-          "image/oldpaper/21.jpg", 
-
-          "image/oldpaper/22.jpg", 
-
-          "image/oldpaper/23.jpg",
-  ]},
-
-  { id: 4006, name: "ក្រដាស់បិតជញ្ជាំង", price:2.15, category: "Wallpaper", 
-  images: ["image/oldpaper/24.jpg",
-
-          "image/oldpaper/25.jpg", 
-
-          "image/oldpaper/26.jpg", 
-
-          "image/oldpaper/27.jpg",
-  ]},
-
-  { id: 4007, name: "ក្រដាស់បិតជញ្ជាំង", price:2.15, category: "Wallpaper", 
-  images: ["image/oldpaper/28.jpg",
-
-          "image/oldpaper/29.jpg", 
-
-          "image/oldpaper/30.jpg", 
-
-          "image/oldpaper/31.jpg",
-  ]},
-
-  { id: 4008, name: "ក្រដាស់បិតជញ្ជាំង", price:2.15, category: "Wallpaper", 
-  images: ["image/oldpaper/32.jpg",
-
-          "image/oldpaper/33.jpg", 
-
-          "image/oldpaper/34.jpg", 
-
-          "image/oldpaper/35.jpg",
-  ]},
-
-  { id: 4009, name: "ក្រដាស់បិតជញ្ជាំង", price:2.15, category: "Wallpaper", 
-  images: ["image/oldpaper/36.jpg",
-
-          "image/oldpaper/37.jpg", 
-
-          "image/oldpaper/38.jpg", 
-
-          "image/oldpaper/39.jpg",
-  ]},
-
-  { id: 4010, name: "ក្រដាស់បិតជញ្ជាំង", price:2.15, category: "Wallpaper", 
-  images: ["image/oldpaper/40.jpg",
-          "image/oldpaper/41.jpg", 
-          "image/oldpaper/42.jpg", 
-          "image/oldpaper/43.jpg",
-  ]},
-
-  { id: 4011, name: "ក្រដាស់បិតជញ្ជាំង", price:2.15, category: "Wallpaper", 
-  images: ["image/wallpaper/1.jpg",
-          "image/wallpaper/2.jpg", 
-          "image/wallpaper/3.jpg", 
-          "image/wallpaper/4.jpg",
-  ]},
-
-  { id: 4012, name: "ក្រដាស់បិតជញ្ជាំង", price:2.15, category: "Wallpaper", 
-  images: ["image/wallpaper/5.jpg",
-          "image/wallpaper/6.jpg", 
-          "image/wallpaper/7.jpg", 
-          "image/wallpaper/8.jpg",
-  ]},
-
-  { id: 4013, name: "ក្រដាស់បិតជញ្ជាំង", price:2.15, category: "Wallpaper", 
-  images: ["image/wallpaper/9.jpg",
-          "image/wallpaper/10.jpg", 
-          "image/wallpaper/11.jpg", 
-          "image/wallpaper/12.jpg",
-  ]},
-
-  { id: 4014, name: "ក្រដាស់បិតជញ្ជាំង", price:2.15, category: "Wallpaper", 
-  images: ["image/wallpaper/13.jpg",
-          "image/wallpaper/14.jpg", 
-          "image/wallpaper/15.jpg", 
-          "image/wallpaper/16.jpg",
-  ]},
-
-  { id: 4015, name: "ក្រដាស់បិតជញ្ជាំង", price:2.15, category: "Wallpaper", 
-  images: ["image/wallpaper/17.jpg",
-          "image/wallpaper/18.jpg", 
-          "image/wallpaper/19.jpg", 
-          "image/wallpaper/20.jpg",
-  ]},
-
-  { id: 4016, name: "ក្រដាស់បិតជញ្ជាំង", price:2.15, category: "Wallpaper", 
-  images: ["image/wallpaper/21.jpg",
-          "image/wallpaper/22.jpg", 
-          "image/wallpaper/23.jpg", 
-          "image/wallpaper/24.jpg",
-  ]},
-
-  { id: 4017, name: "ក្រដាស់បិតជញ្ជាំង", price:2.15, category: "Wallpaper", 
-  images: ["image/wallpaper/25.jpg",
-          "image/wallpaper/26.jpg", 
-          "image/wallpaper/27.jpg", 
-          "image/wallpaper/28.jpg",
-  ]},
-
-  { id: 4018, name: "ក្រដាស់បិតជញ្ជាំង", price:2.15, category: "Wallpaper", 
-  images: ["image/wallpaper/29.jpg",
-          "image/wallpaper/30.jpg", 
-          "image/wallpaper/31.jpg", 
-          "image/wallpaper/32.jpg",
-  ]}
+  { id: 4000, name: "ក្រដាស់បិតជញ្ជាំង", price: 2.15, category: "Wallpaper", images: ["image/oldpaper/5.jpg", "image/oldpaper/4.jpg", "image/oldpaper/6.jpg", "image/oldpaper/7.jpg"] },
+  { id: 4001, name: "ក្រដាស់បិតជញ្ជាំង", price: 2.15, category: "Wallpaper", images: ["image/oldpaper/1.jpg", "image/oldpaper/2.jpg", "image/oldpaper/3.jpg", "image/oldpaper/4.jpg"] },
+  { id: 4002, name: "ក្រដាស់បិតជញ្ជាំង", price: 2.15, category: "Wallpaper", images: ["image/oldpaper/8.jpg", "image/oldpaper/9.jpg", "image/oldpaper/10.jpg", "image/oldpaper/11.jpg"] },
+  { id: 4003, name: "ក្រដាស់បិតជញ្ជាំង", price: 2.15, category: "Wallpaper", images: ["image/oldpaper/12.jpg", "image/oldpaper/13.jpg", "image/oldpaper/14.jpg", "image/oldpaper/15.jpg"] },
+  { id: 4004, name: "ក្រដាស់បិតជញ្ជាំង", price: 2.15, category: "Wallpaper", images: ["image/oldpaper/16.jpg", "image/oldpaper/17.jpg", "image/oldpaper/18.jpg", "image/oldpaper/19.jpg"] },
+  { id: 4005, name: "ក្រដាស់បិតជញ្ជាំង", price: 2.15, category: "Wallpaper", images: ["image/oldpaper/20.jpg", "image/oldpaper/21.jpg", "image/oldpaper/22.jpg", "image/oldpaper/23.jpg"] },
+  { id: 4006, name: "ក្រដាស់បិតជញ្ជាំង", price: 2.15, category: "Wallpaper", images: ["image/oldpaper/24.jpg", "image/oldpaper/25.jpg", "image/oldpaper/26.jpg", "image/oldpaper/27.jpg"] },
+  { id: 4007, name: "ក្រដាស់បិតជញ្ជាំង", price: 2.15, category: "Wallpaper", images: ["image/oldpaper/28.jpg", "image/oldpaper/29.jpg", "image/oldpaper/30.jpg", "image/oldpaper/31.jpg"] },
+  { id: 4008, name: "ក្រដាស់បិតជញ្ជាំង", price: 2.15, category: "Wallpaper", images: ["image/oldpaper/32.jpg", "image/oldpaper/33.jpg", "image/oldpaper/34.jpg", "image/oldpaper/35.jpg"] },
+  { id: 4009, name: "ក្រដាស់បិតជញ្ជាំង", price: 2.15, category: "Wallpaper", images: ["image/oldpaper/36.jpg", "image/oldpaper/37.jpg", "image/oldpaper/38.jpg", "image/oldpaper/39.jpg"] },
+  { id: 4010, name: "ក្រដាស់បិតជញ្ជាំង", price: 2.15, category: "Wallpaper", images: ["image/oldpaper/40.jpg", "image/oldpaper/41.jpg", "image/oldpaper/42.jpg", "image/oldpaper/43.jpg"] },
+  { id: 4011, name: "ក្រដាស់បិតជញ្ជាំង", price: 2.15, category: "Wallpaper", images: ["image/wallpaper/1.jpg", "image/wallpaper/2.jpg", "image/wallpaper/3.jpg", "image/wallpaper/4.jpg"] },
+  { id: 4012, name: "ក្រដាស់បិតជញ្ជាំង", price: 2.15, category: "Wallpaper", images: ["image/wallpaper/5.jpg", "image/wallpaper/6.jpg", "image/wallpaper/7.jpg", "image/wallpaper/8.jpg"] },
+  { id: 4013, name: "ក្រដាស់បិតជញ្ជាំង", price: 2.15, category: "Wallpaper", images: ["image/wallpaper/9.jpg", "image/wallpaper/10.jpg", "image/wallpaper/11.jpg", "image/wallpaper/12.jpg"] },
+  { id: 4014, name: "ក្រដាស់បិតជញ្ជាំង", price: 2.15, category: "Wallpaper", images: ["image/wallpaper/13.jpg", "image/wallpaper/14.jpg", "image/wallpaper/15.jpg", "image/wallpaper/16.jpg"] },
+  { id: 4015, name: "ក្រដាស់បិតជញ្ជាំង", price: 2.15, category: "Wallpaper", images: ["image/wallpaper/17.jpg", "image/wallpaper/18.jpg", "image/wallpaper/19.jpg", "image/wallpaper/20.jpg"] },
+  { id: 4016, name: "ក្រដាស់បិតជញ្ជាំង", price: 2.15, category: "Wallpaper", images: ["image/wallpaper/21.jpg", "image/wallpaper/22.jpg", "image/wallpaper/23.jpg", "image/wallpaper/24.jpg"] },
+  { id: 4017, name: "ក្រដាស់បិតជញ្ជាំង", price: 2.15, category: "Wallpaper", images: ["image/wallpaper/25.jpg", "image/wallpaper/26.jpg", "image/wallpaper/27.jpg", "image/wallpaper/28.jpg"] },
+  { id: 4018, name: "ក្រដាស់បិតជញ្ជាំង", price: 2.15, category: "Wallpaper", images: ["image/wallpaper/29.jpg", "image/wallpaper/30.jpg", "image/wallpaper/31.jpg", "image/wallpaper/32.jpg"] }
 ];
 
+// ================= MODAL NAVIGATION VARIABLES =================
+let currentModalProductId = null;
+let currentModalImageIndex = 0;
+let currentModalMainImageId = null;
 
 // ================= SIDEBAR =================
 function toggleMenu() {
@@ -565,13 +325,125 @@ function toggleMenu() {
   overlay.classList.toggle("hidden");
 }
 
-// ================= CHANGE IMAGE =================
+// ================ CHANGE IMAGE =================
 function changeImage(mainId, imgSrc, productId, imageId) {
-  document.getElementById(mainId).src = imgSrc;
+  const mainImage = document.getElementById(mainId);
+  if (!mainImage) return;
+  
+  mainImage.src = imgSrc;
+  
+  const productIndex = products.findIndex(p => p.id == productId);
+  if (productIndex !== -1) {
+    selectedImages[productId] = imageId;
+  }
+  
+  // Update modal navigation tracking
+  currentModalProductId = productId;
+  currentModalMainImageId = mainId;
+  
+  const parts = imageId.split('-');
+  if (parts.length === 2) {
+    currentModalImageIndex = parseInt(parts[1]) - 1;
+  }
+  
+  console.log("Change image - Product:", currentModalProductId, "Index:", currentModalImageIndex);
+}
 
-  selectedImages[productId] = imageId;
+// ================= OPEN IMAGE =================
+function openImage(src) {
+  // Find which product this image belongs to
+  for (let i = 0; i < products.length; i++) {
+    const imgIndex = products[i].images.findIndex(img => img === src);
+    if (imgIndex !== -1) {
+      currentModalProductId = products[i].id;
+      currentModalImageIndex = imgIndex;
+      currentModalMainImageId = `mainImg${i}`;
+      break;
+    }
+  }
+  
+  const zoomedImg = document.getElementById("zoomedImage");
+  const modal = document.getElementById("imageModal");
+  
+  if (zoomedImg && modal) {
+    zoomedImg.src = src;
+    modal.classList.remove("hidden");
+    modal.classList.add("flex");
+  }
+  
+  console.log("Open Modal - Product:", currentModalProductId, "Index:", currentModalImageIndex);
+}
 
-  console.log("Selected:", productId, imageId);
+function closeImage() {
+  const modal = document.getElementById("imageModal");
+  if (modal) {
+    modal.classList.add("hidden");
+    modal.classList.remove("flex");
+  }
+}
+
+// ================= NEXT IMAGE IN MODAL =================
+function nextImageInModal() {
+  if (currentModalProductId === null) {
+    console.log("No product selected");
+    return;
+  }
+  
+  const product = products.find(p => p.id == currentModalProductId);
+  if (!product) return;
+  
+  // Calculate next index
+  const oldIndex = currentModalImageIndex;
+  currentModalImageIndex = (currentModalImageIndex + 1) % product.images.length;
+  const newSrc = product.images[currentModalImageIndex];
+  
+  console.log(`Next: ${oldIndex} -> ${currentModalImageIndex}`);
+  
+  // Update modal image
+  const zoomedImg = document.getElementById("zoomedImage");
+  if (zoomedImg) zoomedImg.src = newSrc;
+  
+  // Update main product image
+  if (currentModalMainImageId) {
+    const mainImg = document.getElementById(currentModalMainImageId);
+    if (mainImg) mainImg.src = newSrc;
+  }
+  
+  // Update selectedImages
+  const newImageId = `${currentModalProductId}-${currentModalImageIndex + 1}`;
+  selectedImages[currentModalProductId] = newImageId;
+}
+
+// ================= PREVIOUS IMAGE IN MODAL =================
+function prevImageInModal() {
+  if (currentModalProductId === null) {
+    console.log("No product selected");
+    return;
+  }
+  
+  const product = products.find(p => p.id == currentModalProductId);
+  if (!product) return;
+  
+  // Calculate previous index
+  const oldIndex = currentModalImageIndex;
+  currentModalImageIndex = (currentModalImageIndex - 1 + product.images.length) % product.images.length;
+  const newSrc = product.images[currentModalImageIndex];
+  
+  console.log(`Prev: ${oldIndex} -> ${currentModalImageIndex}`);
+  
+  // Update modal image
+  const zoomedImg = document.getElementById("zoomedImage");
+  if (zoomedImg) zoomedImg.src = newSrc;
+  
+  // Update main product image
+  if (currentModalMainImageId) {
+    const mainImg = document.getElementById(currentModalMainImageId);
+    if (mainImg) mainImg.src = newSrc;
+  }
+  
+  // Update selectedImages
+  const newImageId = `${currentModalProductId}-${currentModalImageIndex + 1}`;
+  selectedImages[currentModalProductId] = newImageId;
 }
 
 // ================= RENDER PRODUCTS =================
@@ -581,46 +453,22 @@ function renderProducts(data) {
 
   container.innerHTML = data.map((p, index) => `
     <div class="product-card bg-white rounded-3xl shadow-lg overflow-hidden">
-
       <div class="p-1">
-        <img
-          id="mainImg${index}"
-          src="${p.images[0]}"
-          class="w-full h-44 object-cover rounded-2xl cursor-zoom-in"
-          onclick="openImage('${p.images[0]}')"
-        >
-
+        <img id="mainImg${index}" src="${p.images[0]}" alt="${p.name}" loading="lazy" class="w-full h-44 md:h-60 object-cover rounded-2xl cursor-zoom-in" onclick="openImage('${p.images[0]}')">
         <div class="grid grid-cols-4 gap-2 mt-3">
           ${p.images.map((img, imgIndex) => `
-            <img
-              src="${img}"
-              class="h-16 rounded-xl object-cover cursor-pointer border"
-              data-image-id="${p.id}-${imgIndex + 1}"
-              onclick="changeImage(
-                'mainImg${index}',
-                '${img}',
-                '${p.id}',
-                '${p.id}-${imgIndex + 1}'
-              )"
-            >
+            <img src="${img}" class="small-img h-16 rounded-xl object-cover cursor-pointer border" onclick="changeImage('mainImg${index}', '${img}', '${p.id}', '${p.id}-${imgIndex + 1}')">
           `).join("")}
         </div>
       </div>
-
       <div class="p-4">
         <h2 class="font-bold text-lg">${p.name}</h2>
         <p class="text-gray-500 text-sm">${p.category}</p>
-
-        <h3 class="text-blue-600 text-xl font-bold mt-2">$${p.price}</h3>
-
-        <button
-          onclick="addToCart(${p.id})"
-          class="bg-blue-600 text-white w-full mt-3 py-2 rounded-lg"
-        >
-          Add To Cart
-        </button>
+        <div class="flex items-center justify-between mt-4">
+          <h3 class="text-blue-600 text-2xl font-bold">$${p.price}</h3>
+        </div>
+        <button onclick="addToCart(${p.id})" class="bg-blue-600 text-white w-full mt-3 py-2 rounded-lg">Add To Cart</button>
       </div>
-
     </div>
   `).join("");
 }
@@ -629,83 +477,46 @@ function renderProducts(data) {
 function addToCart(id) {
   const product = products.find(p => p.id == id);
   const item = cart.find(p => p.id == id);
-
   const imageId = selectedImages[id] || `${id}-1`;
 
   if (item) {
     item.qty++;
   } else {
-    cart.push({
-      ...product,
-      qty: 1,
-      imageId: imageId
-    });
+    cart.push({ ...product, qty: 1, imageId: imageId });
   }
-
   save();
 }
 
-// ================= SAVE =================
 function save() {
   localStorage.setItem("cart", JSON.stringify(cart));
   renderCart();
   updateCount();
 }
 
-// ================= SEARCH =================
 function searchProduct() {
   const value = document.getElementById("search").value.toLowerCase();
-
-  const filtered = products.filter(p =>
-    p.name.toLowerCase().includes(value) ||
-    p.category.toLowerCase().includes(value)
-  );
-
+  const filtered = products.filter(p => p.name.toLowerCase().includes(value) || p.category.toLowerCase().includes(value));
   renderProducts(filtered);
 }
 
-// ================= ZOOM IMAGE =================
-function openImage(src) {
-  document.getElementById("zoomedImage").src = src;
-  document.getElementById("imageModal").classList.remove("hidden");
-}
-
-function closeImage() {
-  document.getElementById("imageModal").classList.add("hidden");
-}
-
-// ================= CART =================
 function changeQty(id, n) {
   const item = cart.find(p => p.id === id);
   if (!item) return;
-
   item.qty += n;
-
-  if (item.qty <= 0) {
-    cart = cart.filter(p => p.id !== id);
-  }
-
+  if (item.qty <= 0) cart = cart.filter(p => p.id !== id);
   save();
 }
 
 function renderCart() {
   const box = document.getElementById("cartItems");
   if (!box) return;
-
   let total = 0;
-
   box.innerHTML = cart.map(p => {
     total += p.price * p.qty;
-
     return `
       <div class="border p-3 rounded-xl">
         <div class="flex justify-between">
-          <div>
-            <h3>${p.name}</h3>
-            <p>$${p.price}</p>
-            <small>Image: ${p.imageId}</small>
-          </div>
-
+          <div><h3>${p.name}</h3><p>$${p.price}</p><small>Image: ${p.imageId}</small></div>
           <div class="flex gap-2 items-center">
             <button onclick="changeQty(${p.id},-1)">-</button>
             <span>${p.qty}</span>
@@ -715,13 +526,11 @@ function renderCart() {
       </div>
     `;
   }).join("");
-
-  document.getElementById("total").innerText = total;
+  document.getElementById("total").innerText = total.toFixed(2);
 }
 
 function updateCount() {
-  document.getElementById("count").innerText =
-    cart.reduce((s, p) => s + p.qty, 0);
+  document.getElementById("count").innerText = cart.reduce((s, p) => s + p.qty, 0);
 }
 
 function clearCart() {
@@ -732,58 +541,34 @@ function clearCart() {
 }
 
 function toggleCart() {
-  document.getElementById("cartPanel")
-    .classList.toggle("translate-x-full");
+  document.getElementById("cartPanel").classList.toggle("translate-x-full");
 }
 
 function showQR() {
   document.getElementById("qrBox")?.classList.toggle("hidden");
 }
 
-
-// ================= TELEGRAM =================
 function sendTelegram() {
-  const token = "7961243136:AAExQ2ps_SBqWICvl5iLM-JTKmz0982-tEE";
-  const chatId = "711901461";
-
-  if (cart.length === 0) {
-    alert("Cart is empty!");
-    return;
-  }
-
+  const token = "";
+  const chatId = "";
+  if (cart.length === 0) { alert("Cart is empty!"); return; }
   let msg = "🛒 New Order:\n\n";
-
   cart.forEach(p => {
-    msg += `📦 ${p.name}\n`;
-    msg += `🆔 Product ID: ${p.id}\n`;
-    msg += `🖼️ Image ID: ${p.imageId || "N/A"}\n`;
-    msg += `🔢 Qty: ${p.qty}\n`;
-    msg += `💰 Price: $${p.price * p.qty}\n`;
-    msg += `----------------------\n`;
+    msg += `📦 ${p.name}\n🆔 ID: ${p.id}\n🖼️ Image: ${p.imageId || "N/A"}\n🔢 Qty: ${p.qty}\n💰 Price: $${(p.price * p.qty).toFixed(2)}\n----------------------\n`;
   });
-
   const total = cart.reduce((sum, p) => sum + p.price * p.qty, 0);
-  msg += `\n💰 Total: $${total}`;
-
+  msg += `\n💰 Total: $${total.toFixed(2)}`;
   fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      chat_id: chatId,
-      text: msg
-    })
-  })
-  .then(() => alert("Order sent ✅"))
-  .catch(() => alert("Error ❌"));
+    body: JSON.stringify({ chat_id: chatId, text: msg })
+  }).then(() => alert("Order sent ✅")).catch(() => alert("Error ❌"));
 }
-// ================= PDF =================
+
 let invoiceCounter = Number(localStorage.getItem("invoiceCounter")) || 0;
 
 function printInvoice() {
-  if (cart.length === 0) {
-    alert("Cart is empty!");
-    return;
-  }
+  if (cart.length === 0) { alert("Cart is empty!"); return; }
   const invoice = document.getElementById("invoice");
   invoiceCounter++;
   localStorage.setItem("invoiceCounter", invoiceCounter);
@@ -793,53 +578,14 @@ function printInvoice() {
   const dateTime = now.toLocaleString();
   let total = 0;
   let isEven = false;
-  let html = `
-  <div style="font-family:Arial;padding:20px;width:700px;">
-    <div style="text-align:center;margin-bottom:20px;">
-      <h1 style="color:#2563eb;font-size:28px;margin:0;">SEVEN KHMER</h1>
-      <p>Phnom Penh, Cambodia</p>
-      <p>Tel: 012 968 728</p>
-      <h2 style="margin-top:10px;">INVOICE</h2>
-    </div>
-    <div style="display:flex;justify-content:space-between;margin-bottom:15px;font-size:14px;">
-      <div><b>Invoice No:</b> ${invoiceNo}<br><b>Date:</b> ${dateTime}</div>
-      <div><b>Customer:</b><br>${customerName}</div>
-    </div>
-    <table style="width:100%;border-collapse:collapse;font-size:14px;">
-      <thead>
-        <tr style="background:#2563eb;color:white;">
-          <th style="padding:10px;text-align:left;">Product</th>
-          <th>Qty</th>
-          <th>Price</th>
-          <th>Total</th>
-        </tr>
-      </thead>
-      <tbody>
-  `;
+  let html = `<div style="font-family:Arial;padding:20px;width:700px;"><div style="text-align:center;margin-bottom:20px;"><h1 style="color:#2563eb;font-size:28px;margin:0;">SEVEN KHMER</h1><p>Phnom Penh, Cambodia</p><p>Tel: 012 968 728</p><h2 style="margin-top:10px;">INVOICE</h2></div><div style="display:flex;justify-content:space-between;margin-bottom:15px;font-size:14px;"><div><b>Invoice No:</b> ${invoiceNo}<br><b>Date:</b> ${dateTime}</div><div><b>Customer:</b><br>${customerName}</div></div><table style="width:100%;border-collapse:collapse;font-size:14px;"><thead><tr style="background:#2563eb;color:white;"><th style="padding:10px;text-align:left;">Product</th><th>Qty</th><th>Price</th><th>Total</th></tr></thead><tbody>`;
   cart.forEach(p => {
     const itemTotal = p.price * p.qty;
     total += itemTotal;
-    html += `
-      <tr style="background:${isEven ? '#f9fafb' : '#fff'}">
-        <td style="padding:10px;border-bottom:1px solid #eee;">${p.name}</td>
-        <td style="text-align:center;border-bottom:1px solid #eee;">${p.qty}</td>
-        <td style="text-align:center;border-bottom:1px solid #eee;">$${p.price}</td>
-        <td style="text-align:center;color:#2563eb;font-weight:bold;border-bottom:1px solid #eee;">$${itemTotal.toFixed(2)}</td>
-      </tr>
-    `;
+    html += `<tr style="background:${isEven ? '#f9fafb' : '#fff'}"><td style="padding:10px;border-bottom:1px solid #eee;">${p.name}</td><td style="text-align:center;border-bottom:1px solid #eee;">${p.qty}</td><td style="text-align:center;border-bottom:1px solid #eee;">$${p.price.toFixed(2)}</td><td style="text-align:center;color:#2563eb;font-weight:bold;border-bottom:1px solid #eee;">$${itemTotal.toFixed(2)}</td></tr>`;
     isEven = !isEven;
   });
-  html += `
-      </tbody>
-    </table>
-    <div style="margin-top:20px;text-align:right;font-size:18px;font-weight:bold;">
-      Grand Total: <span style="color:#2563eb;">$${total.toFixed(2)}</span>
-    </div>
-    <p style="margin-top:30px;text-align:center;color:gray;font-size:12px;">
-      Thank you for shopping with SEVEN KHMER ❤️
-    </p>
-  </div>
-  `;
+  html += `</tbody></table><div style="margin-top:20px;text-align:right;font-size:18px;font-weight:bold;">Grand Total: <span style="color:#2563eb;">$${total.toFixed(2)}</span></div><p style="margin-top:30px;text-align:center;color:gray;font-size:12px;">Thank you for shopping with SEVEN KHMER ❤️</p></div>`;
   document.getElementById("invoiceItems").innerHTML = html;
   invoice.classList.remove("hidden");
   html2canvas(invoice, { scale: 2 }).then(canvas => {
@@ -854,11 +600,21 @@ function printInvoice() {
   });
 }
 
+// ================= KEYBOARD NAVIGATION =================
+document.addEventListener('keydown', (e) => {
+  const modal = document.getElementById("imageModal");
+  const isModalOpen = modal && !modal.classList.contains("hidden");
+  if (isModalOpen) {
+    if (e.key === 'ArrowLeft') { e.preventDefault(); prevImageInModal(); }
+    else if (e.key === 'ArrowRight') { e.preventDefault(); nextImageInModal(); }
+    else if (e.key === 'Escape') { closeImage(); }
+  }
+});
+
 // ================= START =================
 renderProducts(products);
 renderCart();
 updateCount();
-
 </script>
 
 </body>
