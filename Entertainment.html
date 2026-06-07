@@ -35,7 +35,7 @@
 <meta name="twitter:image" content="https://yourdomain.com/image/og.jpg">
 
 <!-- CSS -->
-<link rel="stylesheet" href="style.css?v=3">
+<link rel="stylesheet" href="style.css?v=4">
 
 <!-- Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Koulen&family=Battambang&display=swap" rel="stylesheet">
@@ -293,7 +293,12 @@
     { title: "បើមិនប្រកាន់", src: "https://www.youtube.com/embed/nXZB0AiTYMw", thumb: "https://img.youtube.com/vi/nXZB0AiTYMw/hqdefault.jpg", category: "love" },
     { title: "នឹកប្រពន្ធគេ", src: "https://www.youtube.com/embed/VtPMnqmgJG4", thumb: "https://img.youtube.com/vi/VtPMnqmgJG4/hqdefault.jpg", category: "comedy" },
     { title: "ស្នេហ៍ប្រុសងក់ងរ", src: "https://www.youtube.com/embed/pVYwRHT4nyI", thumb: "https://i.ytimg.com/vi/pVYwRHT4nyI/hqdefault.jpg?sqp=-oaymwEnCNACELwBSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLBu024UZz_Vg_NwMgbcuUgiiCKFiQ", category: "comedy" },
-    { title: "ញ៉ាំស្រា", src: "https://www.youtube.com/embed/AHmXbmxEikA", thumb: "https://i.ytimg.com/vi/AHmXbmxEikA/hqdefault.jpg?sqp=-oaymwEnCNACELwBSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLBOs-YGaD13ZkDLzjQpJgYEBe4HCg", category: "comedy" }
+    { title: "ញ៉ាំស្រា", src: "https://www.youtube.com/embed/AHmXbmxEikA", thumb: "https://i.ytimg.com/vi/AHmXbmxEikA/hqdefault.jpg?sqp=-oaymwEnCNACELwBSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLBOs-YGaD13ZkDLzjQpJgYEBe4HCg", category: "comedy" },
+    { title: "ស្នេហ៍ប្រុសង៉ក់ង", src: "https://www.youtube.com/embed/Zg-k3FGWsc8", thumb: "https://i.ytimg.com/vi/Zg-k3FGWsc8/hqdefault.jpg?sqp=-oaymwEnCNACELwBSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLD6diZ9BBc-v5_Rx3-csFUHZB1zpQ", category: "happy" },
+    { title: "ចម្លើយបុប្ផាឋានសួគ៍បូកគោ", src: "https://www.youtube.com/embed/CKt5OWfAfh8", thumb: "https://i.ytimg.com/vi/CKt5OWfAfh8/hqdefault.jpg?sqp=-oaymwExCNACELwBSFryq4qpAyMIARUAAIhCGAHwAQH4Af4JgALQBYoCDAgAEAEYLyA_KH8wDw==&rs=AOn4CLCNtWYUUYsS1DQPq5cRUmJyuPCl-g", category: "happy" },
+    { title: "ចាស់ហើយលោកប្តី", src: "https://www.youtube.com/embed/RZ6sqTZj4HY", thumb: "https://i.ytimg.com/vi/RZ6sqTZj4HY/hq720.jpg?sqp=-oaymwEnCNAFEJQDSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLCVTe-oWbGoqtRo_NLK8jhdHdm4KQ", category: "pop" },
+    { title: "អ្នកណាក៏បាន", src: "https://www.youtube.com/embed/Wlnt0lBb3cc", thumb: "https://i.ytimg.com/vi/Wlnt0lBb3cc/hqdefault.jpg?sqp=-oaymwEnCNACELwBSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLBfXyJKJHlKaruQcstmHUzEq3Qw-w", category: "pop" },
+    { title: "បំណាច់ស្រលាញ់", src: "https://www.youtube.com/embed/ktes_IH3Kc8", thumb: "https://i.ytimg.com/vi/ktes_IH3Kc8/hq720.jpg?sqp=-oaymwEnCNAFEJQDSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLDhQPiTi1lg1t7TZKQQZRNWlhvKKg", category: "pop" },
   ];
   // សម្រាប់ប៊ូតុង "បិទ Menu"
   function toggleMenu() {
@@ -413,7 +418,7 @@ document.addEventListener("click", function (e) {
 
   function buildRecommendations() {
     recommendGrid.innerHTML = "";
-    const recVideos = videos.slice(0, 8);
+    const recVideos = videos.slice(0, 12);
     recVideos.forEach((video, idx) => {
       const card = document.createElement("div");
       card.className = "video-card bg-gray-900/60 backdrop-blur-sm rounded-2xl overflow-hidden border border-white/10 hover:border-orange-500/50 cursor-pointer transition-all duration-300 group";
@@ -426,7 +431,7 @@ document.addEventListener("click", function (e) {
         </div>
         <div class="p-3">
           <h3 class="font-bold truncate">${video.title}</h3>
-          <p class="text-xs text-gray-400 mt-1 flex items-center gap-1"><i class="fas fa-headphones"></i> 2.1k views</p>
+          <p class="text-xs text-gray-400 mt-1 flex items-center gap-1"><i class="fas fa-headphones"></i> 7.1k views</p>
         </div>
       `;
       card.addEventListener("click", () => {
