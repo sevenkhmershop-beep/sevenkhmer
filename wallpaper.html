@@ -70,7 +70,7 @@
 <!-- jspdf for PDF -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
-<link rel="stylesheet" href="style.css?v=2">
+<link rel="stylesheet" href="style.css?v=3">
 <style>
 *{
   margin:0;
@@ -455,10 +455,17 @@ function renderProducts(data) {
   container.innerHTML = data.map((p, index) => `
     <div class="product-card bg-white rounded-3xl shadow-lg overflow-hidden">
       <div class="p-1">
-        <img id="mainImg${index}" src="${p.images[0]}" alt="${p.name}" loading="lazy" class="w-full h-44 md:h-60 object-cover rounded-2xl cursor-zoom-in" onclick="openImage('${p.images[0]}')">
+        <img id="mainImg${index}" src="${p.images[0]}" 
+        alt="${p.name}" 
+        loading="lazy"
+        fetchpriority="low" 
+        class="w-full h-44 md:h-60 object-cover rounded-2xl cursor-zoom-in" 
+        onclick="openImage('${p.images[0]}')">
         <div class="grid grid-cols-4 gap-2 mt-3">
           ${p.images.map((img, imgIndex) => `
-            <img src="${img}" class="small-img h-16 rounded-xl object-cover cursor-pointer border" onclick="changeImage('mainImg${index}', '${img}', '${p.id}', '${p.id}-${imgIndex + 1}')">
+            <img src="${img}" 
+            class="small-img h-16 rounded-xl object-cover cursor-pointer border" 
+            onclick="changeImage('mainImg${index}', '${img}', '${p.id}', '${p.id}-${imgIndex + 1}')">
           `).join("")}
         </div>
       </div>
