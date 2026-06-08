@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://sevenkhmershop-beep.github.io/sevenkhmer/sitemap.xml
