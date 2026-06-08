@@ -1,4 +1,8 @@
+# https://www.robotstxt.org/robotstxt.html
+# For Seven Khmer Shop Website
+
 User-agent: *
 Allow: /
 
+# Sitemaps
 Sitemap: https://sevenkhmershop-beep.github.io/sevenkhmer/sitemap.xml
