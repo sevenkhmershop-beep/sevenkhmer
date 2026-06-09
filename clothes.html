@@ -67,7 +67,7 @@
 <!-- jspdf for PDF -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
-<link rel="stylesheet" href="style.css?v=9">
+<link rel="stylesheet" href="style.css?v=10">
 <style>
 
 *{
@@ -180,7 +180,7 @@ body{
       </div>
 
       <div class="leading-tight -ml-16 md:mx-auto">
-        <h1 class="font-bold text-blue-600 text-lg sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl">
+        <h1 class="font-bold text-blue-600 text-sm sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl">
           SEVEN KHMER
         </h1>
         <p class="text-xs text-gray-500">
@@ -201,14 +201,14 @@ body{
           type="text"
           placeholder="Search..."
           oninput="searchProduct()"
-          class="border border-gray-300 rounded-xl py-2 pl-10 pr-3 outline-none focus:ring-2 focus:ring-blue-400 w-32 md:w-52"
+          class="border border-gray-300 rounded-xl py-2 pl-10 pr-2 outline-none focus:ring-2 focus:ring-blue-400 w-24 md:w-52"
         >
         <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
       </div>
 
       <!-- CART -->
       <div onclick="toggleCart()"
-        class="relative cursor-pointer text-xl hover:scale-110 transition z-50 px-5">
+        class="relative cursor-pointer text-lg hover:scale-110 transition z-50 px-5">
         🛒
         <span id="count"
           class="absolute -top-2 right-1 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
@@ -576,7 +576,7 @@ function renderProducts(data) {
         alt="${p.name}" 
         loading="lazy"
         fetchpriority="low" 
-        class="w-full h-44 md:h-60 object-cover rounded-2xl cursor-zoom-in" 
+        class="w-full h-44 md:h-60 object-cover rounded-2xl cursor-pointer" 
         onclick="openImage('${p.images[0]}')">
         <div class="grid grid-cols-4 gap-2 mt-3">
           ${p.images.map((img, imgIndex) => `
