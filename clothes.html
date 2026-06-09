@@ -67,7 +67,7 @@
 <!-- jspdf for PDF -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
-<link rel="stylesheet" href="style.css?v=11">
+<link rel="stylesheet" href="style.css?v=12">
 <style>
 
 *{
@@ -201,17 +201,17 @@ body{
           type="text"
           placeholder="Search..."
           oninput="searchProduct()"
-          class="border border-gray-300 rounded-xl py-2 pl-10 pr-2 outline-none focus:ring-2 focus:ring-blue-400 w-24 md:w-52"
+          class="border border-gray-300 rounded-xl py-2 pl-10 pr-3 outline-none focus:ring-2 focus:ring-blue-400 w-32 md:w-52"
         >
         <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
       </div>
 
       <!-- CART -->
       <div onclick="toggleCart()"
-        class="relative cursor-pointer text-lg hover:scale-110 transition z-50 px-5">
+        class="relative cursor-pointer text-xl hover:scale-110 transition">
         🛒
         <span id="count"
-          class="absolute -top-2 right-1 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
+          class="absolute -top-2 left-4 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
           0
         </span>
       </div>
