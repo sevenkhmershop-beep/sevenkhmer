@@ -67,7 +67,7 @@
 <!-- jspdf for PDF -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
-<link rel="stylesheet" href="style.css?v=12">
+<link rel="stylesheet" href="style.css?v=14">
 <style>
 
 *{
@@ -586,10 +586,10 @@ function renderProducts(data) {
         </div>
       </div>
       <div class="p-4">
-        <h2 class="font-bold text-lg">${p.name}</h2>
+        <h2 class="font-bold text-sm">${p.name}</h2>
         <p class="text-gray-500 text-sm">${p.category}</p>
         <div class="flex items-center justify-between mt-4">
-          <h3 class="text-blue-600 text-2xl font-bold">$${p.price}</h3>
+          <h3 class="text-blue-600 text-sm font-bold">$${p.price}</h3>
         </div>
         <button onclick="addToCart(${p.id})" class="bg-blue-600 text-white w-full mt-3 py-2 rounded-lg">Add To Cart</button>
       </div>
