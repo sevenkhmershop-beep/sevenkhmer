@@ -67,7 +67,7 @@
 <!-- jspdf for PDF -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
-<link rel="stylesheet" href="style.css?v=14">
+<link rel="stylesheet" href="style.css?v=15">
 <style>
 
 *{
@@ -388,7 +388,7 @@ let selectedImages = {};
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
 const products = [
-  { id: 3000, name: "អាវខោប៊យ ហុងកុង", price: 20, category: "Clothes",
+  { id: 3000, name: "អាវខោប៊យ ហុងកុង", price: 20, category: "2-3 ថ្ងៃ",
 
   images: ["image/pants/1.jpg", 
 
@@ -399,7 +399,7 @@ const products = [
             "image/pants/4.jpg"
   ]},
 
-  { id: 3001, name: "អាវខោប៊យ ហុងកុង", price: 30, category: "Clothes", 
+  { id: 3001, name: "អាវខោប៊យ ហុងកុង", price: 30, category: "7-10 ថ្ងៃ", 
   images: ["image/pants/5.jpg",
 
           "image/pants/6.jpg", 
@@ -409,25 +409,87 @@ const products = [
           "image/pants/8.jpg"
   ]},
 
-  { id: 3003, name: "ចានឆ្នាំង", price: 15, category: "Kitchen", 
-  images: ["https://picsum.photos/id/109/500/500",
+  { id: 3003, name: "អាវបុរស", price: 25, category: "7-10 ថ្ងៃ", 
+  images: ["image/pants/9.jpg",
 
-          "https://picsum.photos/id/110/500/500", 
+          "image/pants/10.jpg", 
 
-          "https://picsum.photos/id/111/500/500", 
+          "image/pants/11.jpg", 
 
-          "https://picsum.photos/id/112/500/500"
+          "image/pants/12.jpg"
   ]},
   
-  { id: 3004, name: "ទូរទឹកកក", price: 120, category: "Electronics", 
-  images: ["https://picsum.photos/id/113/500/500",
+  { id: 3004, name: "អាវបុរស", price: 23, category: "7-10 ថ្ងៃ", 
+  images: ["image/pants/13.jpg",
 
-          "https://picsum.photos/id/114/500/500", 
+          "image/pants/14.jpg", 
 
-          "https://picsum.photos/id/115/500/500", 
+          "image/pants/15.jpg", 
 
-          "https://picsum.photos/id/116/500/500"
-  ] }
+          "image/pants/16.jpg"
+  ]},
+
+  { id: 3005, name: "អាវបុរស", price: 20, category: "7-10 ថ្ងៃ", 
+  images: ["image/pants/17.jpg",
+
+          "image/pants/18.jpg", 
+
+          "image/pants/19.jpg", 
+
+          "image/pants/20.jpg"
+  ]},
+
+  { id: 3006, name: "អាវបុរស", price: 23, category: "7-10 ថ្ងៃ", 
+  images: ["image/pants/21.jpg",
+
+          "image/pants/22.jpg", 
+
+          "image/pants/23.jpg", 
+
+          "image/pants/24.jpg"
+  ]},
+
+  { id: 3007, name: "អាវបុរស", price: 28, category: "7-10 ថ្ងៃ", 
+  images: ["image/pants/25.jpg",
+
+          "image/pants/26.jpg", 
+
+          "image/pants/27.jpg", 
+
+          "image/pants/28.jpg"
+  ]},
+
+  { id: 3008, name: "អាវបុរស", price: 32, category: "7-10 ថ្ងៃ", 
+  images: ["image/pants/30.jpg",
+
+          "image/pants/31.jpg", 
+
+          "image/pants/32.jpg", 
+
+          "image/pants/29.jpg"
+  ]},
+
+  { id: 3009, name: "ខោបុរស", price: 35, category: "7-10 ថ្ងៃ", 
+  images: ["image/pants/33.jpg",
+
+          "image/pants/34.jpg", 
+
+          "image/pants/35.jpg", 
+
+          "image/pants/36.jpg"
+  ]}, 
+
+  { id: 3010, name: "ខោបុរស", price: 18, category: "7-10 ថ្ងៃ", 
+  images: ["image/pants/37.jpg",
+
+          "image/pants/38.jpg", 
+
+          "image/pants/39.jpg", 
+
+          "image/pants/40.jpg"
+  ]},  
+
+
 ];
 
 // ================= MODAL NAVIGATION VARIABLES =================
