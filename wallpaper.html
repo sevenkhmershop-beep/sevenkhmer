@@ -310,7 +310,10 @@ const products = [
   { id: 4015, name: "ក្រដាស់បិតជញ្ជាំង", price: 2.15, category: "Wallpaper", images: ["image/wallpaper/17.jpg", "image/wallpaper/18.jpg", "image/wallpaper/19.jpg", "image/wallpaper/20.jpg"] },
   { id: 4016, name: "ក្រដាស់បិតជញ្ជាំង", price: 2.15, category: "Wallpaper", images: ["image/wallpaper/21.jpg", "image/wallpaper/22.jpg", "image/wallpaper/23.jpg", "image/wallpaper/24.jpg"] },
   { id: 4017, name: "ក្រដាស់បិតជញ្ជាំង", price: 2.15, category: "Wallpaper", images: ["image/wallpaper/25.jpg", "image/wallpaper/26.jpg", "image/wallpaper/27.jpg", "image/wallpaper/28.jpg"] },
-  { id: 4018, name: "ក្រដាស់បិតជញ្ជាំង", price: 2.15, category: "Wallpaper", images: ["image/wallpaper/29.jpg", "image/wallpaper/30.jpg", "image/wallpaper/31.jpg", "image/wallpaper/32.jpg"] }
+  { id: 4018, name: "ក្រដាស់បិតជញ្ជាំង", price: 2.15, category: "Wallpaper", images: ["image/wallpaper/29.jpg", "image/wallpaper/30.jpg", "image/wallpaper/31.jpg", "image/wallpaper/32.jpg"] },
+  { id: 4019, name: "ក្រដាស់បិតជញ្ជាំង", price: 2.15, category: "Wallpaper", images: ["image/veryoldpaper/1.jpg", "image/veryoldpaper/2.jpg", "image/veryoldpaper/3.jpg", "image/veryoldpaper/4.jpg"]},
+  { id: 4020, name: "ក្រដាស់បិតជញ្ជាំង", price: 2.15, category: "Wallpaper", images: ["image/veryoldpaper/5.jpg", "image/veryoldpaper/6.jpg", "image/veryoldpaper/7.jpg", "image/veryoldpaper/8.jpg"]},
+  
 ];
 
 // ================= MODAL NAVIGATION VARIABLES =================
@@ -459,7 +462,7 @@ function renderProducts(data) {
         alt="${p.name}" 
         loading="lazy"
         fetchpriority="low" 
-        class="w-full h-44 md:h-60 object-cover rounded-2xl cursor-zoom-in" 
+        class="w-full h-44 md:h-60 object-cover rounded-2xl cursor-pointer" 
         onclick="openImage('${p.images[0]}')">
         <div class="grid grid-cols-4 gap-2 mt-3">
           ${p.images.map((img, imgIndex) => `
