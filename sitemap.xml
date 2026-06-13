@@ -1,68 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="1.xsl" href="sitemap.xsl"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
-  <!-- Home Page -->
+  <!-- ទំព័រដើមចម្បង (Main Homepage) -->
   <url>
     <loc>https://sevenkhmershop-beep.github.io/sevenkhmer/</loc>
     <lastmod>2026-06-08</lastmod>
     <changefreq>always</changefreq>
-    <priority>0.80</priority>
+    <priority>0.8</priority>
   </url>
 
-  <!-- Index Page -->
+  <!-- ទំព័រ index.html -->
   <url>
     <loc>https://sevenkhmershop-beep.github.io/sevenkhmer/index.html</loc>
     <lastmod>2026-06-08</lastmod>
     <changefreq>hourly</changefreq>
-    <priority>0.70</priority>
+    <priority>0.7</priority>
   </url>
 
-  <!-- Products Page -->
+  <!-- ទំព័រផលិតផល (Products) -->
   <url>
     <loc>https://sevenkhmershop-beep.github.io/sevenkhmer/products.html</loc>
     <lastmod>2026-06-08</lastmod>
     <changefreq>hourly</changefreq>
-    <priority>0.80</priority>
+    <priority>0.8</priority>
   </url>
 
-  <!-- Clothes Page -->
+  <!-- ទំព័រលក់ខោអាវ (Clothes) -->
   <url>
     <loc>https://sevenkhmershop-beep.github.io/sevenkhmer/clothes.html</loc>
     <lastmod>2026-06-08</lastmod>
     <changefreq>hourly</changefreq>
-    <priority>0.90</priority>
+    <priority>0.9</priority>
   </url>
 
-  <!-- Wallpaper Page -->
+  <!-- ទំព័ររូបភាព Wallpaper -->
   <url>
     <loc>https://sevenkhmershop-beep.github.io/sevenkhmer/wallpaper.html</loc>
     <lastmod>2026-06-08</lastmod>
     <changefreq>hourly</changefreq>
-    <priority>0.90</priority>
+    <priority>0.9</priority>
   </url>
 
-  <!-- Promo Page -->
+  <!-- ទំព័រប្រូម៉ូសិន (Promo) -->
   <url>
     <loc>https://sevenkhmershop-beep.github.io/sevenkhmer/promo.html</loc>
     <lastmod>2026-06-08</lastmod>
     <changefreq>hourly</changefreq>
-    <priority>0.80</priority>
+    <priority>0.8</priority>
   </url>
 
-  <!-- Contact Page -->
+  <!-- ទំព័រទំនាក់ទំនង (Contact) -->
   <url>
     <loc>https://sevenkhmershop-beep.github.io/sevenkhmer/contact.html</loc>
     <lastmod>2026-06-08</lastmod>
     <changefreq>hourly</changefreq>
-    <priority>0.90</priority>
+    <priority>0.9</priority>
   </url>
 
-  <!-- Success Page -->
+  <!-- ទំព័រជោគជ័យ (Success) -->
   <url>
     <loc>https://sevenkhmershop-beep.github.io/sevenkhmer/success.html</loc>
     <lastmod>2026-06-08</lastmod>
     <changefreq>hourly</changefreq>
-    <priority>0.50</priority>
+    <priority>0.5</priority>
   </url>
 
 </urlset>
