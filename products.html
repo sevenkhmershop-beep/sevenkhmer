@@ -66,7 +66,7 @@
 <!-- jspdf for PDF -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
-<link rel="stylesheet" href="style.css?v=20">
+<link rel="stylesheet" href="style.css?v=21">
 <style>
   body{
   font-family: 'Battambang', 'Koulen', sans-serif;
@@ -79,6 +79,32 @@
 
 #sidebar {
   scrollbar-width: none;
+}
+/* Custom smooth transitions and image preview overlay */
+.preview-overlay {
+  transition: opacity 0.25s ease;
+}
+.preview-img {
+  max-width: 90vw;
+  max-height: 85vh;
+  object-fit: contain;
+  box-shadow: 0 25px 40px rgba(0,0,0,0.3);
+  border-radius: 1rem;
+  transition: transform 0.2s ease;
+}
+.blur-load {
+  background-color: #e5e7eb;
+}
+/* custom scrollbar for sidebar/cart */
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
 }
 </style>
 </head>
@@ -120,7 +146,7 @@
 <!-- 🔷 SIDEBAR -->
 
 <div id="sidebar"
-class="fixed left-0 top-0 w-64 h-screen bg-white shadow-lg
+class="fixed left-0 top-0 w-72 h-screen bg-white shadow-lg
 overflow-y-auto -translate-x-full p-4 z-50">
 
   <!-- Header -->
@@ -261,6 +287,15 @@ overflow-y-auto -translate-x-full p-4 z-50">
 <!-- ================= INVOICE ================= -->
 <div id="invoice" class="hidden bg-white p-5" style="width:700px">
   <div id="invoiceItems"></div>
+</div>
+
+<!-- IMAGE PREVIEW MODAL (LIGHTBOX) -->
+<div id="imagePreviewModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 preview-overlay hidden transition-all duration-300" onclick="closePreview()">
+  <div class="relative max-w-5xl w-full mx-4" onclick="event.stopPropagation()">
+    <button onclick="closePreview()" class="absolute -top-12 right-0 text-white text-3xl hover:text-gray-300 transition">&times;</button>
+    <img id="previewImageSrc" class="preview-img w-full rounded-2xl shadow-2xl border-2 border-white/30" alt="Preview">
+    <div class="text-center text-white mt-4 text-sm md:text-base" id="previewCaption"></div>
+  </div>
 </div>
 
 <!-- 🔷 PRODUCTS -->
@@ -617,6 +652,24 @@ function filterCategory(cat){
   renderProducts();
 }
 
+// ================= IMAGE PREVIEW =================
+function openPreview(imgSrc, productName){
+  const modal = document.getElementById('imagePreviewModal');
+  const previewImg = document.getElementById('previewImageSrc');
+  const caption = document.getElementById('previewCaption');
+  previewImg.src = imgSrc;
+  caption.innerText = productName || 'Product preview';
+  modal.classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+}
+
+function closePreview(){
+  const modal = document.getElementById('imagePreviewModal');
+  modal.classList.add('hidden');
+  document.body.style.overflow = '';
+}
+
+
 // ================= RENDER PRODUCTS =================
 function renderProducts(){
 
@@ -631,7 +684,7 @@ function renderProducts(){
   document.getElementById("products").innerHTML =
     paginated.map(p => `
       <div class="bg-white text-sm p-3 rounded-lg shadow hover:shadow-lg transition z-30">
-      
+        <div class="cursor-pointer" onclick="openPreview('${p.img}', '${p.name.replace(/'/g, "\\'")}')">
         <img src="${p.img}"
         loading="lazy"
         decoding="async"
@@ -641,6 +694,7 @@ function renderProducts(){
         class="w-full aspect-square object-cover rounded-xl
         bg-gray-200 blur-lg scale-105 cursor-pointer
         hover:scale-105 transition duration-300">
+        </div>
         <h3 class="mt-2 ">${p.name}</h3>
         <p>${p.category}</p>
         <p>$ ${p.price}</p>
