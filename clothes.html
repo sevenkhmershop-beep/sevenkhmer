@@ -67,7 +67,7 @@
 <!-- jspdf for PDF -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
-<link rel="stylesheet" href="style.css?v=15">
+<link rel="stylesheet" href="style.css?v=16">
 <style>
 
 *{
@@ -347,13 +347,59 @@ transform -translate-x-full transition-all duration-300 shadow-2xl">
   </div>
   <div id="cartItems" class="p-4 space-y-3"></div>
   <div class="p-4 border-t">
-    <h2 class="text-xl font-bold">Total: $<span id="total">0</span></h2>
-    <button onclick="showQR()" class="bg-green-500 hover:bg-green-600 text-white w-full py-3 rounded-xl mt-4">ABA Pay</button>
-    <div id="qrBox" class="hidden mt-4"><img src="image/woods/ACLIDA.jpg" class="rounded-xl shadow"></div>
-    <button onclick="printInvoice()" class="bg-blue-500 hover:bg-blue-600 text-white w-full py-3 rounded-xl mt-3">Invoice PDF</button>
-    <button onclick="sendTelegram()" class="bg-purple-500 hover:bg-purple-600 text-white w-full py-3 rounded-xl mt-3">Telegram Order</button>
-    <button onclick="clearCart()" class="bg-red-500 hover:bg-red-600 text-white w-full py-3 rounded-xl mt-3">Clear Cart</button>
+
+  <input
+    type="text"
+    id="customerName"
+    placeholder="ឈ្មោះអតិថិជន"
+    class="w-full border border-gray-300 rounded-lg p-2 mb-3"
+    required
+  >
+
+  <input
+    type="tel"
+    id="customerPhone"
+    placeholder="លេខទូរស័ព្ទ"
+    class="w-full border border-gray-300 rounded-lg p-2 mb-3"
+    required
+  >
+
+  <textarea
+    id="customerAddress"
+    placeholder="អាសយដ្ឋាន"
+    class="w-full border border-gray-300 rounded-lg p-2 mb-3"
+    rows="3"
+  ></textarea>
+
+  <h2 class="text-xl font-bold">
+    Total: $<span id="total">0</span>
+  </h2>
+
+  <button onclick="showQR()"
+    class="bg-green-500 hover:bg-green-600 text-white w-full py-3 rounded-xl mt-4">
+    ABA Pay
+  </button>
+
+  <div id="qrBox" class="hidden mt-4">
+    <img src="image/woods/ACLIDA.jpg" class="rounded-xl shadow">
   </div>
+
+  <button onclick="printInvoice()"
+    class="bg-blue-500 hover:bg-blue-600 text-white w-full py-3 rounded-xl mt-3">
+    Invoice PDF
+  </button>
+
+  <button onclick="sendTelegram()"
+    class="bg-purple-500 hover:bg-purple-600 text-white w-full py-3 rounded-xl mt-3">
+    Telegram Order
+  </button>
+
+  <button onclick="clearCart()"
+    class="bg-red-500 hover:bg-red-600 text-white w-full py-3 rounded-xl mt-3">
+    Clear Cart
+  </button>
+
+</div>
 </div>
 
 <!-- ================= INVOICE ================= -->
@@ -470,23 +516,23 @@ const products = [
   ]},
 
   { id: 3009, name: "ខោបុរស", price: 35, category: "7-10 ថ្ងៃ", 
-  images: ["image/pants/33.jpg",
+  images: ["image/cottonpants/1.jpg",
 
-          "image/pants/34.jpg", 
+          "image/cottonpants/2.jpg", 
 
-          "image/pants/35.jpg", 
+          "image/cottonpants/3.jpg", 
 
-          "image/pants/36.jpg"
+          "image/cottonpants/4.jpg"
   ]}, 
 
   { id: 3010, name: "ខោបុរស", price: 18, category: "7-10 ថ្ងៃ", 
-  images: ["image/pants/37.jpg",
+  images: ["image/cottonpants/5.jpg",
 
-          "image/pants/38.jpg", 
+          "image/cottonpants/6.jpg", 
 
-          "image/pants/39.jpg", 
+          "image/cottonpants/7.jpg", 
 
-          "image/pants/40.jpg"
+          "image/cottonpants/8.jpg"
   ]},  
 
 
@@ -738,11 +784,33 @@ function showQR() {
 function sendTelegram() {
   const token = "7961243136:AAExQ2ps_SBqWICvl5iLM-JTKmz0982-tEE";
   const chatId = "711901461";
-  if (cart.length === 0) { alert("Cart is empty!"); return; }
-  let msg = "🛒 New Order:\n\n";
-  cart.forEach(p => {
-    msg += `📦 ${p.name}\n🆔 ID: ${p.id}\n🖼️ Image: ${p.imageId || "N/A"}\n🔢 Qty: ${p.qty}\n💰 Price: $${(p.price * p.qty).toFixed(2)}\n----------------------\n`;
-  });
+ const customerName =
+    document.getElementById("customerName").value;
+
+  const customerPhone =
+    document.getElementById("customerPhone").value;
+
+  const customerAddress =
+    document.getElementById("customerAddress").value;
+
+  if (!customerName || !customerPhone) {
+    alert("សូមបញ្ចូលឈ្មោះ និងលេខទូរស័ព្ទ");
+    return;
+  }
+
+  if (cart.length === 0) {
+    alert("Cart is empty!");
+    return;
+  }
+
+  let msg = `🛒 New Order
+
+👤 ឈ្មោះ: ${customerName}
+📞 ទូរស័ព្ទ: ${customerPhone}
+📍 អាសយដ្ឋាន: ${customerAddress}
+
+📦 ទំនិញ៖
+`;
   const total = cart.reduce((sum, p) => sum + p.price * p.qty, 0);
   msg += `\n💰 Total: $${total.toFixed(2)}`;
   fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
