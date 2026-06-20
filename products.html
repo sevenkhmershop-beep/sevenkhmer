@@ -66,7 +66,7 @@
 <!-- jspdf for PDF -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
-<link rel="stylesheet" href="style.css?v=24">
+<link rel="stylesheet" href="style.css?v=25">
 <style>
   body{
   font-family: 'Battambang', 'Koulen', sans-serif;
@@ -591,12 +591,30 @@ const products = [
   {id:280, name:"ធុងទឺក 45L",price:3.6 ,category:"Plastics",img:"image/plastic/21.jpg"},
 
   {id:281, name:"រាវកោង 2ជាន់",price:2 ,category:"Plastics",img:"image/ttkplastic/1.jpg"},
+
   {id:282, name:"ដាក់ចង្កឹះជ្រុង",price:5 ,category:"Plastics",img:"image/ttkplastic/2.jpg"},
+
   {id:283, name:"កន្ត្រកឆ្នូតធំ",price:2.65 ,category:"Plastics",img:"image/ttkplastic/3.jpg"},
+
   {id:284, name:"បោយផ្កា",price:3.6,category:"Plastics",img:"image/ttkplastic/4.jpg"},
+
   {id:285, name:"រាវចានក្របចិនតូច",price:5.7 ,category:"Plastics",img:"image/ttkplastic/5.jpg"},
+
   {id:286, name:"រាវចានក្របចិនកណ្តាល",price:6.3 ,category:"Plastics",img:"image/ttkplastic/6.jpg"},
+
   {id:287, name:"រាវចានក្របចិនធំ",price:7.3 ,category:"Plastics",img:"image/ttkplastic/7.jpg"},
+
+  {id:288, name:"រាវចានTTK 2ជាន់ល្អ",price:4.5,category:"Plastics",img:"image/ttkplastic/10.jpg"},
+
+  {id:289, name:"រាវចានTTk 3ជាន់ល្អ",price:4.9 ,category:"Plastics",img:"image/ttkplastic/9.jpg"},
+
+  {id:290, name:"រាវចានTTK 4ជាន់ល្អ",price:6.2,category:"Plastics",img:"image/ttkplastic/8.jpg"},
+
+  {id:291, name:"រាវចានTTK 2ជាន់អន់",price:3.1 ,category:"Plastics",img:"image/ttkplastic/11.jpg"},
+
+  {id:292, name:"រាវចានTTK 3ជាន់អន់",price:4,category:"Plastics",img:"image/ttkplastic/12.jpg"},
+
+  {id:293, name:"រាវចានTTK 4ជាន់អន់",price:5,category:"Plastics",img:"image/ttkplastic/13.jpg"},
 
   // ================= POT  =================
 
@@ -660,6 +678,12 @@ const products = [
 
   {id:389, name:"ឆ្នាំងស្ទាំងដៃមូល 28",price:5.4,category:"Pot",img:"image/pot/30.jpg"},
 
+    // ================= Vn COTTON  =================
+
+  {id:600, name:"កន្ទេលស្នោ ABC",price:6.5,category:"Plastics",img:"image/vncotton/1.jpg"},
+  {id:601, name:"អង្រឹងប៉ារ៉ា​ 2.5M",price:7,category:"Plastics",img:"image/vncotton/2.jpg"},
+  {id:602, name:"អង្រឹងប៉ារ៉ា​ 3M",price:8,category:"Plastics",img:"image/vncotton/3.jpg"},
+  {id:603, name:"អង្រឹងប៉ារ៉ា​ 3.5M",price:8.5,category:"Plastics",img:"image/vncotton/4.jpg"},
 ];
 
 function toggleMenu() {
@@ -870,6 +894,7 @@ function toggleSidebar(){
   overlay.classList.toggle("hidden");
 }
 // ================= TETEGRAM =================
+
 function sendTelegram() {
 
   const token = "7961243136:AAExQ2ps_SBqWICvl5iLM-JTKmz0982-tEE";
@@ -974,16 +999,16 @@ function printInvoice(){
 
   let html = `
 
-  <div style="font-family:Arial;padding:20px;width:700px;">
+  <div style="font-family:Arial;padding:10px;width:700px;">
 
     <!-- HEADER -->
     <div style="text-align:center;margin-bottom:20px;">
-      <h1 style="color:#2563eb;font-size:28px;margin:0;">
-        SEVEN KHMER
+      <h1 style="color:#2563eb;font-size:28px;margin:0;font-family:khmer os muol light;">
+        Seven Khmer Shop
       </h1>
 
-      <p>Phnom Penh, Cambodia</p>
-      <p>Tel: 012 968 728</p>
+      <p class="text-center font-battambang text-sm">អាស័យដ្ឋានផ្ទះលេខ 143-141 ផ្លូវលេខ5 បុរីពិភពថ្មីកំបូល1 ភូមិត្រពាំងគល់ សង្កាត់កន្ទោក ខ័ណ្ឌកំបូល ភ្នំពេញ </p>
+      <p>Tel: 012 968 728.016 456 187.017 800 004</p>
 
       <h2 style="margin-top:10px;">INVOICE</h2>
     </div>
